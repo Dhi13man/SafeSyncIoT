@@ -1,34 +1,7 @@
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:moor/moor.dart';
 
+import 'dataClasses.dart';
 part 'sharedDatabase.g.dart';
-
-class Employees extends Table {
-  TextColumn get employeeID => text()();
-  TextColumn get name => text().withLength(max: 32).nullable()();
-  IntColumn get phoneNo => integer().nullable()();
-  TextColumn get deviceID => text().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {employeeID};
-}
-
-class Attendances extends Table {
-  TextColumn get employeeID => text()();
-  IntColumn get attendanceCount => integer().withDefault(const Constant(0))();
-  DateTimeColumn get lastAttendance => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {employeeID};
-}
-
-class Events extends Table {
-  DateTimeColumn get eventTime => dateTime()();
-  TextColumn get employeeIDA => text()();
-  TextColumn get employeeIDB => text()();
-
-  @override
-  Set<Column> get primaryKey => {eventTime};
-}
 
 @UseMoor(tables: [Employees, Attendances, Events])
 class SharedDatabase extends _$SharedDatabase {
@@ -64,4 +37,29 @@ class SharedDatabase extends _$SharedDatabase {
   Future<int> insertEvent(Event event) => into(events).insert(event);
   Future updateEvent(Event event) => update(events).replace(event);
   Future removeEvent(Event event) => delete(events).delete(event);
+
+  // Relational
+  Stream<List<Employee>> watchAttendaceEmployeeGreater(int lowerBound) =>
+      (select(employees)
+            ..join(<Join<Table, DataClass>>[
+              innerJoin(
+                attendances,
+                employees.employeeID.equalsExp(attendances.employeeID) &
+                    attendances.attendanceCount
+                        .isBiggerOrEqual(Constant(lowerBound)),
+              ),
+            ]))
+          .watch();
+
+  Stream<List<Employee>> watchAttendaceEmployeeLesser(int upperBound) =>
+      (select(employees)
+            ..join(<Join<Table, DataClass>>[
+              innerJoin(
+                attendances,
+                employees.employeeID.equalsExp(attendances.employeeID) &
+                    attendances.attendanceCount
+                        .isSmallerOrEqual(Constant(upperBound)),
+              ),
+            ]))
+          .watch();
 }

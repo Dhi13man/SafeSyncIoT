@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'components/menu_list.dart';
-import 'package:safe_sync/attendance/attendance.dart';
-import 'package:safe_sync/logs/logs.dart';
-import 'package:safe_sync/statistics/statistics.dart';
+import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
+import 'package:safe_sync/UI/home/components/logs/logs.dart';
+import 'package:safe_sync/UI/home/components/menu_list.dart';
+import 'package:safe_sync/UI/home/components/statistics/statistics.dart';
 
 class HomeBody extends StatefulWidget {
   final String title;

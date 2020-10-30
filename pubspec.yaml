@@ -24,6 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
+  provider: ^4.3.2+2
+  
+  sqlite3_flutter_libs: ^0.2.0
+  path_provider: ^1.6.22
+  path: ^1.7.0
   moor: ^3.4.0
   moor_flutter: ^3.1.0
   moor_db_viewer: ^2.0.3
@@ -33,9 +38,6 @@ dev_dependencies:
     sdk: flutter
   moor_generator: ^3.4.0
   build_runner: ^1.6.0
-  sqlite3_flutter_libs: ^0.2.0
-  path_provider: ^1.6.22
-  path: ^1.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
