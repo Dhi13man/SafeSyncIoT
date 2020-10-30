@@ -25,7 +25,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.0
   provider: ^4.3.2+2
-  
+  url_launcher: ^5.7.8
+
   sqlite3_flutter_libs: ^0.2.0
   path_provider: ^1.6.22
   path: ^1.7.0

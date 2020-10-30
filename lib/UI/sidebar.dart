@@ -25,15 +25,6 @@ class SideBarDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
-            leading: Icon(
-              Icons.download_rounded,
-            ),
-            title: Text(
-              'Placeholder',
-            ),
-          ),
-          ListTile(
             onTap: () {
               if (_scaffoldKey.currentState.isDrawerOpen) {
                 _scaffoldKey.currentState.openEndDrawer();
@@ -41,10 +32,24 @@ class SideBarDrawer extends StatelessWidget {
               }
             },
             leading: Icon(
-              Icons.contacts,
+              Icons.group_outlined,
             ),
             title: Text(
               'Employee Management',
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              if (_scaffoldKey.currentState.isDrawerOpen) {
+                _scaffoldKey.currentState.openEndDrawer();
+                Navigator.pushNamed(_mainContext, '/contact');
+              }
+            },
+            leading: Icon(
+              Icons.contact_page,
+            ),
+            title: Text(
+              'Contact us',
             ),
           ),
         ],

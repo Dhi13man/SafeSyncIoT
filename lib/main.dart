@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:safe_sync/UI/employeeManage/employeeManage.dart';
+import 'package:safe_sync/UI/EmployeeManage/employeeManage.dart';
 import 'package:safe_sync/UI/home/home.dart';
+import 'package:safe_sync/UI/ContactPage/contactPage.dart';
 
 void main() => runApp(SafeSyncApp());
 
@@ -16,6 +17,7 @@ class SafeSyncApp extends StatelessWidget {
       routes: {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/employeeManage': (context) => EmployeeManagement(),
+        '/contact': (context) => ContactPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
