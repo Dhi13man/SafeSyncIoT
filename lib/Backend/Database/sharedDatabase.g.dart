@@ -8,35 +8,29 @@ part of 'sharedDatabase.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Employee extends DataClass implements Insertable<Employee> {
-  final int id;
   final String employeeID;
   final String name;
   final int phoneNo;
-  Employee(
-      {@required this.id,
-      @required this.employeeID,
-      @required this.name,
-      @required this.phoneNo});
+  final String deviceID;
+  Employee({@required this.employeeID, this.name, this.phoneNo, this.deviceID});
   factory Employee.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final intType = db.typeSystem.forDartType<int>();
     return Employee(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       employeeID: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}employee_i_d']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       phoneNo:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}phone_no']),
+      deviceID: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}device_i_d']),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
     if (!nullToAbsent || employeeID != null) {
       map['employee_i_d'] = Variable<String>(employeeID);
     }
@@ -46,12 +40,14 @@ class Employee extends DataClass implements Insertable<Employee> {
     if (!nullToAbsent || phoneNo != null) {
       map['phone_no'] = Variable<int>(phoneNo);
     }
+    if (!nullToAbsent || deviceID != null) {
+      map['device_i_d'] = Variable<String>(deviceID);
+    }
     return map;
   }
 
   EmployeesCompanion toCompanion(bool nullToAbsent) {
     return EmployeesCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       employeeID: employeeID == null && nullToAbsent
           ? const Value.absent()
           : Value(employeeID),
@@ -59,6 +55,9 @@ class Employee extends DataClass implements Insertable<Employee> {
       phoneNo: phoneNo == null && nullToAbsent
           ? const Value.absent()
           : Value(phoneNo),
+      deviceID: deviceID == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceID),
     );
   }
 
@@ -66,107 +65,102 @@ class Employee extends DataClass implements Insertable<Employee> {
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Employee(
-      id: serializer.fromJson<int>(json['id']),
       employeeID: serializer.fromJson<String>(json['employeeID']),
       name: serializer.fromJson<String>(json['name']),
       phoneNo: serializer.fromJson<int>(json['phoneNo']),
+      deviceID: serializer.fromJson<String>(json['deviceID']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
       'employeeID': serializer.toJson<String>(employeeID),
       'name': serializer.toJson<String>(name),
       'phoneNo': serializer.toJson<int>(phoneNo),
+      'deviceID': serializer.toJson<String>(deviceID),
     };
   }
 
-  Employee copyWith({int id, String employeeID, String name, int phoneNo}) =>
+  Employee copyWith(
+          {String employeeID, String name, int phoneNo, String deviceID}) =>
       Employee(
-        id: id ?? this.id,
         employeeID: employeeID ?? this.employeeID,
         name: name ?? this.name,
         phoneNo: phoneNo ?? this.phoneNo,
+        deviceID: deviceID ?? this.deviceID,
       );
   @override
   String toString() {
     return (StringBuffer('Employee(')
-          ..write('id: $id, ')
           ..write('employeeID: $employeeID, ')
           ..write('name: $name, ')
-          ..write('phoneNo: $phoneNo')
+          ..write('phoneNo: $phoneNo, ')
+          ..write('deviceID: $deviceID')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(employeeID.hashCode, $mrjc(name.hashCode, phoneNo.hashCode))));
+  int get hashCode => $mrjf($mrjc(employeeID.hashCode,
+      $mrjc(name.hashCode, $mrjc(phoneNo.hashCode, deviceID.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Employee &&
-          other.id == this.id &&
           other.employeeID == this.employeeID &&
           other.name == this.name &&
-          other.phoneNo == this.phoneNo);
+          other.phoneNo == this.phoneNo &&
+          other.deviceID == this.deviceID);
 }
 
 class EmployeesCompanion extends UpdateCompanion<Employee> {
-  final Value<int> id;
   final Value<String> employeeID;
   final Value<String> name;
   final Value<int> phoneNo;
+  final Value<String> deviceID;
   const EmployeesCompanion({
-    this.id = const Value.absent(),
     this.employeeID = const Value.absent(),
     this.name = const Value.absent(),
     this.phoneNo = const Value.absent(),
+    this.deviceID = const Value.absent(),
   });
   EmployeesCompanion.insert({
-    @required int id,
     @required String employeeID,
-    @required String name,
-    @required int phoneNo,
-  })  : id = Value(id),
-        employeeID = Value(employeeID),
-        name = Value(name),
-        phoneNo = Value(phoneNo);
+    this.name = const Value.absent(),
+    this.phoneNo = const Value.absent(),
+    this.deviceID = const Value.absent(),
+  }) : employeeID = Value(employeeID);
   static Insertable<Employee> custom({
-    Expression<int> id,
     Expression<String> employeeID,
     Expression<String> name,
     Expression<int> phoneNo,
+    Expression<String> deviceID,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
       if (employeeID != null) 'employee_i_d': employeeID,
       if (name != null) 'name': name,
       if (phoneNo != null) 'phone_no': phoneNo,
+      if (deviceID != null) 'device_i_d': deviceID,
     });
   }
 
   EmployeesCompanion copyWith(
-      {Value<int> id,
-      Value<String> employeeID,
+      {Value<String> employeeID,
       Value<String> name,
-      Value<int> phoneNo}) {
+      Value<int> phoneNo,
+      Value<String> deviceID}) {
     return EmployeesCompanion(
-      id: id ?? this.id,
       employeeID: employeeID ?? this.employeeID,
       name: name ?? this.name,
       phoneNo: phoneNo ?? this.phoneNo,
+      deviceID: deviceID ?? this.deviceID,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
     if (employeeID.present) {
       map['employee_i_d'] = Variable<String>(employeeID.value);
     }
@@ -176,16 +170,19 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
     if (phoneNo.present) {
       map['phone_no'] = Variable<int>(phoneNo.value);
     }
+    if (deviceID.present) {
+      map['device_i_d'] = Variable<String>(deviceID.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('EmployeesCompanion(')
-          ..write('id: $id, ')
           ..write('employeeID: $employeeID, ')
           ..write('name: $name, ')
-          ..write('phoneNo: $phoneNo')
+          ..write('phoneNo: $phoneNo, ')
+          ..write('deviceID: $deviceID')
           ..write(')'))
         .toString();
   }
@@ -196,15 +193,6 @@ class $EmployeesTable extends Employees
   final GeneratedDatabase _db;
   final String _alias;
   $EmployeesTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
   final VerificationMeta _employeeIDMeta = const VerificationMeta('employeeID');
   GeneratedTextColumn _employeeID;
   @override
@@ -222,7 +210,7 @@ class $EmployeesTable extends Employees
   @override
   GeneratedTextColumn get name => _name ??= _constructName();
   GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn('name', $tableName, false, maxTextLength: 32);
+    return GeneratedTextColumn('name', $tableName, true, maxTextLength: 32);
   }
 
   final VerificationMeta _phoneNoMeta = const VerificationMeta('phoneNo');
@@ -233,12 +221,24 @@ class $EmployeesTable extends Employees
     return GeneratedIntColumn(
       'phone_no',
       $tableName,
-      false,
+      true,
+    );
+  }
+
+  final VerificationMeta _deviceIDMeta = const VerificationMeta('deviceID');
+  GeneratedTextColumn _deviceID;
+  @override
+  GeneratedTextColumn get deviceID => _deviceID ??= _constructDeviceID();
+  GeneratedTextColumn _constructDeviceID() {
+    return GeneratedTextColumn(
+      'device_i_d',
+      $tableName,
+      true,
     );
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, employeeID, name, phoneNo];
+  List<GeneratedColumn> get $columns => [employeeID, name, phoneNo, deviceID];
   @override
   $EmployeesTable get asDslTable => this;
   @override
@@ -250,11 +250,6 @@ class $EmployeesTable extends Employees
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
     if (data.containsKey('employee_i_d')) {
       context.handle(
           _employeeIDMeta,
@@ -266,20 +261,20 @@ class $EmployeesTable extends Employees
     if (data.containsKey('name')) {
       context.handle(
           _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('phone_no')) {
       context.handle(_phoneNoMeta,
           phoneNo.isAcceptableOrUnknown(data['phone_no'], _phoneNoMeta));
-    } else if (isInserting) {
-      context.missing(_phoneNoMeta);
+    }
+    if (data.containsKey('device_i_d')) {
+      context.handle(_deviceIDMeta,
+          deviceID.isAcceptableOrUnknown(data['device_i_d'], _deviceIDMeta));
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, employeeID};
+  Set<GeneratedColumn> get $primaryKey => {employeeID};
   @override
   Employee map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -403,10 +398,9 @@ class AttendancesCompanion extends UpdateCompanion<Attendance> {
   });
   AttendancesCompanion.insert({
     @required String employeeID,
-    @required int attendanceCount,
+    this.attendanceCount = const Value.absent(),
     this.lastAttendance = const Value.absent(),
-  })  : employeeID = Value(employeeID),
-        attendanceCount = Value(attendanceCount);
+  }) : employeeID = Value(employeeID);
   static Insertable<Attendance> custom({
     Expression<String> employeeID,
     Expression<int> attendanceCount,
@@ -480,11 +474,8 @@ class $AttendancesTable extends Attendances
   GeneratedIntColumn get attendanceCount =>
       _attendanceCount ??= _constructAttendanceCount();
   GeneratedIntColumn _constructAttendanceCount() {
-    return GeneratedIntColumn(
-      'attendance_count',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('attendance_count', $tableName, false,
+        defaultValue: const Constant(0));
   }
 
   final VerificationMeta _lastAttendanceMeta =
@@ -528,8 +519,6 @@ class $AttendancesTable extends Attendances
           _attendanceCountMeta,
           attendanceCount.isAcceptableOrUnknown(
               data['attendance_count'], _attendanceCountMeta));
-    } else if (isInserting) {
-      context.missing(_attendanceCountMeta);
     }
     if (data.containsKey('last_attendance')) {
       context.handle(

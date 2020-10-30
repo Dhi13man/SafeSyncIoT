@@ -3,18 +3,18 @@ import 'package:moor_flutter/moor_flutter.dart';
 part 'sharedDatabase.g.dart';
 
 class Employees extends Table {
-  IntColumn get id => integer().autoIncrement()();
   TextColumn get employeeID => text()();
-  TextColumn get name => text().withLength(max: 32)();
-  IntColumn get phoneNo => integer()();
+  TextColumn get name => text().withLength(max: 32).nullable()();
+  IntColumn get phoneNo => integer().nullable()();
+  TextColumn get deviceID => text().nullable()();
 
   @override
-  Set<Column> get primaryKey => {id, employeeID};
+  Set<Column> get primaryKey => {employeeID};
 }
 
 class Attendances extends Table {
   TextColumn get employeeID => text()();
-  IntColumn get attendanceCount => integer()();
+  IntColumn get attendanceCount => integer().withDefault(const Constant(0))();
   DateTimeColumn get lastAttendance => dateTime().nullable()();
 
   @override
