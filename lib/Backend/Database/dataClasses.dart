@@ -1,5 +1,8 @@
 import 'package:moor/moor.dart';
 
+import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
+
+// Bases
 class Employees extends Table {
   TextColumn get employeeID => text()();
   TextColumn get name => text().withLength(max: 32).nullable()();
@@ -26,4 +29,12 @@ class Events extends Table {
 
   @override
   Set<Column> get primaryKey => {eventTime};
+}
+
+// Relational
+class EmployeesWithAttendance {
+  final Employee employee;
+  final Attendance attendance;
+
+  EmployeesWithAttendance(this.employee, this.attendance);
 }
