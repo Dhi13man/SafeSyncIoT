@@ -11,11 +11,12 @@ class SafeSyncHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+    Size _dimensions = MediaQuery.of(context).size;
     return Scaffold(
       key: _drawerKey,
       body: Container(
-        height: double.infinity,
-        width: double.infinity,
+        height: _dimensions.height,
+        width: _dimensions.width,
         decoration: importantConstants.bgGradDecoration,
         child: HomeBody(
           title: title,
@@ -26,9 +27,12 @@ class SafeSyncHomePage extends StatelessWidget {
         backgroundColor: importantConstants.bgGradBegin,
         foregroundColor: Colors.white,
         autofocus: true,
-        focusColor: importantConstants.bgGradEnd,
+        focusColor: Colors.black,
         tooltip: 'Employee Tools',
-        child: Icon(Icons.person),
+        child: Icon(
+          Icons.person,
+          size: 30,
+        ),
         onPressed: () {
           _drawerKey.currentState.openDrawer();
         },

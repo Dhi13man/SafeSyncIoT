@@ -32,21 +32,21 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
+    Size _dimensions = MediaQuery.of(context).size;
     return Column(
       children: [
         Flexible(
           flex: 1,
           child: Container(
-            height: double.infinity,
-            width: double.infinity,
+            height: _dimensions.height,
+            width: _dimensions.width,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             alignment: Alignment.topLeft,
             child: Text(
               title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 25,
                 color: Colors.white,
               ),
             ),
@@ -61,7 +61,7 @@ class _HomeBodyState extends State<HomeBody> {
               children: [
                 Container(
                   height: 40,
-                  width: _width,
+                  width: _dimensions.width,
                   child: MenuList(
                     tabSelect: _openTab,
                     selectedTab: tabID,
@@ -73,7 +73,7 @@ class _HomeBodyState extends State<HomeBody> {
                       color: Colors.white,
                       border: Border.all(width: 0, color: Colors.white),
                     ),
-                    width: _width,
+                    width: _dimensions.width,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Container(child: _selectedWidget[tabID]),
                   ),

@@ -2,7 +2,7 @@ import 'package:moor/moor.dart';
 import 'package:undo/undo.dart';
 
 import 'dataClasses.dart';
-import 'db_utils.dart';
+import 'dbUtils.dart';
 part 'sharedDatabase.g.dart';
 
 @UseMoor(tables: [Employees, Attendances, Events])
@@ -97,7 +97,10 @@ class SharedDatabase extends _$SharedDatabase {
   Future resetAttendance(String employeeID) async {
     Attendance _attendance =
         Attendance(employeeID: employeeID, attendanceCount: 0);
-    return updateRow(cs, attendances, _attendance);
+
+    // If already exists, remove first
+    deleteRow(cs, attendances, _attendance);
+    return insertRow(cs, attendances, _attendance);
   }
 
   Future giveAttendance(String employeeID) async {
@@ -126,5 +129,11 @@ class SharedDatabase extends _$SharedDatabase {
 
   Future deleteEvent(Event event) {
     return deleteRow(cs, events, event);
+  }
+
+  Future deleteTables() async {
+    delete(employees).go();
+    delete(attendances).go();
+    delete(events).go();
   }
 }

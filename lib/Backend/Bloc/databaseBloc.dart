@@ -7,13 +7,7 @@ import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
 
 /// Class that keeps information about a category and whether it's selected at
 /// the moment.
-class EmployeeActiveAttendance {
-  EmployeeActiveAttendance(this.employee, this.attendance);
-
-  EmployeesWithAttendance employee;
-  int attendance;
-}
-
+///
 class DataBloc extends Cubit<ChangeStack> {
   DataBloc(this.db) : super(db.cs) {
     init();
@@ -23,23 +17,21 @@ class DataBloc extends Cubit<ChangeStack> {
   final BehaviorSubject<Employee> _activeCategory =
       BehaviorSubject.seeded(null);
 
-  final BehaviorSubject<List<EmployeeActiveAttendance>> _allCategories =
-      BehaviorSubject();
-
-  void init() {
-    // also watch all categories so that they can be displayed in the navigation
-    // drawer.
-  }
-
-  void showCategory(Employee category) {
-    _activeCategory.add(category);
-  }
+  void init() {}
 
   // EMPLOYEES ACTIONS
   void createEmployee(Employee employee) async {
     await db.createEmployee(employee);
     emit(db.cs);
-    showCategory(employee);
+    showEmployee(employee);
+  }
+
+  void showEmployee(Employee employee) {
+    _activeCategory.add(employee);
+  }
+
+  Stream<List<Employee>> showAllEmployees() {
+    return db.watchAllEmployees();
   }
 
   void updateEmployee(Employee employee) async {
@@ -58,6 +50,10 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
+  Stream<List<Event>> showAllEvents() {
+    return db.watchAllEvents();
+  }
+
   void updateEvent(Event event) async {
     db.updateEvent(event);
     emit(db.cs);
@@ -68,7 +64,7 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  // Employee Attendance Actions
+  // Employee-Attendance Actions
   void giveAttendance(String employeeID) {
     db.giveAttendance(employeeID);
     emit(db.cs);
@@ -79,10 +75,12 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  void getEmployeesWithAttendance(int bound, {String boundType = 'lower'}) {
+  Stream<List<EmployeesWithAttendance>> getEmployeesWithAttendance(int bound,
+      {String boundType = 'lower'}) {
     if (boundType == 'lower')
-      db.watchEmployeeAttendaceGreater(bound);
-    else if (boundType == 'upper') db.watchEmployeeAttendaceLesser(bound);
+      return db.watchEmployeeAttendaceGreater(bound);
+    else
+      return db.watchEmployeeAttendaceLesser(bound);
   }
 
   // Database manipulation actions
@@ -98,12 +96,14 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  void clear() {
+  void clear() async {
+    db.deleteTables();
     db.cs.clearHistory();
     emit(db.cs);
   }
 
   void dispose() {
-    _allCategories.close();
+    db.close();
+    emit(db.cs);
   }
 }

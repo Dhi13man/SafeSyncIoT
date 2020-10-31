@@ -34,6 +34,7 @@ class EmployeeCard extends StatelessWidget {
           shadowColor: Colors.black38,
           borderOnForeground: true,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(flex: 1, child: _getIcon()),
               Flexible(
@@ -46,7 +47,7 @@ class EmployeeCard extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: Container(
-                  child: Text('$attendanceCount',
+                  child: Text('$attendanceCount Attendances',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.blue[900])),

@@ -7,11 +7,12 @@ class ImportantConstants {
   final Color bgGradMid = Colors.blue[900];
   final Color bgGradEnd = Colors.red;
   final Color textLighterColor = Color(0xFFACACAC);
+  final Color textLightestColor = Colors.white;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [bgGradBegin, bgGradMid, bgGradEnd],
+          colors: [bgGradBegin, bgGradMid],
         ),
       );
 
