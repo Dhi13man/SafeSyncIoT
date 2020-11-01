@@ -55,30 +55,35 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(
           flex: 8,
           child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Column(
-              children: [
-                Container(
-                  height: 40,
-                  width: _dimensions.width,
-                  child: MenuList(
-                    tabSelect: _openTab,
-                    selectedTab: tabID,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 0, color: Colors.white),
-                    ),
+              height: double.infinity,
+              width: double.infinity,
+              margin: EdgeInsets.all(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Column(
+                children: [
+                  Container(
+                    height: 40,
                     width: _dimensions.width,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Container(child: _selectedWidget[tabID]),
+                    child: MenuList(
+                      tabSelect: _openTab,
+                      selectedTab: tabID,
+                    ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(width: 0, color: Colors.white),
+                      ),
+                      width: _dimensions.width,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: _selectedWidget[tabID],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

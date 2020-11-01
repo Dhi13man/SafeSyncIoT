@@ -15,6 +15,8 @@ class EmployeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 10,
+      shadowColor: Colors.black,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

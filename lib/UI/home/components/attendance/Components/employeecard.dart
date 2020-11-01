@@ -27,13 +27,14 @@ class EmployeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          shadowColor: Colors.black38,
-          borderOnForeground: true,
-          child: Row(
+    return Card(
+          shadowColor: _getIcon().color,
+          elevation: 10,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          borderOnForeground: false,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(flex: 1, child: _getIcon()),
@@ -41,7 +42,11 @@ class EmployeeCard extends StatelessWidget {
                 flex: 5,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(employeeName),
+                  child: Text(
+                    '$employeeName',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
                 ),
               ),
               Flexible(
@@ -49,14 +54,13 @@ class EmployeeCard extends StatelessWidget {
                 child: Container(
                   child: Text('$attendanceCount Attendances',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: Colors.blue[900])),
                 ),
               ),
             ],
           ),
         ),
-      ),
     );
   }
 }

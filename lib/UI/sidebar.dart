@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_sync/Backend/constants.dart';
 
 class SideBarDrawer extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey;
@@ -12,15 +13,17 @@ class SideBarDrawer extends StatelessWidget {
         padding: EdgeInsets.all(20),
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.black87,
-            ),
-            child: Text(
-              'SafeSync Utilities',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                letterSpacing: 1.5,
+            decoration: importantConstants.bgGradDecoration,
+            child: Center(
+              child: Expanded(
+                child: Text(
+                  'SafeSync Utilities',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    letterSpacing: 1.5,
+                  ),
+                ),
               ),
             ),
           ),

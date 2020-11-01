@@ -22,7 +22,7 @@ class SafeSyncApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    // PRevent Orientation Changes
+    // Prevent Orientation Changes
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
