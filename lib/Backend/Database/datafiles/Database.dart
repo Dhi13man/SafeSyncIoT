@@ -1,8 +1,9 @@
 import 'package:moor/moor.dart';
 import 'package:undo/undo.dart';
 
-import 'dataClasses.dart';
-import 'dbUtils.dart';
+import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
+import 'package:safe_sync/Backend/Database/datafiles/dbUtils.dart';
+
 part 'Database.g.dart';
 
 @UseMoor(tables: [Employees, Attendances, Events])
@@ -16,7 +17,20 @@ class Database extends _$Database {
   // DATABASE OPERATIONS
   //EMPLOYEES
   Future<List<Employee>> getAllEmployees() => select(employees).get();
-  Stream<List<Employee>> watchAllEmployees() => select(employees).watch();
+  Stream<List<Employee>> watchAllEmployees({String orderBy, String mode}) =>
+      (select(employees)
+            ..orderBy([
+              (u) {
+                GeneratedTextColumn criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'id') criteria = employees.employeeID;
+                if (orderBy == 'name') criteria = employees.name;
+                if (orderBy == 'device') criteria = employees.deviceID;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
+          .watch();
   Future<int> createEmployeeSQL(Employee employee) =>
       into(employees).insert(employee);
   Future updateEmployeeSQL(Employee employee) =>
@@ -36,13 +50,15 @@ class Database extends _$Database {
 
   // Events
   Future<List<Event>> getAllEvents() => select(events).get();
-  Stream<List<Event>> watchAllEvents() => select(events).watch();
+  Stream<List<Event>> watchAllEvents() =>
+      (select(events)..orderBy([(u) => OrderingTerm.desc(events.eventTime)]))
+          .watch();
   Future<int> createEventSQL(Event event) => into(events).insert(event);
   Future updateEventSQL(Event event) => update(events).replace(event);
   Future removeEventSQL(Event event) => delete(events).delete(event);
 
   // Relational Attendance-Employee Actions
-  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendaceGreater(
+  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceGreater(
       int lowerBound) {
     final query = select(employees).join([
       leftOuterJoin(
@@ -61,7 +77,7 @@ class Database extends _$Database {
     });
   }
 
-  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendaceLesser(
+  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceLesser(
       int lowerBound) {
     final query = select(employees).join([
       leftOuterJoin(
@@ -78,6 +94,17 @@ class Database extends _$Database {
         );
       }).toList();
     });
+  }
+
+  // Relational Event-Employee Actions
+  Future<EventWithEmployees> getEmployeeFromEvent(Event _event) async {
+    Employee _a = Employee(employeeID: _event.employeeIDA),
+        _b = Employee(employeeID: _event.employeeIDB);
+    final queryEmployeeA = select(employees)..whereSamePrimaryKey(_a);
+    final queryEmployeeB = select(employees)..whereSamePrimaryKey(_b);
+
+    return EventWithEmployees(_event, await queryEmployeeA.getSingle(),
+        await queryEmployeeB.getSingle());
   }
 
   // Dart Employee Handling
@@ -116,6 +143,8 @@ class Database extends _$Database {
 
   // Dart Event handling
   Future<int> createEvent(Event event) {
+    print(event.eventTime);
+    print(event.eventType);
     return insertRow(
       cs,
       events,
@@ -127,8 +156,12 @@ class Database extends _$Database {
     return updateRow(cs, events, event);
   }
 
-  Future deleteEvent(Event event) {
+  Future deleteEvent(Event event) async {
     return deleteRow(cs, events, event);
+  }
+
+  Future clearEvents() async {
+    return delete(events).go();
   }
 
   Future deleteTables() async {

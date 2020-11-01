@@ -16,7 +16,7 @@ class ContactCard extends StatelessWidget {
       }
     } catch (e) {
       AlertDialog(
-        title: e,
+        title: Text(e),
       );
     }
   }

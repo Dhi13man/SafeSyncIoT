@@ -1,10 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
+import 'package:safe_sync/Backend/constants.dart';
 
 class EmployeeCard extends StatelessWidget {
   final int attendanceCount, optimumAttendancesNumber = 5;
-  final String employeeName;
-  const EmployeeCard({Key key, this.employeeName, this.attendanceCount})
+  final Employee employee;
+  const EmployeeCard({Key key, this.employee, this.attendanceCount})
       : super(key: key);
 
   Icon _getIcon() {
@@ -28,39 +32,53 @@ class EmployeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-          shadowColor: _getIcon().color,
-          elevation: 10,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          borderOnForeground: false,
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(flex: 1, child: _getIcon()),
-              Flexible(
-                flex: 5,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    '$employeeName',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
+      shadowColor: _getIcon().color,
+      elevation: 10,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      borderOnForeground: false,
+      child: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(flex: 1, child: _getIcon()),
+            Flexible(
+              flex: 5,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  '${employee.name}',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: Container(
-                  child: Text('$attendanceCount Attendances',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blue[900])),
+            ),
+            Flexible(
+              flex: 2,
+              child: Container(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text(
+                        'ID: ${employee.employeeID}',
+                        style: TextStyle(
+                            fontSize: 9,
+                            color: importantConstants.textLighterColor),
+                      ),
+                    ),
+                    Text('$attendanceCount Attendances',
+                        style: TextStyle(
+                            fontSize: (kIsWeb) ? 15 : 7,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue[900])),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

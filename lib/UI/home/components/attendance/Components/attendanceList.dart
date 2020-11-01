@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/UI/Home/components/attendance/Components/infoText.dart';
-import 'package:safe_sync/UI/home/components/attendance/Components/employeeCard.dart';
+import 'package:safe_sync/UI/Home/components/attendance/components/employeeCard.dart';
 import 'package:undo/undo.dart';
 
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 
-class EmployeeList extends StatelessWidget {
+class AttendanceList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEmployeeList(
       BuildContext context, String criteria) {
-    DataBloc bloc = BlocProvider.of<DataBloc>(context);
+    DataBloc bloc = context.bloc();
     Stream<List<EmployeesWithAttendance>> watchStream;
 
     if (criteria == 'present')
@@ -23,10 +23,10 @@ class EmployeeList extends StatelessWidget {
       watchStream = bloc.getEmployeesWithAttendance(5, boundType: 'lower');
 
     return BlocBuilder<DataBloc, ChangeStack>(
-      builder: (context, cs) {
+      builder: (_context, cs) {
         return StreamBuilder<List<EmployeesWithAttendance>>(
             stream: watchStream,
-            builder: (context, snapshot) {
+            builder: (_context, snapshot) {
               if (!snapshot.hasData) return CircularProgressIndicator();
 
               // Nobody in given Criteria Found
@@ -42,9 +42,9 @@ class EmployeeList extends StatelessWidget {
               return Expanded(
                 child: ListView.builder(
                   itemCount: employeeAttendances.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (BuildContext _context, int index) {
                     return EmployeeCard(
-                      employeeName: employeeAttendances[index].employee.name,
+                      employee: employeeAttendances[index].employee,
                       attendanceCount:
                           employeeAttendances[index].attendance.attendanceCount,
                     );

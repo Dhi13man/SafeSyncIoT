@@ -1,5 +1,5 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:safe_sync/Backend/constants.dart';
 
 class ListItem extends StatelessWidget {
@@ -18,6 +18,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _infosize = (kIsWeb) ? 15 : 11;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.25),
       child: GestureDetector(
@@ -30,7 +31,7 @@ class ListItem extends StatelessWidget {
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(
                 _tabIcon[tab],
-                size: 15,
+                size: _infosize,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5),
@@ -38,7 +39,7 @@ class ListItem extends StatelessWidget {
               Text(
                 itemText,
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: _infosize - 2,
                   fontWeight: FontWeight.bold,
                   color: importantConstants.textColor,
                 ),

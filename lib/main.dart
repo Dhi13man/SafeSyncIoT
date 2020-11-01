@@ -1,18 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
-import 'package:safe_sync/Backend/Database/mobileDatabase.dart';
-import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
-import 'package:safe_sync/Backend/Database/webDatabase.dart';
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
+import 'package:safe_sync/Backend/Database/shared.dart';
 
-import 'package:safe_sync/UI/EmployeeManage/employeeManage.dart';
-import 'package:safe_sync/UI/EmployeeManage/components/employeeAdd.dart';
-
-import 'package:safe_sync/UI/home/home.dart';
 import 'package:safe_sync/UI/ContactPage/contactPage.dart';
+import 'package:safe_sync/UI/EmployeeManage/components/employeeAdd.dart';
+import 'package:safe_sync/UI/EmployeeManage/employeeManage.dart';
+import 'package:safe_sync/UI/home/home.dart';
 
 void main() => runApp(SafeSyncApp());
 
@@ -29,23 +26,20 @@ class SafeSyncApp extends StatelessWidget {
     ]);
 
     // Initialize Database based on OS
-    var db;
-    if (kIsWeb)
-      db = WebDb();
-    else
-      db = MobileDb();
-
-    return RepositoryProvider<SharedDatabase>(
-      create: (context) => db.create(),
+    return RepositoryProvider<Database>(
+      create: (context) => createDb(),
       child: BlocProvider<DataBloc>(
         create: (context) {
-          final database = RepositoryProvider.of<SharedDatabase>(context);
+          final database = RepositoryProvider.of<Database>(context);
           return DataBloc(database);
         },
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'SafeSync IoT',
           routes: {
+            '/': (context) => BlocProvider.value(
+                value: BlocProvider.of<DataBloc>(context),
+                child: SafeSyncHomePage(title: 'SafeSync IoT Dashboard')),
             '/employeeManage': (context) => BlocProvider.value(
                 value: BlocProvider.of<DataBloc>(context),
                 child: EmployeeManagement()),
@@ -59,7 +53,6 @@ class SafeSyncApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SafeSyncHomePage(title: 'SafeSync IoT Dashboard'),
         ),
       ),
     );

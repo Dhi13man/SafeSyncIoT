@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
-import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/UI/EmployeeManage/components/employeeCard.dart';
 import 'package:undo/undo.dart';
+
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 class EmployeeManagement extends StatelessWidget {
   const EmployeeManagement({Key key}) : super(key: key);
@@ -28,7 +29,7 @@ class EmployeeManagement extends StatelessWidget {
               icon: const Icon(Icons.delete),
               color: Colors.red,
               onPressed: () {
-                BlocProvider.of<DataBloc>(context).clear();
+                bloc(context).clear();
               },
             )
           ],

@@ -2,18 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:undo/undo.dart';
 
-import 'package:safe_sync/Backend/Database/dataClasses.dart';
-import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
+import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
-/// Class that keeps information about a category and whether it's selected at
-/// the moment.
-///
 class DataBloc extends Cubit<ChangeStack> {
   DataBloc(this.db) : super(db.cs) {
     init();
   }
 
-  final SharedDatabase db;
+  final Database db;
   final BehaviorSubject<Employee> _activeCategory =
       BehaviorSubject.seeded(null);
 
@@ -44,7 +41,7 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  // EVENTS ACTIONS
+  // EVENTS ACTIONS. Event types: attendance, contact, join, register
   void createEvent(Event event) async {
     await db.createEvent(event);
     emit(db.cs);
@@ -64,6 +61,11 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
+  void clearEvents() async {
+    db.clearEvents();
+    emit(db.cs);
+  }
+
   // Employee-Attendance Actions
   void giveAttendance(String employeeID) {
     db.giveAttendance(employeeID);
@@ -77,13 +79,16 @@ class DataBloc extends Cubit<ChangeStack> {
 
   Stream<List<EmployeesWithAttendance>> getEmployeesWithAttendance(int bound,
       {String boundType = 'lower'}) {
-    if (boundType == 'lower')
-      return db.watchEmployeeAttendaceGreater(bound);
-    else
-      return db.watchEmployeeAttendaceLesser(bound);
+    if (boundType == 'lower') return db.watchEmployeeAttendanceGreater(bound);
+    return db.watchEmployeeAttendanceLesser(bound);
   }
 
-  // Database manipulation actions
+  // Event-Employee Actions
+  Stream<EventWithEmployees> getEmployeesFromEvent(Event _event) {
+    return db.getEmployeeFromEvent(_event).asStream();
+  }
+
+  //Database manipulation actions
   bool get canUndo => db.cs.canUndo;
   void undo() async {
     await db.cs.undo();

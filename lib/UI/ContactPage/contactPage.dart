@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:safe_sync/UI/ContactPage/contactPageCard.dart';
 
 class ContactPage extends StatelessWidget {

@@ -1,5 +1,5 @@
-import '../database.dart';
+import 'datafiles/Database.dart';
 
-Database constructDb({bool logStatements = false}) {
+Database createDb({bool logStatements = false}) {
   throw 'Platform not supported';
 }

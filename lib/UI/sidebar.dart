@@ -12,16 +12,23 @@ class SideBarDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(20),
         children: <Widget>[
-          DrawerHeader(
-            decoration: importantConstants.bgGradDecoration,
-            child: Center(
-              child: Expanded(
-                child: Text(
-                  'SafeSync Utilities',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    letterSpacing: 1.5,
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 40),
+            child: ClipRRect(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              borderRadius: BorderRadius.circular(50),
+              child: DrawerHeader(
+                margin: EdgeInsets.zero,
+                decoration: importantConstants.bgGradDecoration,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'SafeSync Utilities',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                      letterSpacing: 1.5,
+                    ),
                   ),
                 ),
               ),

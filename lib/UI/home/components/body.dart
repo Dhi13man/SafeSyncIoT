@@ -7,7 +7,7 @@ import 'package:safe_sync/UI/home/components/statistics/statistics.dart';
 
 class HomeBody extends StatefulWidget {
   final String title;
-  HomeBody({this.title});
+  HomeBody({Key key, this.title});
 
   @override
   _HomeBodyState createState() => _HomeBodyState(title: title);
@@ -38,9 +38,10 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(
           flex: 1,
           child: Container(
+            margin: EdgeInsets.only(top: 35),
             height: _dimensions.height,
             width: _dimensions.width,
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             alignment: Alignment.topLeft,
             child: Text(
               title,
@@ -55,12 +56,12 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(
           flex: 8,
           child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              margin: EdgeInsets.all(20),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Column(
+            height: double.infinity,
+            width: double.infinity,
+            margin: EdgeInsets.all(20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Column(
                 children: [
                   Container(
                     height: 40,

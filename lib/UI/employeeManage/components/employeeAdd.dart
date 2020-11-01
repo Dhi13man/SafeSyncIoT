@@ -2,18 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
-import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
+
 class EmployeeAdd extends StatelessWidget {
-  const EmployeeAdd({Key key, Employee employee}) : super(key: key);
+  const EmployeeAdd({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size _dimensions = MediaQuery.of(context).size;
+    Employee employee = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add a new Employee'),
+        title:
+            Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(
@@ -23,45 +26,52 @@ class EmployeeAdd extends StatelessWidget {
       ),
       body: Container(
         width: _dimensions.width,
-        height: double.infinity,
         decoration: importantConstants.bgGradDecoration,
-        child: Column(children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                margin: EdgeInsets.all(importantConstants.defaultPadding),
-                width: _dimensions.width,
-                decoration: BoxDecoration(
-                  color: importantConstants.textLightestColor,
-                  border: Border.all(
-                      color: Colors.black, style: BorderStyle.solid, width: 5),
-                ),
-                padding: EdgeInsets.all(10),
-                child: EmployeeForm(),
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(60),
+          child: Container(
+            height: _dimensions.height,
+            margin: EdgeInsets.all(importantConstants.defaultPadding),
+            padding: EdgeInsets.symmetric(vertical: 50),
+            decoration: BoxDecoration(
+              color: importantConstants.textLightestColor,
+              border: Border.all(
+                  color: Colors.black, style: BorderStyle.solid, width: 1),
+            ),
+            child: EmployeeForm(
+              employee: employee,
             ),
           ),
-        ]),
+        ),
       ),
     );
   }
 }
 
 class EmployeeForm extends StatefulWidget {
-  EmployeeForm({Key key}) : super(key: key);
+  final Employee employee;
+
+  EmployeeForm({Key key, this.employee}) : super(key: key);
 
   @override
-  _EmployeeFormState createState() => _EmployeeFormState();
+  _EmployeeFormState createState() => _EmployeeFormState(employee: employee);
 }
 
 class _EmployeeFormState extends State<EmployeeForm> {
-  final Map<String, TextEditingController> _controlMap = {
-    'id': TextEditingController(),
-    'name': TextEditingController(),
-    'phone': TextEditingController(),
-    'device': TextEditingController()
-  };
+  Map<String, TextEditingController> _controlMap;
+
+  final Employee employee;
+  _EmployeeFormState({this.employee}) {
+    bool _editmode = employee != null;
+    _controlMap = {
+      'id': TextEditingController(text: (_editmode) ? employee.employeeID : ''),
+      'name': TextEditingController(text: (_editmode) ? employee.name : ''),
+      'phone': TextEditingController(
+          text: (_editmode) ? employee.phoneNo.toString() : ''),
+      'device':
+          TextEditingController(text: (_editmode) ? employee.deviceID : '')
+    };
+  }
 
   void _insertToDatabase(BuildContext context) {
     if (_controlMap['id'].text.isEmpty) return;
@@ -83,7 +93,11 @@ class _EmployeeFormState extends State<EmployeeForm> {
         name: name,
         deviceID: device,
         phoneNo: int.parse(phone)));
-    BlocProvider.of<DataBloc>(context).resetAttendance(id);
+    if (employee == null) {
+      BlocProvider.of<DataBloc>(context).createEvent(Event(
+          eventTime: DateTime.now(), eventType: 'register', employeeIDA: id));
+      BlocProvider.of<DataBloc>(context).resetAttendance(id);
+    }
     Navigator.of(context).pop();
   }
 
@@ -93,11 +107,9 @@ class _EmployeeFormState extends State<EmployeeForm> {
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Center(
               child: Text(
                 'Employee Details',
                 style: Theme.of(context).textTheme.headline6,
@@ -136,19 +148,18 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 height: 50,
                 margin: EdgeInsets.symmetric(vertical: 40),
                 width: _width,
-                child: Expanded(
-                  child: CupertinoButton(
-                    color: importantConstants.bgGradMid,
-                    child: Text('Add Employee',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: importantConstants.textLightestColor,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    onPressed: () {
-                      _insertToDatabase(context);
-                    },
-                  ),
+                child: CupertinoButton(
+                  color: importantConstants.bgGradMid,
+                  child:
+                      Text((employee == null) ? 'Add Employee' : 'Update Info',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: importantConstants.textLightestColor,
+                            fontWeight: FontWeight.bold,
+                          )),
+                  onPressed: () {
+                    _insertToDatabase(context);
+                  },
                 )),
           ],
         ),
