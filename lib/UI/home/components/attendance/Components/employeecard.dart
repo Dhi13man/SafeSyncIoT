@@ -69,7 +69,7 @@ class EmployeeCard extends StatelessWidget {
                     ),
                     Text('$attendanceCount Attendances',
                         style: TextStyle(
-                            fontSize: (kIsWeb) ? 15 : 7,
+                            fontSize: (kIsWeb) ? 10 : 7,
                             fontWeight: FontWeight.w600,
                             color: Colors.blue[900])),
                   ],

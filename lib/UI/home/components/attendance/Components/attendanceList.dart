@@ -60,25 +60,28 @@ class AttendanceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         InfoText('Present: '),
         _buildEmployeeList(context, 'present'),
         InfoText('Absent: '),
         _buildEmployeeList(context, 'absent'),
-        Container(
-            alignment: Alignment.bottomCenter,
-            height: 50,
-            width: MediaQuery.of(context).size.width,
-            child: CupertinoButton(
-              color: importantConstants.bgGradMid,
-              child: Text('Reset Attendances',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: importantConstants.textLightestColor,
-                    fontWeight: FontWeight.bold,
-                  )),
-              onPressed: () => context.bloc<DataBloc>().clearEvents(),
-            )),
+        Expanded(
+          child: Container(
+              alignment: Alignment.bottomCenter,
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              child: CupertinoButton(
+                color: importantConstants.bgGradMid,
+                child: Text('Reset Attendances',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: importantConstants.textLightestColor,
+                      fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () => context.bloc<DataBloc>().clearEvents(),
+              )),
+        ),
       ],
     );
   }
