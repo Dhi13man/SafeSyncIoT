@@ -72,15 +72,24 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(width: 0, color: Colors.white),
+                    // SWIPE TO CHANGE TAP CAPABILITY
+                    child: GestureDetector(
+                      onHorizontalDragEnd: (details) {
+                        if (details.primaryVelocity > 0)
+                          _openTab((tabID != 0) ? tabID - 1 : tabID);
+                        else if (details.primaryVelocity < 0)
+                          _openTab((tabID != 2) ? tabID + 1 : tabID);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 0, color: Colors.white),
+                        ),
+                        width: _dimensions.width,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: _selectedWidget[tabID],
                       ),
-                      width: _dimensions.width,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: _selectedWidget[tabID],
                     ),
                   ),
                 ],

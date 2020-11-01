@@ -11,7 +11,7 @@ import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 
 class EventList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEventList(BuildContext context) {
-    DataBloc _bloc = context.bloc();
+    DataBloc _bloc = context.bloc<DataBloc>();
 
     return BlocBuilder<DataBloc, ChangeStack>(
       builder: (_context, cs) {
@@ -61,7 +61,7 @@ class EventList extends StatelessWidget {
                               color: importantConstants.textLightestColor,
                               fontWeight: FontWeight.bold,
                             )),
-                        onPressed: () {},
+                        onPressed: () => _bloc.clearEvents(),
                       )),
                 ],
               );

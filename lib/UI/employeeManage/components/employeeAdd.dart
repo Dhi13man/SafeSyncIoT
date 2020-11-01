@@ -88,15 +88,17 @@ class _EmployeeFormState extends State<EmployeeForm> {
       phone = _controlMap['phone'].text;
     }
 
-    BlocProvider.of<DataBloc>(context).createEmployee(Employee(
+    DataBloc _bloc = context.bloc<DataBloc>();
+
+    _bloc.createEmployee(Employee(
         employeeID: id,
         name: name,
         deviceID: device,
         phoneNo: int.parse(phone)));
     if (employee == null) {
-      BlocProvider.of<DataBloc>(context).createEvent(Event(
+      _bloc.createEvent(Event(
           eventTime: DateTime.now(), eventType: 'register', employeeIDA: id));
-      BlocProvider.of<DataBloc>(context).resetAttendance(id);
+      _bloc.resetAttendance(id);
     }
     Navigator.of(context).pop();
   }

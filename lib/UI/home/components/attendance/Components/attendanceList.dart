@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:undo/undo.dart';
+
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
+
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/UI/Home/components/attendance/Components/infoText.dart';
 import 'package:safe_sync/UI/Home/components/attendance/components/employeeCard.dart';
-import 'package:undo/undo.dart';
-
-import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 
 class AttendanceList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEmployeeList(
       BuildContext context, String criteria) {
-    DataBloc bloc = context.bloc();
+    DataBloc bloc = context.bloc<DataBloc>();
     Stream<List<EmployeesWithAttendance>> watchStream;
 
     if (criteria == 'present')
@@ -64,6 +65,20 @@ class AttendanceList extends StatelessWidget {
         _buildEmployeeList(context, 'present'),
         InfoText('Absent: '),
         _buildEmployeeList(context, 'absent'),
+        Container(
+            alignment: Alignment.bottomCenter,
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            child: CupertinoButton(
+              color: importantConstants.bgGradMid,
+              child: Text('Reset Attendances',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: importantConstants.textLightestColor,
+                    fontWeight: FontWeight.bold,
+                  )),
+              onPressed: () => context.bloc<DataBloc>().clearEvents(),
+            )),
       ],
     );
   }

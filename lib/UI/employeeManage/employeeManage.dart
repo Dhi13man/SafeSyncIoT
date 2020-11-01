@@ -9,7 +9,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 class EmployeeManagement extends StatelessWidget {
   const EmployeeManagement({Key key}) : super(key: key);
-  DataBloc bloc(BuildContext context) => BlocProvider.of<DataBloc>(context);
+  DataBloc bloc(BuildContext context) => context.bloc<DataBloc>();
 
   @override
   Widget build(BuildContext context) {
