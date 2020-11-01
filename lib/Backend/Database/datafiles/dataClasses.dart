@@ -1,6 +1,6 @@
 import 'package:moor/moor.dart';
 
-import 'package:safe_sync/Backend/Database/sharedDatabase.dart';
+import 'package:safe_sync/Backend/Database/Database.dart';
 
 // Bases
 class Employees extends Table {

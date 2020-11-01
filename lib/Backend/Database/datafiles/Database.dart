@@ -3,11 +3,11 @@ import 'package:undo/undo.dart';
 
 import 'dataClasses.dart';
 import 'dbUtils.dart';
-part 'sharedDatabase.g.dart';
+part 'Database.g.dart';
 
 @UseMoor(tables: [Employees, Attendances, Events])
-class SharedDatabase extends _$SharedDatabase {
-  SharedDatabase(QueryExecutor e) : super(e);
+class Database extends _$Database {
+  Database(QueryExecutor e) : super(e);
   final cs = ChangeStack();
 
   @override
