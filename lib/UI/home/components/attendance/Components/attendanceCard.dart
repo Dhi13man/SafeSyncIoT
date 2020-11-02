@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
-class EmployeeCard extends StatelessWidget {
+class AttendanceCard extends StatelessWidget {
   final int attendanceCount, optimumAttendancesNumber = 5;
   final Employee employee;
-  const EmployeeCard({Key key, this.employee, this.attendanceCount})
+  const AttendanceCard({Key key, this.employee, this.attendanceCount})
       : super(key: key);
 
   Icon _getIcon() {
@@ -37,20 +37,14 @@ class EmployeeCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       borderOnForeground: false,
       child: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(flex: 1, child: _getIcon()),
-            Flexible(
-              flex: 5,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  '${employee.name}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
-                ),
+            Container(
+              child: importantConstants.cardText(
+                '${employee.name}',
               ),
             ),
             Flexible(
@@ -60,11 +54,8 @@ class EmployeeCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(3.0),
-                      child: Text(
+                      child: importantConstants.cardSubText(
                         'ID: ${employee.employeeID}',
-                        style: TextStyle(
-                            fontSize: 9,
-                            color: importantConstants.textLighterColor),
                       ),
                     ),
                     Text('$attendanceCount Attendances',

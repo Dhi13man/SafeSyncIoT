@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ImportantConstants {
-  final Color textColor = Colors.black;
-  final Color textLightColor = Color(0xFF535353);
-  final Color bgGradBegin = Colors.purple[900];
-  final Color bgGradMid = Colors.blue[900];
-  final Color bgGradEnd = Colors.red;
-  final Color textLighterColor = Color(0xFFACACAC);
-  final Color textLightestColor = Colors.white;
+  Color get textColor => Colors.black;
+  Color get textLightColor => Color(0xFF535353);
+  Color get bgGradBegin => Colors.purple[900];
+  Color get bgGradMid => Colors.blue[900];
+  Color get bgGradEnd => Colors.red;
+  Color get textLighterColor => Color(0xFFACACAC);
+  Color get textLightestColor => Colors.white;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -15,6 +15,36 @@ class ImportantConstants {
           colors: [bgGradBegin, bgGradMid],
         ),
       );
+
+  Widget cardText(String _text, {TextStyle style}) {
+    style =
+        (style) ?? TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
+
+    return Expanded(
+      flex: 5,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Text(
+          _text,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  Widget cardSubText(String _text, {TextStyle style}) {
+    style = (style) ??
+        TextStyle(fontSize: 9, color: importantConstants.textLighterColor);
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Text(
+        _text,
+        overflow: TextOverflow.ellipsis,
+        style: style,
+      ),
+    );
+  }
 
   final double defaultPadding = 20.0;
 }

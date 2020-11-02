@@ -59,10 +59,11 @@ class EmployeeForm extends StatefulWidget {
 
 class _EmployeeFormState extends State<EmployeeForm> {
   Map<String, TextEditingController> _controlMap;
+  bool _editmode;
 
   final Employee employee;
   _EmployeeFormState({this.employee}) {
-    bool _editmode = employee != null;
+    _editmode = employee != null;
     _controlMap = {
       'id': TextEditingController(text: (_editmode) ? employee.employeeID : ''),
       'name': TextEditingController(text: (_editmode) ? employee.name : ''),
@@ -95,7 +96,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
         name: name,
         deviceID: device,
         phoneNo: int.parse(phone)));
-    if (employee == null) {
+    if (!_editmode) {
       _bloc.createEvent(Event(
           eventTime: DateTime.now(), eventType: 'register', employeeIDA: id));
       _bloc.resetAttendance(id);

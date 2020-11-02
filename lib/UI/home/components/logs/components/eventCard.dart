@@ -42,14 +42,12 @@ class EventCard extends StatelessWidget {
 
   Widget _infoString() {
     if (event.eventType == 'register')
-      return Text(
+      return importantConstants.cardText(
         'ID ${event.employeeIDA} was added',
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       );
     else if (event.eventType == 'attendance')
-      return Text(
+      return importantConstants.cardText(
         'ID ${event.employeeIDA} just sanitized',
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       );
     else if (event.eventType == 'contact')
       return StreamBuilder<EventWithEmployees>(
@@ -63,21 +61,19 @@ class EventCard extends StatelessWidget {
           }
           final EventWithEmployees data = snapshot.data;
           return Container(
-            child: Text(
+            child: importantConstants.cardText(
               '${data.employeeA.name} and ${data.employeeB.name} came into contact!',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
           );
         },
       );
     else if (event.eventType == 'join')
-      return Text(
+      return importantConstants.cardText(
         '${event.employeeIDA} device connected',
         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       );
     else
-      return Text(
+      return importantConstants.cardText(
         'Unknown Event',
         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       );
@@ -96,13 +92,7 @@ class EventCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(flex: 1, child: _getIcon()),
-            Flexible(
-              flex: 10,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: _infoString(),
-              ),
-            ),
+            _infoString(),
             Flexible(
               flex: 2,
               child: Container(

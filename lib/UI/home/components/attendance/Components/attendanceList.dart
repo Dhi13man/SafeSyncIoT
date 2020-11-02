@@ -8,7 +8,7 @@ import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/UI/Home/components/attendance/Components/infoText.dart';
-import 'package:safe_sync/UI/Home/components/attendance/components/employeeCard.dart';
+import 'package:safe_sync/UI/Home/components/attendance/components/attendanceCard.dart';
 
 class AttendanceList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEmployeeList(
@@ -44,7 +44,7 @@ class AttendanceList extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: employeeAttendances.length,
                   itemBuilder: (BuildContext _context, int index) {
-                    return EmployeeCard(
+                    return AttendanceCard(
                       employee: employeeAttendances[index].employee,
                       attendanceCount:
                           employeeAttendances[index].attendance.attendanceCount,

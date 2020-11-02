@@ -21,67 +21,61 @@ class EmployeeCard extends StatelessWidget {
       child: Card(
         elevation: 10,
         shadowColor: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                          ),
-                          child: Text(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          importantConstants.cardText(
                             '${entry.name} ',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: importantConstants.textColor),
                           ),
-                        ),
-                        Text(
-                          'ID: ${entry.employeeID}',
-                          style: TextStyle(
-                              fontSize: 9,
-                              color: importantConstants.textLighterColor),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Contact: ${entry.phoneNo.toString()}',
-                          style: TextStyle(
-                            fontSize: 12,
+                          importantConstants.cardSubText(
+                            'ID: ${entry.employeeID}',
                           ),
-                        ),
-                        Text(
-                          'DeviceID: ${entry.deviceID}',
-                          style: TextStyle(
-                              fontSize: 9,
-                              color: importantConstants.textLighterColor),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          importantConstants.cardText(
+                            'Contact: ${entry.phoneNo.toString()}',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          importantConstants.cardSubText(
+                            'DeviceID: ${entry.deviceID}',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete),
-                color: Colors.red,
-                onPressed: () {
-                  BlocProvider.of<DataBloc>(context).deleteEmployee(entry);
-                },
-              )
-            ],
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  color: Colors.red,
+                  onPressed: () {
+                    BlocProvider.of<DataBloc>(context).deleteEmployee(entry);
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

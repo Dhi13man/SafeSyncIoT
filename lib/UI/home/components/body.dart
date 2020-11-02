@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
@@ -75,6 +78,8 @@ class _HomeBodyState extends State<HomeBody> {
                     // SWIPE TO CHANGE TAP CAPABILITY
                     child: GestureDetector(
                       onHorizontalDragEnd: (details) {
+                        if (kIsWeb) return;
+                        if (!Platform.isAndroid && !Platform.isIOS) return;
                         if (details.primaryVelocity > 0)
                           _openTab((tabID != 0) ? tabID - 1 : tabID);
                         else if (details.primaryVelocity < 0)

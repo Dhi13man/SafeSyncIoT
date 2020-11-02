@@ -11,8 +11,9 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   final Database db;
-  final BehaviorSubject<Employee> _activeCategory =
+  final BehaviorSubject<Employee> _activateEmployee =
       BehaviorSubject.seeded(null);
+  final BehaviorSubject<Event> _activateEvent = BehaviorSubject.seeded(null);
 
   void init() {}
 
@@ -24,7 +25,7 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   void showEmployee(Employee employee) {
-    _activeCategory.add(employee);
+    _activateEmployee.add(employee);
   }
 
   Stream<List<Employee>> showAllEmployees() {
@@ -45,6 +46,11 @@ class DataBloc extends Cubit<ChangeStack> {
   void createEvent(Event event) async {
     await db.createEvent(event);
     emit(db.cs);
+    showEvent(event);
+  }
+
+  void showEvent(Event event) {
+    _activateEvent.add(event);
   }
 
   Stream<List<Event>> showAllEvents() {

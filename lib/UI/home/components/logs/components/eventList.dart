@@ -72,6 +72,6 @@ class EventList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: _buildEventList(context));
+    return _buildEventList(context);
   }
 }
