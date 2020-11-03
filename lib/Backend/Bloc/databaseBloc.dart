@@ -4,19 +4,24 @@ import 'package:undo/undo.dart';
 
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
+import 'package:safe_sync/Backend/Server/server.dart';
 
 class DataBloc extends Cubit<ChangeStack> {
-  DataBloc(this.db) : super(db.cs) {
-    init();
-  }
-
   final Database db;
+  SafeSyncServer server;
+
   final BehaviorSubject<Employee> _activateEmployee =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<Event> _activateEvent = BehaviorSubject.seeded(null);
 
-  void init() {}
+  DataBloc(this.db) : super(db.cs) {
+    server = SafeSyncServer(handleParsedClientRequest);
+  }
 
+  //------------------- SERVER -------------------//
+  void handleParsedClientRequest(Map parsedRequest) {}
+
+  //------------------- DATABASE -------------------//
   // EMPLOYEES ACTIONS
   void createEmployee(Employee employee) async {
     await db.createEmployee(employee);
@@ -90,8 +95,8 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   // Event-Employee Actions
-  Stream<EventWithEmployees> getEmployeesFromEvent(Event _event) {
-    return db.getEmployeeFromEvent(_event).asStream();
+  Future<EventWithEmployees> getEmployeesFromEvent(Event _event) {
+    return db.getEmployeeFromEvent(_event);
   }
 
   //Database manipulation actions

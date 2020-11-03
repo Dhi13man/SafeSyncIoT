@@ -8,9 +8,8 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
-  final Stream associatedEmployees;
-  const EventCard({Key key, this.event, this.associatedEmployees})
-      : super(key: key);
+  final Future<EventWithEmployees> associatedEmployees;
+  EventCard({Key key, this.event, this.associatedEmployees}) : super(key: key);
 
   Icon _getIcon() {
     if (event.eventType == 'register')
@@ -50,8 +49,8 @@ class EventCard extends StatelessWidget {
         'ID ${event.employeeIDA} just sanitized',
       );
     else if (event.eventType == 'contact')
-      return StreamBuilder<EventWithEmployees>(
-        stream: associatedEmployees,
+      return FutureBuilder<EventWithEmployees>(
+        future: associatedEmployees,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Align(
