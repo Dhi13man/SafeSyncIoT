@@ -210,7 +210,7 @@ class $EmployeesTable extends Employees
   @override
   GeneratedTextColumn get name => _name ??= _constructName();
   GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn('name', $tableName, true, maxTextLength: 32);
+    return GeneratedTextColumn('name', $tableName, true, maxTextLength: 100);
   }
 
   final VerificationMeta _phoneNoMeta = const VerificationMeta('phoneNo');
@@ -544,63 +544,70 @@ class $AttendancesTable extends Attendances
 }
 
 class Event extends DataClass implements Insertable<Event> {
+  final String key;
   final DateTime eventTime;
   final String eventType;
-  final String employeeIDA;
-  final String employeeIDB;
+  final String deviceIDA;
+  final String deviceIDB;
   Event(
-      {@required this.eventTime,
+      {@required this.key,
+      @required this.eventTime,
       @required this.eventType,
-      @required this.employeeIDA,
-      this.employeeIDB});
+      @required this.deviceIDA,
+      this.deviceIDB});
   factory Event.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return Event(
+      key: stringType.mapFromDatabaseResponse(data['${effectivePrefix}key']),
       eventTime: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}event_time']),
       eventType: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}event_type']),
-      employeeIDA: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}employee_i_d_a']),
-      employeeIDB: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}employee_i_d_b']),
+      deviceIDA: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}device_i_d_a']),
+      deviceIDB: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}device_i_d_b']),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (!nullToAbsent || key != null) {
+      map['key'] = Variable<String>(key);
+    }
     if (!nullToAbsent || eventTime != null) {
       map['event_time'] = Variable<DateTime>(eventTime);
     }
     if (!nullToAbsent || eventType != null) {
       map['event_type'] = Variable<String>(eventType);
     }
-    if (!nullToAbsent || employeeIDA != null) {
-      map['employee_i_d_a'] = Variable<String>(employeeIDA);
+    if (!nullToAbsent || deviceIDA != null) {
+      map['device_i_d_a'] = Variable<String>(deviceIDA);
     }
-    if (!nullToAbsent || employeeIDB != null) {
-      map['employee_i_d_b'] = Variable<String>(employeeIDB);
+    if (!nullToAbsent || deviceIDB != null) {
+      map['device_i_d_b'] = Variable<String>(deviceIDB);
     }
     return map;
   }
 
   EventsCompanion toCompanion(bool nullToAbsent) {
     return EventsCompanion(
+      key: key == null && nullToAbsent ? const Value.absent() : Value(key),
       eventTime: eventTime == null && nullToAbsent
           ? const Value.absent()
           : Value(eventTime),
       eventType: eventType == null && nullToAbsent
           ? const Value.absent()
           : Value(eventType),
-      employeeIDA: employeeIDA == null && nullToAbsent
+      deviceIDA: deviceIDA == null && nullToAbsent
           ? const Value.absent()
-          : Value(employeeIDA),
-      employeeIDB: employeeIDB == null && nullToAbsent
+          : Value(deviceIDA),
+      deviceIDB: deviceIDB == null && nullToAbsent
           ? const Value.absent()
-          : Value(employeeIDB),
+          : Value(deviceIDB),
     );
   }
 
@@ -608,119 +615,138 @@ class Event extends DataClass implements Insertable<Event> {
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Event(
+      key: serializer.fromJson<String>(json['key']),
       eventTime: serializer.fromJson<DateTime>(json['eventTime']),
       eventType: serializer.fromJson<String>(json['eventType']),
-      employeeIDA: serializer.fromJson<String>(json['employeeIDA']),
-      employeeIDB: serializer.fromJson<String>(json['employeeIDB']),
+      deviceIDA: serializer.fromJson<String>(json['deviceIDA']),
+      deviceIDB: serializer.fromJson<String>(json['deviceIDB']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
       'eventTime': serializer.toJson<DateTime>(eventTime),
       'eventType': serializer.toJson<String>(eventType),
-      'employeeIDA': serializer.toJson<String>(employeeIDA),
-      'employeeIDB': serializer.toJson<String>(employeeIDB),
+      'deviceIDA': serializer.toJson<String>(deviceIDA),
+      'deviceIDB': serializer.toJson<String>(deviceIDB),
     };
   }
 
   Event copyWith(
-          {DateTime eventTime,
+          {String key,
+          DateTime eventTime,
           String eventType,
-          String employeeIDA,
-          String employeeIDB}) =>
+          String deviceIDA,
+          String deviceIDB}) =>
       Event(
+        key: key ?? this.key,
         eventTime: eventTime ?? this.eventTime,
         eventType: eventType ?? this.eventType,
-        employeeIDA: employeeIDA ?? this.employeeIDA,
-        employeeIDB: employeeIDB ?? this.employeeIDB,
+        deviceIDA: deviceIDA ?? this.deviceIDA,
+        deviceIDB: deviceIDB ?? this.deviceIDB,
       );
   @override
   String toString() {
     return (StringBuffer('Event(')
+          ..write('key: $key, ')
           ..write('eventTime: $eventTime, ')
           ..write('eventType: $eventType, ')
-          ..write('employeeIDA: $employeeIDA, ')
-          ..write('employeeIDB: $employeeIDB')
+          ..write('deviceIDA: $deviceIDA, ')
+          ..write('deviceIDB: $deviceIDB')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => $mrjf($mrjc(
-      eventTime.hashCode,
-      $mrjc(eventType.hashCode,
-          $mrjc(employeeIDA.hashCode, employeeIDB.hashCode))));
+      key.hashCode,
+      $mrjc(
+          eventTime.hashCode,
+          $mrjc(eventType.hashCode,
+              $mrjc(deviceIDA.hashCode, deviceIDB.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Event &&
+          other.key == this.key &&
           other.eventTime == this.eventTime &&
           other.eventType == this.eventType &&
-          other.employeeIDA == this.employeeIDA &&
-          other.employeeIDB == this.employeeIDB);
+          other.deviceIDA == this.deviceIDA &&
+          other.deviceIDB == this.deviceIDB);
 }
 
 class EventsCompanion extends UpdateCompanion<Event> {
+  final Value<String> key;
   final Value<DateTime> eventTime;
   final Value<String> eventType;
-  final Value<String> employeeIDA;
-  final Value<String> employeeIDB;
+  final Value<String> deviceIDA;
+  final Value<String> deviceIDB;
   const EventsCompanion({
+    this.key = const Value.absent(),
     this.eventTime = const Value.absent(),
     this.eventType = const Value.absent(),
-    this.employeeIDA = const Value.absent(),
-    this.employeeIDB = const Value.absent(),
+    this.deviceIDA = const Value.absent(),
+    this.deviceIDB = const Value.absent(),
   });
   EventsCompanion.insert({
+    @required String key,
     @required DateTime eventTime,
     this.eventType = const Value.absent(),
-    @required String employeeIDA,
-    this.employeeIDB = const Value.absent(),
-  })  : eventTime = Value(eventTime),
-        employeeIDA = Value(employeeIDA);
+    @required String deviceIDA,
+    this.deviceIDB = const Value.absent(),
+  })  : key = Value(key),
+        eventTime = Value(eventTime),
+        deviceIDA = Value(deviceIDA);
   static Insertable<Event> custom({
+    Expression<String> key,
     Expression<DateTime> eventTime,
     Expression<String> eventType,
-    Expression<String> employeeIDA,
-    Expression<String> employeeIDB,
+    Expression<String> deviceIDA,
+    Expression<String> deviceIDB,
   }) {
     return RawValuesInsertable({
+      if (key != null) 'key': key,
       if (eventTime != null) 'event_time': eventTime,
       if (eventType != null) 'event_type': eventType,
-      if (employeeIDA != null) 'employee_i_d_a': employeeIDA,
-      if (employeeIDB != null) 'employee_i_d_b': employeeIDB,
+      if (deviceIDA != null) 'device_i_d_a': deviceIDA,
+      if (deviceIDB != null) 'device_i_d_b': deviceIDB,
     });
   }
 
   EventsCompanion copyWith(
-      {Value<DateTime> eventTime,
+      {Value<String> key,
+      Value<DateTime> eventTime,
       Value<String> eventType,
-      Value<String> employeeIDA,
-      Value<String> employeeIDB}) {
+      Value<String> deviceIDA,
+      Value<String> deviceIDB}) {
     return EventsCompanion(
+      key: key ?? this.key,
       eventTime: eventTime ?? this.eventTime,
       eventType: eventType ?? this.eventType,
-      employeeIDA: employeeIDA ?? this.employeeIDA,
-      employeeIDB: employeeIDB ?? this.employeeIDB,
+      deviceIDA: deviceIDA ?? this.deviceIDA,
+      deviceIDB: deviceIDB ?? this.deviceIDB,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
     if (eventTime.present) {
       map['event_time'] = Variable<DateTime>(eventTime.value);
     }
     if (eventType.present) {
       map['event_type'] = Variable<String>(eventType.value);
     }
-    if (employeeIDA.present) {
-      map['employee_i_d_a'] = Variable<String>(employeeIDA.value);
+    if (deviceIDA.present) {
+      map['device_i_d_a'] = Variable<String>(deviceIDA.value);
     }
-    if (employeeIDB.present) {
-      map['employee_i_d_b'] = Variable<String>(employeeIDB.value);
+    if (deviceIDB.present) {
+      map['device_i_d_b'] = Variable<String>(deviceIDB.value);
     }
     return map;
   }
@@ -728,10 +754,11 @@ class EventsCompanion extends UpdateCompanion<Event> {
   @override
   String toString() {
     return (StringBuffer('EventsCompanion(')
+          ..write('key: $key, ')
           ..write('eventTime: $eventTime, ')
           ..write('eventType: $eventType, ')
-          ..write('employeeIDA: $employeeIDA, ')
-          ..write('employeeIDB: $employeeIDB')
+          ..write('deviceIDA: $deviceIDA, ')
+          ..write('deviceIDB: $deviceIDB')
           ..write(')'))
         .toString();
   }
@@ -741,6 +768,18 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
   final GeneratedDatabase _db;
   final String _alias;
   $EventsTable(this._db, [this._alias]);
+  final VerificationMeta _keyMeta = const VerificationMeta('key');
+  GeneratedTextColumn _key;
+  @override
+  GeneratedTextColumn get key => _key ??= _constructKey();
+  GeneratedTextColumn _constructKey() {
+    return GeneratedTextColumn(
+      'key',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _eventTimeMeta = const VerificationMeta('eventTime');
   GeneratedDateTimeColumn _eventTime;
   @override
@@ -762,29 +801,25 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
         defaultValue: const Constant('attendance'));
   }
 
-  final VerificationMeta _employeeIDAMeta =
-      const VerificationMeta('employeeIDA');
-  GeneratedTextColumn _employeeIDA;
+  final VerificationMeta _deviceIDAMeta = const VerificationMeta('deviceIDA');
+  GeneratedTextColumn _deviceIDA;
   @override
-  GeneratedTextColumn get employeeIDA =>
-      _employeeIDA ??= _constructEmployeeIDA();
-  GeneratedTextColumn _constructEmployeeIDA() {
+  GeneratedTextColumn get deviceIDA => _deviceIDA ??= _constructDeviceIDA();
+  GeneratedTextColumn _constructDeviceIDA() {
     return GeneratedTextColumn(
-      'employee_i_d_a',
+      'device_i_d_a',
       $tableName,
       false,
     );
   }
 
-  final VerificationMeta _employeeIDBMeta =
-      const VerificationMeta('employeeIDB');
-  GeneratedTextColumn _employeeIDB;
+  final VerificationMeta _deviceIDBMeta = const VerificationMeta('deviceIDB');
+  GeneratedTextColumn _deviceIDB;
   @override
-  GeneratedTextColumn get employeeIDB =>
-      _employeeIDB ??= _constructEmployeeIDB();
-  GeneratedTextColumn _constructEmployeeIDB() {
+  GeneratedTextColumn get deviceIDB => _deviceIDB ??= _constructDeviceIDB();
+  GeneratedTextColumn _constructDeviceIDB() {
     return GeneratedTextColumn(
-      'employee_i_d_b',
+      'device_i_d_b',
       $tableName,
       true,
     );
@@ -792,7 +827,7 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   @override
   List<GeneratedColumn> get $columns =>
-      [eventTime, eventType, employeeIDA, employeeIDB];
+      [key, eventTime, eventType, deviceIDA, deviceIDB];
   @override
   $EventsTable get asDslTable => this;
   @override
@@ -804,6 +839,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+          _keyMeta, key.isAcceptableOrUnknown(data['key'], _keyMeta));
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
     if (data.containsKey('event_time')) {
       context.handle(_eventTimeMeta,
           eventTime.isAcceptableOrUnknown(data['event_time'], _eventTimeMeta));
@@ -814,25 +855,25 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
       context.handle(_eventTypeMeta,
           eventType.isAcceptableOrUnknown(data['event_type'], _eventTypeMeta));
     }
-    if (data.containsKey('employee_i_d_a')) {
+    if (data.containsKey('device_i_d_a')) {
       context.handle(
-          _employeeIDAMeta,
-          employeeIDA.isAcceptableOrUnknown(
-              data['employee_i_d_a'], _employeeIDAMeta));
+          _deviceIDAMeta,
+          deviceIDA.isAcceptableOrUnknown(
+              data['device_i_d_a'], _deviceIDAMeta));
     } else if (isInserting) {
-      context.missing(_employeeIDAMeta);
+      context.missing(_deviceIDAMeta);
     }
-    if (data.containsKey('employee_i_d_b')) {
+    if (data.containsKey('device_i_d_b')) {
       context.handle(
-          _employeeIDBMeta,
-          employeeIDB.isAcceptableOrUnknown(
-              data['employee_i_d_b'], _employeeIDBMeta));
+          _deviceIDBMeta,
+          deviceIDB.isAcceptableOrUnknown(
+              data['device_i_d_b'], _deviceIDBMeta));
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {eventTime};
+  Set<GeneratedColumn> get $primaryKey => {key};
   @override
   Event map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

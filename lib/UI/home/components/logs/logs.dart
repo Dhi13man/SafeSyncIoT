@@ -9,7 +9,6 @@ class RealTimeLogs extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       margin: EdgeInsets.symmetric(
         vertical: 20,
-        horizontal: 20,
       ),
       child: EventList(),
     );

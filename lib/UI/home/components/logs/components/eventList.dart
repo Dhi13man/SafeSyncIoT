@@ -42,10 +42,14 @@ class EventList extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: _events.length,
                       itemBuilder: (BuildContext _context, int index) {
-                        return EventCard(
-                            associatedEmployees:
-                                _bloc.getEmployeesFromEvent(_events[index]),
-                            event: _events[index]);
+                        return FutureBuilder(
+                          future: _bloc.getEmployeesFromEvent(_events[index]),
+                          builder: (_context, snapshot) {
+                            if (!snapshot.hasData)
+                              return CircularProgressIndicator.adaptive();
+                            return EventCard(snapshot.data);
+                          },
+                        );
                       },
                     ),
                   ),

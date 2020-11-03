@@ -44,10 +44,16 @@ class AttendanceList extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: employeeAttendances.length,
                   itemBuilder: (BuildContext _context, int index) {
+                    // Sanitizing Station attendance not needed
+                    if (employeeAttendances[index].employee.deviceID ==
+                        'safesync-iot-sanitize')
+                      return Container(
+                        height: 0,
+                        width: 0,
+                      );
                     return AttendanceCard(
                       employee: employeeAttendances[index].employee,
-                      attendanceCount:
-                          employeeAttendances[index].attendance.attendanceCount,
+                      attendance: employeeAttendances[index].attendance,
                     );
                   },
                 ),

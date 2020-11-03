@@ -1,11 +1,10 @@
 import 'package:moor/moor.dart';
-
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 // Bases
 class Employees extends Table {
   TextColumn get employeeID => text()();
-  TextColumn get name => text().withLength(max: 32).nullable()();
+  TextColumn get name => text().withLength(max: 100).nullable()();
   IntColumn get phoneNo => integer().nullable()();
   TextColumn get deviceID => text().nullable()();
 
@@ -23,15 +22,16 @@ class Attendances extends Table {
 }
 
 class Events extends Table {
+  TextColumn get key => text()();
   DateTimeColumn get eventTime => dateTime()();
-  // Event types: attendance, contact, join, register
+  // Event types: attendance, contact, danger, register
   TextColumn get eventType =>
       text().withDefault(const Constant('attendance'))();
-  TextColumn get employeeIDA => text()();
-  TextColumn get employeeIDB => text().nullable()();
+  TextColumn get deviceIDA => text()();
+  TextColumn get deviceIDB => text().nullable()();
 
   @override
-  Set<Column> get primaryKey => {eventTime};
+  Set<Column> get primaryKey => {key};
 }
 
 // Relational

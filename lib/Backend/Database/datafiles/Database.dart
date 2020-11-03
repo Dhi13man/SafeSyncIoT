@@ -17,6 +17,16 @@ class Database extends _$Database {
   // DATABASE OPERATIONS
   //EMPLOYEES
   Future<List<Employee>> getAllEmployees() => select(employees).get();
+
+  Future<Employee> getEmployeebyID(String id, {String type = 'employee'}) {
+    final query = select(employees);
+    query.where((employees) {
+      if (type.compareTo('device') == 0) return employees.deviceID.equals(id);
+      return employees.employeeID.equals(id);
+    });
+    return query.getSingle();
+  }
+
   Stream<List<Employee>> watchAllEmployees({String orderBy, String mode}) =>
       (select(employees)
             ..orderBy([
@@ -98,13 +108,9 @@ class Database extends _$Database {
 
   // Relational Event-Employee Actions
   Future<EventWithEmployees> getEmployeeFromEvent(Event _event) async {
-    Employee _a = Employee(employeeID: _event.employeeIDA),
-        _b = Employee(employeeID: _event.employeeIDB);
-    final queryEmployeeA = select(employees)..whereSamePrimaryKey(_a);
-    final queryEmployeeB = select(employees)..whereSamePrimaryKey(_b);
-
-    return EventWithEmployees(_event, await queryEmployeeA.getSingle(),
-        await queryEmployeeB.getSingle());
+    Employee _a = await getEmployeebyID(_event.deviceIDA, type: 'device'),
+        _b = await getEmployeebyID(_event.deviceIDB, type: 'device');
+    return EventWithEmployees(_event, _a, _b);
   }
 
   // Dart Employee Handling
@@ -135,20 +141,22 @@ class Database extends _$Database {
         Attendance(employeeID: employeeID, attendanceCount: null);
     _attendance = await (select(attendances)..whereSamePrimaryKey(_attendance))
         .getSingle();
+
+    // HANDLE EMPLOYEE NOT FOUND
+    if (_attendance.attendanceCount == null) return;
     Attendance _newAttendance = Attendance(
         employeeID: employeeID,
-        attendanceCount: _attendance.attendanceCount + 1);
+        attendanceCount: _attendance.attendanceCount + 1,
+        lastAttendance: DateTime.now());
     return updateRow(cs, attendances, _newAttendance);
   }
 
   // Dart Event handling
-  Future<int> createEvent(Event event) {
-    print(event.eventTime);
-    print(event.eventType);
+  Future createEvent(Event _event) async {
     return insertRow(
       cs,
       events,
-      event,
+      _event,
     );
   }
 

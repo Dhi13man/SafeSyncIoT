@@ -6,18 +6,19 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 class AttendanceCard extends StatelessWidget {
-  final int attendanceCount, optimumAttendancesNumber = 5;
+  final int optimumAttendancesNumber = 5;
+  final Attendance attendance;
   final Employee employee;
-  const AttendanceCard({Key key, this.employee, this.attendanceCount})
+  const AttendanceCard({Key key, this.employee, this.attendance})
       : super(key: key);
 
   Icon _getIcon() {
-    if (attendanceCount < 1)
+    if (attendance.attendanceCount < 1)
       return Icon(
         CupertinoIcons.exclamationmark_circle_fill,
         color: Colors.red[900],
       );
-    else if (attendanceCount < optimumAttendancesNumber)
+    else if (attendance.attendanceCount < optimumAttendancesNumber)
       return Icon(
         CupertinoIcons.checkmark_circle_fill,
         color: Colors.green,
@@ -58,11 +59,14 @@ class AttendanceCard extends StatelessWidget {
                         'ID: ${employee.employeeID}',
                       ),
                     ),
-                    Text('$attendanceCount Attendances',
+                    importantConstants.cardSubText(
+                        '${attendance.attendanceCount} Attendances',
                         style: TextStyle(
                             fontSize: (kIsWeb) ? 10 : 7,
                             fontWeight: FontWeight.w600,
                             color: Colors.blue[900])),
+                    importantConstants
+                        .cardSubText('Last: ${attendance.lastAttendance}')
                   ],
                 ),
               ),

@@ -19,12 +19,43 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   //------------------- SERVER -------------------//
-  void handleParsedClientRequest(Map parsedRequest) {}
+  void handleParsedClientRequest(Map parsedRequest) {
+    // As IoT device waits 15 seconds before making request, we make it up.
+    DateTime _current = DateTime.now();
+    _current.subtract(Duration(seconds: 18));
+    if (parsedRequest['selfID'] == 'safesync-iot-sanitize') {
+      giveAttendance(parsedRequest['contactDeviceID']);
+      createEvent(Event(
+          key: _current.toString() + parsedRequest['selfID'],
+          deviceIDA: parsedRequest['selfID'],
+          eventType: 'attendance',
+          eventTime: _current));
+    } else {
+      createEvent(Event(
+          key: _current.toString() + parsedRequest['selfID'],
+          deviceIDA: parsedRequest['selfID'],
+          deviceIDB: parsedRequest['contactDeviceID'],
+          eventType: parsedRequest['type'],
+          eventTime: _current));
+    }
+  }
 
   //------------------- DATABASE -------------------//
   // EMPLOYEES ACTIONS
+  void resetSanitizingStation() async {
+    Employee _station = Employee(
+        employeeID: 'safesync-iot-sanitize',
+        name: 'Sanitizing Station (unmodifiable)',
+        deviceID: 'safesync-iot-sanitize',
+        phoneNo: 0);
+    await db.removeEmployeeSQL(_station);
+    await db.createEmployee(_station);
+  }
+
   void createEmployee(Employee employee) async {
     await db.createEmployee(employee);
+    // SANITIZING STATION WILL ALWAYS EXIST
+    resetSanitizingStation();
     emit(db.cs);
     showEmployee(employee);
   }
@@ -38,12 +69,18 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   void updateEmployee(Employee employee) async {
-    db.updateEmployee(employee);
+    await db.updateEmployee(employee);
+    // SANITIZING STATION WILL ALWYS EXIST
+    resetSanitizingStation();
+
     emit(db.cs);
   }
 
   void deleteEmployee(Employee employee) async {
     db.deleteEmployee(employee);
+    // SANITIZING STATION WILL ALWYS EXIST
+    resetSanitizingStation();
+
     emit(db.cs);
   }
 

@@ -16,7 +16,9 @@ class EmployeeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/employeeManage/add', arguments: entry);
+        if (entry.deviceID !=
+            'safesync-iot-sanitize') // Can't modify Sanitizing Station
+          Navigator.pushNamed(context, '/employeeManage/add', arguments: entry);
       },
       child: Card(
         elevation: 10,

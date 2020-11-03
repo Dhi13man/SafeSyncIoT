@@ -97,8 +97,14 @@ class _EmployeeFormState extends State<EmployeeForm> {
         deviceID: device,
         phoneNo: int.parse(phone)));
     if (!_editmode) {
-      _bloc.createEvent(Event(
-          eventTime: DateTime.now(), eventType: 'register', employeeIDA: id));
+      DateTime _current = DateTime.now();
+      Event _event = Event(
+        key: _current.toString() + device,
+        eventTime: _current,
+        eventType: 'register',
+        deviceIDA: device,
+      );
+      _bloc.createEvent(_event);
       _bloc.resetAttendance(id);
     }
     Navigator.of(context).pop();
@@ -108,63 +114,66 @@ class _EmployeeFormState extends State<EmployeeForm> {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            Center(
-              child: Text(
-                'Employee Details',
-                style: Theme.of(context).textTheme.headline6,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Employee Details',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
               ),
-            ),
-            TextField(
-              controller: _controlMap['id'],
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Employee ID',
+              TextField(
+                controller: _controlMap['id'],
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'Employee ID',
+                ),
               ),
-            ),
-            TextField(
-              controller: _controlMap['name'],
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Employee Name',
+              TextField(
+                controller: _controlMap['name'],
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'Employee Name',
+                ),
               ),
-            ),
-            TextField(
-              controller: _controlMap['phone'],
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Phone No.',
+              TextField(
+                controller: _controlMap['phone'],
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'Phone No.',
+                ),
               ),
-            ),
-            TextField(
-              controller: _controlMap['device'],
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Provided Device ID',
+              TextField(
+                controller: _controlMap['device'],
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'Provided Device ID',
+                ),
               ),
-            ),
-            Container(
-                alignment: Alignment.bottomCenter,
-                height: 50,
-                margin: EdgeInsets.symmetric(vertical: 40),
-                width: _width,
-                child: CupertinoButton(
-                  color: importantConstants.bgGradMid,
-                  child:
-                      Text((employee == null) ? 'Add Employee' : 'Update Info',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: importantConstants.textLightestColor,
-                            fontWeight: FontWeight.bold,
-                          )),
-                  onPressed: () {
-                    _insertToDatabase(context);
-                  },
-                )),
-          ],
+              Container(
+                  alignment: Alignment.bottomCenter,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  width: _width,
+                  child: CupertinoButton(
+                    color: importantConstants.bgGradMid,
+                    child: Text(
+                        (employee == null) ? 'Add Employee' : 'Update Info',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: importantConstants.textLightestColor,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    onPressed: () {
+                      _insertToDatabase(context);
+                    },
+                  )),
+            ],
+          ),
         ),
       ),
     );

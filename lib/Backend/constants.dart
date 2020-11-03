@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ImportantConstants {
@@ -34,7 +35,9 @@ class ImportantConstants {
 
   Widget cardSubText(String _text, {TextStyle style}) {
     style = (style) ??
-        TextStyle(fontSize: 9, color: importantConstants.textLighterColor);
+        TextStyle(
+            fontSize: (kIsWeb) ? 9 : 6,
+            color: importantConstants.textLighterColor);
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

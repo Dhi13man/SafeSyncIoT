@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http_server/http_server.dart';
 
 class SafeSyncServer {
   HttpServer server;
-  final Function sendParsedRequest;
+  List<String> _lastResponses = new List<String>(2); // Handle repetitions
+  final Function(Map) sendParsedRequest;
 
   SafeSyncServer(this.sendParsedRequest) {
     initServer();
@@ -11,7 +13,7 @@ class SafeSyncServer {
 
   void initServer() async {
     server = await HttpServer.bind(
-      InternetAddress.loopbackIPv4,
+      InternetAddress.anyIPv6,
       4041,
     );
 
@@ -19,7 +21,9 @@ class SafeSyncServer {
       try {
         if (request.method == 'POST') {
           _handleDataPosted(request);
-        } else {}
+        } else if (request.method == 'GET') {
+          print('GET REQUEST RECIEVED. NOT IMPLEMENTED');
+        }
       } catch (e) {
         print('Exception in handleRequest: $e');
       }
@@ -29,17 +33,24 @@ class SafeSyncServer {
   void _handleDataPosted(HttpRequest request) async {
     ContentType contentType = request.headers.contentType;
     HttpResponse response = request.response;
-
     if (contentType?.mimeType == 'application/json' /*1*/) {
       try {
         String content = await utf8.decoder.bind(request).join(); /*2*/
         Map data = jsonDecode(content) as Map; /*3*/
-        print(data);
-        sendParsedRequest(data);
+
+        bool responseHandledAlready = false;
+
+        for (String _response in _lastResponses)
+          if (_response.toString() == _response) responseHandledAlready = true;
+        if (!responseHandledAlready) sendParsedRequest(data);
+        _lastResponses[0] = _lastResponses[1];
+        _lastResponses[1] = response.toString();
 
         request.response
           ..statusCode = HttpStatus.ok
           ..write('Request Handled.');
+
+        sendParsedRequest(data);
       } catch (e) {
         response
           ..statusCode = HttpStatus.internalServerError

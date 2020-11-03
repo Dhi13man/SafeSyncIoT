@@ -4,33 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
-import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
-
 class EventCard extends StatelessWidget {
-  final Event event;
-  final Future<EventWithEmployees> associatedEmployees;
-  EventCard({Key key, this.event, this.associatedEmployees}) : super(key: key);
+  final EventWithEmployees _eventAndEmployees;
+  EventCard(this._eventAndEmployees, {Key key}) : super(key: key);
 
   Icon _getIcon() {
-    if (event.eventType == 'register')
+    if (_eventAndEmployees.event.eventType == 'register')
       return Icon(
         CupertinoIcons.person_add_solid,
         color: Colors.blue[900],
       );
-    else if (event.eventType == 'attendance')
+    else if (_eventAndEmployees.event.eventType == 'attendance')
       return Icon(
         CupertinoIcons.checkmark_circle_fill,
         color: Colors.green,
       );
-    else if (event.eventType == 'contact')
+    else if (_eventAndEmployees.event.eventType == 'contact')
+      return Icon(
+        Icons.group,
+        color: Colors.yellow,
+      );
+    else if (_eventAndEmployees.event.eventType == 'danger')
       return Icon(
         Icons.warning_amber_outlined,
         color: Colors.red[900],
-      );
-    else if (event.eventType == 'join')
-      return Icon(
-        Icons.plus_one,
-        color: Colors.yellow,
       );
     else
       return Icon(
@@ -40,36 +37,25 @@ class EventCard extends StatelessWidget {
   }
 
   Widget _infoString() {
-    if (event.eventType == 'register')
+    if (_eventAndEmployees.event.eventType == 'register')
       return importantConstants.cardText(
-        'ID ${event.employeeIDA} was added',
+        '${_eventAndEmployees.employeeA.name} was added',
       );
-    else if (event.eventType == 'attendance')
+    else if (_eventAndEmployees.event.eventType == 'attendance')
       return importantConstants.cardText(
-        'ID ${event.employeeIDA} just sanitized',
+        '${_eventAndEmployees.employeeA.name} just sanitized',
       );
-    else if (event.eventType == 'contact')
-      return FutureBuilder<EventWithEmployees>(
-        future: associatedEmployees,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            );
-          }
-          final EventWithEmployees data = snapshot.data;
-          return Container(
-            child: importantConstants.cardText(
-              '${data.employeeA.name} and ${data.employeeB.name} came into contact!',
-            ),
-          );
-        },
+    else if (_eventAndEmployees.event.eventType == 'contact')
+      return Container(
+        child: importantConstants.cardText(
+          '${_eventAndEmployees.employeeA.name} and ${_eventAndEmployees.employeeB.name} came into contact!',
+        ),
       );
-    else if (event.eventType == 'join')
-      return importantConstants.cardText(
-        '${event.employeeIDA} device connected',
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+    else if (_eventAndEmployees.event.eventType == 'danger')
+      return Container(
+        child: importantConstants.cardText(
+          '${_eventAndEmployees.employeeA.name} and ${_eventAndEmployees.employeeB.name} were in contact for too long!',
+        ),
       );
     else
       return importantConstants.cardText(
@@ -82,7 +68,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shadowColor: _getIcon().color,
-      elevation: 10,
+      elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       borderOnForeground: false,
       child: Container(
@@ -95,7 +81,7 @@ class EventCard extends StatelessWidget {
             Flexible(
               flex: 2,
               child: Container(
-                child: Text('${event.eventTime}',
+                child: Text('${_eventAndEmployees.event.eventTime}',
                     style: TextStyle(
                         fontSize: (kIsWeb) ? 9 : 5.5,
                         fontWeight: FontWeight.w600,
