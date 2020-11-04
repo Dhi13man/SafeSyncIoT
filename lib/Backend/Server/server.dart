@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http_server/http_server.dart';
 
 class SafeSyncServer {
   HttpServer server;

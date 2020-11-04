@@ -16,7 +16,21 @@ class Database extends _$Database {
 
   // DATABASE OPERATIONS
   //EMPLOYEES
-  Future<List<Employee>> getAllEmployees() => select(employees).get();
+  Future<List<Employee>> getAllEmployees(
+          {String orderBy = 'asce', String mode = 'name'}) =>
+      (select(employees)
+            ..orderBy([
+              (u) {
+                GeneratedTextColumn criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'id') criteria = employees.employeeID;
+                if (orderBy == 'name') criteria = employees.name;
+                if (orderBy == 'device') criteria = employees.deviceID;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
+          .get();
 
   Future<Employee> getEmployeebyID(String id, {String type = 'employee'}) {
     final query = select(employees);
@@ -27,7 +41,8 @@ class Database extends _$Database {
     return query.getSingle();
   }
 
-  Stream<List<Employee>> watchAllEmployees({String orderBy, String mode}) =>
+  Stream<List<Employee>> watchAllEmployees(
+          {String orderBy = 'asce', String mode = 'name'}) =>
       (select(employees)
             ..orderBy([
               (u) {

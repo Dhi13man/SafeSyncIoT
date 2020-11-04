@@ -81,12 +81,21 @@ class _EmployeeFormState extends State<EmployeeForm> {
 
     DataBloc _bloc = context.bloc<DataBloc>();
 
-    _bloc.createEmployee(Employee(
-        employeeID: id,
-        name: name,
-        deviceID: device,
-        phoneNo: int.parse(phone)));
-    if (!_editmode) {
+    if (_editmode)
+      _bloc.updateEmployee(Employee(
+          employeeID: id,
+          name: name,
+          deviceID: device,
+          phoneNo: int.parse(phone)));
+    else {
+      // ADD NEW EMPLOYEE
+      _bloc.createEmployee(Employee(
+          employeeID: id,
+          name: name,
+          deviceID: device,
+          phoneNo: int.parse(phone)));
+
+      // ADD EVENT THAT NEW EMPLOYEE WAS ADDED
       DateTime _current = DateTime.now();
       Event _event = Event(
         key: _current.toString() + device,
@@ -95,7 +104,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
         deviceIDA: device,
       );
       _bloc.createEvent(_event);
-      _bloc.resetAttendance(id);
+      _bloc.resetAttendance(id); // SET ATTENDANCE TO ZERO FOR THIS EMPLOYEE
     }
     Navigator.of(context).pop();
   }

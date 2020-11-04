@@ -56,6 +56,8 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   void createEmployee(Employee employee) async {
+    // SANITIZING STATION WILL ALWAYS EXIST
+    resetSanitizingStation();
     await db.createEmployee(employee);
     // SANITIZING STATION WILL ALWAYS EXIST
     resetSanitizingStation();
@@ -67,13 +69,14 @@ class DataBloc extends Cubit<ChangeStack> {
     _activateEmployee.add(employee);
   }
 
-  Stream<List<Employee>> showAllEmployees() {
-    return db.watchAllEmployees();
+  Stream<List<Employee>> showAllEmployees(
+      {String orderBy = 'asce', String mode = 'name'}) {
+    return db.watchAllEmployees(orderBy: orderBy, mode: mode);
   }
 
   void updateEmployee(Employee employee) async {
     await db.updateEmployee(employee);
-    // SANITIZING STATION WILL ALWYS EXIST
+    // SANITIZING STATION WILL ALWAYS EXIST
     resetSanitizingStation();
 
     emit(db.cs);
@@ -137,6 +140,22 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   //Database manipulation actions
+  Future<int> exportDatabase(
+      {bool getEmployees = true,
+      bool getAttendances = true,
+      bool getEvents = true}) async {
+    if (getEmployees) {
+      //List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+    }
+    if (getAttendances) {
+      // List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+    }
+    if (getEvents) {
+      //List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+    }
+    return 0;
+  }
+
   bool get canUndo => db.cs.canUndo;
   void undo() async {
     await db.cs.undo();

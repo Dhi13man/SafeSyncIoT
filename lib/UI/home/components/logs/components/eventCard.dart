@@ -36,26 +36,88 @@ class EventCard extends StatelessWidget {
       );
   }
 
-  Widget _infoString() {
+  Widget _infoString(BuildContext context) {
     if (_eventAndEmployees.event.eventType == 'register')
-      return importantConstants.cardText(
-        '${_eventAndEmployees.employeeA.name} was added',
+      return GestureDetector(
+        onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+            arguments: _eventAndEmployees.employeeA),
+        child: importantConstants.cardText(
+          '${_eventAndEmployees.employeeA.name} was added',
+        ),
       );
     else if (_eventAndEmployees.event.eventType == 'attendance')
-      return importantConstants.cardText(
-        '${_eventAndEmployees.employeeA.name} just sanitized',
+      return GestureDetector(
+        onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+            arguments: _eventAndEmployees.employeeA),
+        child: importantConstants.cardText(
+          '${_eventAndEmployees.employeeA.name} just sanitized',
+        ),
       );
     else if (_eventAndEmployees.event.eventType == 'contact')
-      return Container(
-        child: importantConstants.cardText(
-          '${_eventAndEmployees.employeeA.name} and ${_eventAndEmployees.employeeB.name} came into contact!',
-        ),
+      return Row(
+        children: [
+          Container(
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+                  arguments: _eventAndEmployees.employeeA),
+              child: importantConstants.cardText(
+                '${_eventAndEmployees.employeeA.name} ',
+              ),
+            ),
+          ),
+          Container(
+            child: importantConstants.cardText(
+              'and',
+            ),
+          ),
+          Container(
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+                  arguments: _eventAndEmployees.employeeA),
+              child: importantConstants.cardText(
+                ' ${_eventAndEmployees.employeeB.name} ',
+              ),
+            ),
+          ),
+          Container(
+            child: importantConstants.cardText(
+              'came into contact!',
+            ),
+          ),
+        ],
       );
     else if (_eventAndEmployees.event.eventType == 'danger')
-      return Container(
-        child: importantConstants.cardText(
-          '${_eventAndEmployees.employeeA.name} and ${_eventAndEmployees.employeeB.name} were in contact for too long!',
-        ),
+      return Row(
+        children: [
+          Container(
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+                  arguments: _eventAndEmployees.employeeA),
+              child: importantConstants.cardText(
+                '${_eventAndEmployees.employeeA.name} ',
+              ),
+            ),
+          ),
+          Container(
+            child: importantConstants.cardText(
+              'and',
+            ),
+          ),
+          Container(
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
+                  arguments: _eventAndEmployees.employeeA),
+              child: importantConstants.cardText(
+                ' ${_eventAndEmployees.employeeB.name} ',
+              ),
+            ),
+          ),
+          Container(
+            child: importantConstants.cardText(
+              'were in contact for too long!',
+            ),
+          ),
+        ],
       );
     else
       return importantConstants.cardText(
@@ -77,7 +139,7 @@ class EventCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(flex: 1, child: _getIcon()),
-            _infoString(),
+            _infoString(context),
             Flexible(
               flex: 2,
               child: Container(
