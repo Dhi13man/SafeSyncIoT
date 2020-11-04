@@ -15,7 +15,7 @@ class EmployeeAdd extends StatelessWidget {
     Employee employee = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title:
+        title: // Changes based on whether Adding new or editing.
             Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
@@ -29,18 +29,8 @@ class EmployeeAdd extends StatelessWidget {
         decoration: importantConstants.bgGradDecoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(60),
-          child: Container(
-            height: _dimensions.height,
-            margin: EdgeInsets.all(importantConstants.defaultPadding),
-            padding: EdgeInsets.symmetric(vertical: 50),
-            decoration: BoxDecoration(
-              color: importantConstants.textLightestColor,
-              border: Border.all(
-                  color: Colors.black, style: BorderStyle.solid, width: 1),
-            ),
-            child: EmployeeForm(
-              employee: employee,
-            ),
+          child: EmployeeForm(
+            employee: employee,
           ),
         ),
       ),
@@ -116,7 +106,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
     return Dialog(
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(20),
           child: Column(
             children: [
               Center(

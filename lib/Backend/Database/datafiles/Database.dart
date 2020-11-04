@@ -137,13 +137,12 @@ class Database extends _$Database {
   }
 
   Future giveAttendance(String employeeID) async {
-    Attendance _attendance =
-        Attendance(employeeID: employeeID, attendanceCount: null);
-    _attendance = await (select(attendances)..whereSamePrimaryKey(_attendance))
-        .getSingle();
+    final query = select(attendances);
+    query.where((attendences) => attendances.employeeID.equals(employeeID));
+    Attendance _attendance = await query.getSingle();
 
     // HANDLE EMPLOYEE NOT FOUND
-    if (_attendance.attendanceCount == null) return;
+    if (_attendance == null) return;
     Attendance _newAttendance = Attendance(
         employeeID: employeeID,
         attendanceCount: _attendance.attendanceCount + 1,
@@ -170,6 +169,18 @@ class Database extends _$Database {
 
   Future clearEvents() async {
     return delete(events).go();
+  }
+
+  // OVERALL DATABASE ACTIONS
+  Future<Map<String, List<DataClass>>> getAllTables() async {
+    List<Employee> _employees = await getAllEmployees();
+    List<Attendance> _attendances = await getAllAttendances();
+    List<Event> _events = await getAllEvents();
+    return {
+      'employees': _employees,
+      'attendances': _attendances,
+      'events': _events
+    };
   }
 
   Future deleteTables() async {

@@ -73,8 +73,7 @@ class EmployeeManagement extends StatelessWidget {
           ),
           backgroundColor: Colors.black,
           splashColor: Colors.yellow,
-          onPressed: () =>
-              {Navigator.pushNamed(context, '/employeeManage/add')},
+          onPressed: () => Navigator.pushNamed(context, '/employeeManage/add'),
           tooltip: 'Add Employee',
         ),
       ),

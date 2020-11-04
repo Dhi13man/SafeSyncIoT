@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImportantConstants {
@@ -9,6 +9,7 @@ class ImportantConstants {
   Color get bgGradEnd => Colors.red;
   Color get textLighterColor => Color(0xFFACACAC);
   Color get textLightestColor => Colors.white;
+  bool get onSmallerScreen => Platform.isIOS || Platform.isAndroid;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -36,7 +37,7 @@ class ImportantConstants {
   Widget cardSubText(String _text, {TextStyle style}) {
     style = (style) ??
         TextStyle(
-            fontSize: (kIsWeb) ? 9 : 6,
+            fontSize: (onSmallerScreen) ? 6 : 9,
             color: importantConstants.textLighterColor);
 
     return SingleChildScrollView(

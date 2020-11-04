@@ -1,50 +1,34 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sqlite3/open.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'plugins/desktop/desktop.dart';
 import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart' as data;
 import 'package:safe_sync/Backend/Database/shared.dart';
-import 'plugins/desktop/desktop.dart';
 
 import 'package:safe_sync/UI/ContactPage/contactPage.dart';
 import 'package:safe_sync/UI/EmployeeManage/components/employeeAdd.dart';
 import 'package:safe_sync/UI/EmployeeManage/employeeManage.dart';
 import 'package:safe_sync/UI/home/home.dart';
 
-// For Database on Linux
-DynamicLibrary _openOnLinux() {
-  final script = File(Platform.script.toFilePath());
-  print(script.path);
-  final libraryNextToScript = File('${script.path}/sqlite3.so');
-  return DynamicLibrary.open(libraryNextToScript.path);
-}
-
-// For Database on Windows
-DynamicLibrary _openOnWindows() {
-  final script = File(Platform.script.toFilePath());
-  final libraryNextToScript = File('${script.path}/sqlite3.dll');
-  return DynamicLibrary.open(libraryNextToScript.path);
-}
-
-Future main() async {
+void setUpDatabaseForDesktop() {
   WidgetsFlutterBinding.ensureInitialized();
   setTargetPlatformForDesktop();
-  open.overrideFor(OperatingSystem.linux, _openOnLinux);
-  open.overrideFor(OperatingSystem.windows, _openOnWindows);
 
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     // Change the default factory
     databaseFactory = databaseFactoryFfi;
   }
+}
 
+Future main() async {
+  setUpDatabaseForDesktop();
   runApp(SafeSyncApp());
 }
 

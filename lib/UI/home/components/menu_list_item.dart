@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
@@ -18,7 +17,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _infosize = (kIsWeb) ? 15 : 11;
+    double _infosize = (importantConstants.onSmallerScreen) ? 11 : 15;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.25),
       child: GestureDetector(
