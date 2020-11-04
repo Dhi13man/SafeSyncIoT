@@ -9,6 +9,7 @@ import 'package:safe_sync/Backend/Server/server.dart';
 class DataBloc extends Cubit<ChangeStack> {
   final Database db;
   SafeSyncServer server;
+  int c = 0;
 
   final BehaviorSubject<Employee> _activateEmployee =
       BehaviorSubject.seeded(null);
