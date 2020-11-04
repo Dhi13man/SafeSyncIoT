@@ -158,6 +158,7 @@ class Database extends _$Database {
 
     // HANDLE EMPLOYEE NOT FOUND
     if (_attendance == null) return;
+
     Attendance _newAttendance = Attendance(
         employeeID: employeeID,
         attendanceCount: _attendance.attendanceCount + 1,

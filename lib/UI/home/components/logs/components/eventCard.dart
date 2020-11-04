@@ -37,87 +37,32 @@ class EventCard extends StatelessWidget {
   }
 
   Widget _infoString(BuildContext context) {
+    String _nameA, _nameB;
+    // Handle bad info in database
+    if (_eventAndEmployees.employeeA == null)
+      _nameA = '{device_id_A not found in employee database}';
+    else
+      _nameA = _eventAndEmployees.employeeA.name;
+    if (_eventAndEmployees.employeeB == null)
+      _nameB = '{device_id_B not found in employee database}';
+    else
+      _nameB = _eventAndEmployees.employeeB.name;
+
     if (_eventAndEmployees.event.eventType == 'register')
-      return GestureDetector(
-        onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-            arguments: _eventAndEmployees.employeeA),
-        child: importantConstants.cardText(
-          '${_eventAndEmployees.employeeA.name} was added',
-        ),
+      return importantConstants.cardText(
+        '$_nameA was added',
       );
     else if (_eventAndEmployees.event.eventType == 'attendance')
-      return GestureDetector(
-        onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-            arguments: _eventAndEmployees.employeeA),
-        child: importantConstants.cardText(
-          '${_eventAndEmployees.employeeA.name} just sanitized',
-        ),
+      return importantConstants.cardText(
+        '$_nameA sanitized!',
       );
     else if (_eventAndEmployees.event.eventType == 'contact')
-      return Row(
-        children: [
-          Container(
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-                  arguments: _eventAndEmployees.employeeA),
-              child: importantConstants.cardText(
-                '${_eventAndEmployees.employeeA.name} ',
-              ),
-            ),
-          ),
-          Container(
-            child: importantConstants.cardText(
-              'and',
-            ),
-          ),
-          Container(
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-                  arguments: _eventAndEmployees.employeeA),
-              child: importantConstants.cardText(
-                ' ${_eventAndEmployees.employeeB.name} ',
-              ),
-            ),
-          ),
-          Container(
-            child: importantConstants.cardText(
-              'came into contact!',
-            ),
-          ),
-        ],
+      return importantConstants.cardText(
+        '$_nameA and $_nameB came into contact!',
       );
     else if (_eventAndEmployees.event.eventType == 'danger')
-      return Row(
-        children: [
-          Container(
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-                  arguments: _eventAndEmployees.employeeA),
-              child: importantConstants.cardText(
-                '${_eventAndEmployees.employeeA.name} ',
-              ),
-            ),
-          ),
-          Container(
-            child: importantConstants.cardText(
-              'and',
-            ),
-          ),
-          Container(
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-                  arguments: _eventAndEmployees.employeeA),
-              child: importantConstants.cardText(
-                ' ${_eventAndEmployees.employeeB.name} ',
-              ),
-            ),
-          ),
-          Container(
-            child: importantConstants.cardText(
-              'were in contact for too long!',
-            ),
-          ),
-        ],
+      return importantConstants.cardText(
+        '$_nameA and $_nameB were in contact for too long!',
       );
     else
       return importantConstants.cardText(
@@ -128,30 +73,42 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: _getIcon().color,
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      borderOnForeground: false,
-      child: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(flex: 1, child: _getIcon()),
-            _infoString(context),
-            Flexible(
-              flex: 2,
-              child: Container(
-                child: Text('${_eventAndEmployees.event.eventTime}',
-                    style: TextStyle(
-                        fontSize:
-                            (importantConstants.onSmallerScreen) ? 5.5 : 9,
-                        fontWeight: FontWeight.w600,
-                        color: importantConstants.textLighterColor)),
+    return GestureDetector(
+      onTap: () {
+        if (_eventAndEmployees.employeeA != null)
+          Navigator.pushNamed(context, '/employeeManage/add',
+              arguments: _eventAndEmployees.employeeA);
+      },
+      onDoubleTap: () {
+        if (_eventAndEmployees.employeeB != null)
+          Navigator.pushNamed(context, '/employeeManage/add',
+              arguments: _eventAndEmployees.employeeB);
+      },
+      child: Card(
+        shadowColor: _getIcon().color,
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        borderOnForeground: false,
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(flex: 1, child: _getIcon()),
+              _infoString(context),
+              Flexible(
+                flex: 2,
+                child: Container(
+                  child: Text('${_eventAndEmployees.event.eventTime}',
+                      style: TextStyle(
+                          fontSize:
+                              (importantConstants.onSmallerScreen) ? 5.5 : 9,
+                          fontWeight: FontWeight.w600,
+                          color: importantConstants.textLighterColor)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

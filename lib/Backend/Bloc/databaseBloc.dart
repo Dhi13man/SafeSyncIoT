@@ -22,7 +22,7 @@ class DataBloc extends Cubit<ChangeStack> {
   void handleParsedClientRequest(Map parsedRequest) {
     // As IoT device waits 15 seconds before making request, we make it up.
     DateTime _current = DateTime.now();
-    _current.subtract(Duration(seconds: 18));
+    _current.subtract(Duration(seconds: 15));
 
     // Don't need to register contact with Sanitizing station
     if (parsedRequest['contactDeviceID'] == 'safesync-iot-sanitize') return;
@@ -91,7 +91,6 @@ class DataBloc extends Cubit<ChangeStack> {
   void createEvent(Event event) async {
     await db.createEvent(event);
     emit(db.cs);
-    showEvent(event);
   }
 
   void showEvent(Event event) {
