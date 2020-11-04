@@ -34,7 +34,6 @@ dependencies:
 
   # DATABASE
   sqlite3_flutter_libs: ^0.2.0
-  moor_flutter: ^3.1.0
   moor_db_viewer: ^2.0.3
 
   # Mobile Path finding
@@ -53,6 +52,7 @@ dev_dependencies:
   moor_generator: ^3.4.0
   build_runner: ^1.10.4
   build_web_compilers: ^2.13.0
+  sqflite_common_ffi: ^1.1.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

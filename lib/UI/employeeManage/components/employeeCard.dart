@@ -69,13 +69,16 @@ class EmployeeCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  color: Colors.red,
-                  onPressed: () {
-                    BlocProvider.of<DataBloc>(context).deleteEmployee(entry);
-                  },
-                )
+                (entry.deviceID != 'safesync-iot-sanitize')
+                    ? IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: Colors.red,
+                        onPressed: () {
+                          BlocProvider.of<DataBloc>(context)
+                              .deleteEmployee(entry);
+                        },
+                      )
+                    : Container(), // NO DELETE BUTTON FOR SANITIZING STATION
               ],
             ),
           ),

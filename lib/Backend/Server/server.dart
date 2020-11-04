@@ -14,7 +14,7 @@ class SafeSyncServer {
   void initServer() async {
     server = await HttpServer.bind(
       InternetAddress.anyIPv6,
-      4041,
+      8989,
     );
 
     await for (var request in server) {
@@ -39,9 +39,9 @@ class SafeSyncServer {
         Map data = jsonDecode(content) as Map; /*3*/
 
         bool responseHandledAlready = false;
-
         for (String _response in _lastResponses)
-          if (_response.toString() == _response) responseHandledAlready = true;
+          if (response.toString() == _response) responseHandledAlready = true;
+
         if (!responseHandledAlready) sendParsedRequest(data);
         _lastResponses[0] = _lastResponses[1];
         _lastResponses[1] = response.toString();

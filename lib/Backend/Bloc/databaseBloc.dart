@@ -23,6 +23,9 @@ class DataBloc extends Cubit<ChangeStack> {
     // As IoT device waits 15 seconds before making request, we make it up.
     DateTime _current = DateTime.now();
     _current.subtract(Duration(seconds: 18));
+
+    // Don't need to register contact with Sanitizing station
+    if (parsedRequest['contactDeviceID'] == 'safesync-iot-sanitize') return;
     if (parsedRequest['selfID'] == 'safesync-iot-sanitize') {
       giveAttendance(parsedRequest['contactDeviceID']);
       createEvent(Event(
@@ -78,9 +81,6 @@ class DataBloc extends Cubit<ChangeStack> {
 
   void deleteEmployee(Employee employee) async {
     db.deleteEmployee(employee);
-    // SANITIZING STATION WILL ALWYS EXIST
-    resetSanitizingStation();
-
     emit(db.cs);
   }
 
