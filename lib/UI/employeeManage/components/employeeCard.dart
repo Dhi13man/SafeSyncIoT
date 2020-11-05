@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 import 'package:safe_sync/Backend/constants.dart';

@@ -7,7 +7,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'plugins/desktop/desktop.dart';
-import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart' as data;
 import 'package:safe_sync/Backend/Database/shared.dart';
 

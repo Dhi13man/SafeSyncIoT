@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:undo/undo.dart';
 
-import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 
 import 'package:safe_sync/Backend/constants.dart';

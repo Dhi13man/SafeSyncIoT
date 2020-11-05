@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 import 'package:undo/undo.dart';
 
-import 'package:safe_sync/Backend/Bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 import 'package:safe_sync/Backend/constants.dart';
