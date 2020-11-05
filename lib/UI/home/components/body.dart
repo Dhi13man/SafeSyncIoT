@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
@@ -153,6 +154,28 @@ class DatabaseExtractButton extends StatelessWidget {
   final DataBloc bloc;
   final String type;
 
+  _showAlert(BuildContext context, bool _hasSucceeded, String _where) {
+    String _message = (!_hasSucceeded)
+        ? 'Unable to Save. Check Permissions.'
+        : 'Saved $type in $_where!';
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(_message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     String _directory = (importantConstants.onSmallerScreen)
@@ -172,21 +195,24 @@ class DatabaseExtractButton extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
+                Future<bool> _result;
                 if (type == 'Employees')
-                  bloc.exportDatabase(
+                  _result = bloc.exportDatabase(
                       getEmployees: true,
                       getAttendances: false,
                       getEvents: false);
                 else if (type == 'Attendances')
-                  bloc.exportDatabase(
+                  _result = bloc.exportDatabase(
                       getEmployees: false,
                       getAttendances: true,
                       getEvents: false);
                 else if (type == 'Events')
-                  bloc.exportDatabase(
+                  _result = bloc.exportDatabase(
                       getEmployees: false,
                       getAttendances: false,
                       getEvents: true);
+                return _result
+                    .then((value) => (_showAlert(context, value, _directory)));
               },
             ),
             Text(

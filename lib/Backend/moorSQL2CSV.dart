@@ -24,7 +24,7 @@ class MoorSQLToCSV {
     this._file = _localFile(csvFileName);
     this._prExisting = false;
 
-    _writeToCSV(_csvBody);
+    _status = _writeToCSV(_csvBody);
   }
 
   String _generateCSVBody() {
@@ -44,7 +44,6 @@ class MoorSQLToCSV {
       });
       out = out.replaceRange(out.length, out.length, '\n');
     });
-    print(out);
     return out;
   }
 
