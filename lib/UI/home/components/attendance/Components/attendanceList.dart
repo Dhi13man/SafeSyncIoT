@@ -85,7 +85,7 @@ class AttendanceList extends StatelessWidget {
                       color: importantConstants.textLightestColor,
                       fontWeight: FontWeight.bold,
                     )),
-                onPressed: () => context.bloc<DataBloc>().clearEvents(),
+                onPressed: () => context.bloc<DataBloc>().resetAllAttendances(),
               )),
         ),
       ],

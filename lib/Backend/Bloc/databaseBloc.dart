@@ -25,8 +25,8 @@ class DataBloc extends Cubit<ChangeStack> {
     if (parsedRequest['selfID'] == 'safesync-iot-sanitize') {
       giveAttendance(parsedRequest['contactDeviceID']);
       createEvent(Event(
-          key: _current.toString() + parsedRequest['selfID'],
-          deviceIDA: parsedRequest['selfID'],
+          key: _current.toString() + parsedRequest['contactDeviceID'],
+          deviceIDA: parsedRequest['contactDeviceID'],
           eventType: 'attendance',
           eventTime: _current));
     } else {
@@ -105,14 +105,20 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   // Employee-Attendance Actions
-  void giveAttendance(String employeeID) {
-    db.giveAttendance(employeeID);
+  void giveAttendance(String deviceID) async {
+    Employee _employee = await db.getEmployeebyID(deviceID, type: 'device');
+    db.giveAttendance(_employee.employeeID);
     emit(db.cs);
   }
 
   void resetAttendance(String employeeID) {
     db.resetAttendance(employeeID);
     emit(db.cs);
+  }
+
+  void resetAllAttendances() async {
+    List<Employee> _employees = await db.getAllEmployees();
+    _employees.forEach((element) => resetAttendance(element.employeeID));
   }
 
   Stream<List<EmployeesWithAttendance>> getEmployeesWithAttendance(int bound,
