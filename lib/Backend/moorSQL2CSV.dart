@@ -9,7 +9,7 @@ class MoorSQLToCSV {
   String csvFileName;
 
   Future<File> _file;
-  bool _permitted, _prExisting;
+  bool _permitted = true, _prExisting;
   Future<bool> _status;
 
   Future<bool> get wasCreated => _status;
@@ -49,6 +49,8 @@ class MoorSQLToCSV {
   }
 
   Future<bool> getPermission() async {
+    // Don't need permission for desktop devices
+    if (!Platform.isIOS && !Platform.isAndroid) return true;
     PermissionStatus permissionResult = await Permission.storage.request();
     return (permissionResult == PermissionStatus.granted);
   }
@@ -66,7 +68,7 @@ class MoorSQLToCSV {
 
   Future<File> _localFile(String name, {String initial = ''}) async {
     final String path = await localPath;
-    final File thisFile = File('$path/$name');
+    final File thisFile = File('$path/$name.csv');
 
     if (!_permitted) _permitted = await getPermission();
 

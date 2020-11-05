@@ -135,18 +135,24 @@ class DataBloc extends Cubit<ChangeStack> {
     bool didSucceed = true;
     if (getEmployees) {
       List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
-      _csvGenerator = MoorSQLToCSV(_employees, csvFileName: 'employees');
-      didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      if (_employees.isNotEmpty) {
+        _csvGenerator = MoorSQLToCSV(_employees, csvFileName: 'employees');
+        didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      }
     }
     if (getAttendances) {
       List<Attendance> _attendances = await db.getAllAttendances();
-      _csvGenerator = MoorSQLToCSV(_attendances, csvFileName: 'attendances');
-      didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      if (_attendances.isNotEmpty) {
+        _csvGenerator = MoorSQLToCSV(_attendances, csvFileName: 'attendances');
+        didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      }
     }
     if (getEvents) {
       List<Event> _events = await db.getAllEvents();
-      _csvGenerator = MoorSQLToCSV(_events, csvFileName: 'events');
-      didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      if (_events.isNotEmpty) {
+        _csvGenerator = MoorSQLToCSV(_events, csvFileName: 'events');
+        didSucceed = didSucceed && await _csvGenerator.wasCreated;
+      }
     }
     return didSucceed;
   }

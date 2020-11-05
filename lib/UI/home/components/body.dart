@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
-import 'package:safe_sync/Backend/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
 import 'package:safe_sync/UI/home/components/logs/logs.dart';
@@ -37,6 +37,8 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
+    DataBloc bloc = context.bloc<DataBloc>();
+
     Size _dimensions = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -62,9 +64,10 @@ class _HomeBodyState extends State<HomeBody> {
                 IconButton(
                   icon: Icon(
                     Icons.cloud_download,
+                    size: 30,
                     color: Colors.white,
                   ),
-                  onPressed: () => importantConstants.bloc.exportDatabase(),
+                  onPressed: () => bloc.exportDatabase(),
                 ),
               ],
             ),
