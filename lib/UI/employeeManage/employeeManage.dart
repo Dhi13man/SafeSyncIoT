@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
@@ -7,9 +8,39 @@ import 'package:undo/undo.dart';
 
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
-class EmployeeManagement extends StatelessWidget {
+class EmployeeManagement extends StatefulWidget {
   const EmployeeManagement({Key key}) : super(key: key);
+
+  @override
+  _EmployeeManagementState createState() => _EmployeeManagementState();
+}
+
+class _EmployeeManagementState extends State<EmployeeManagement> {
+  String _filter = 'Name';
+  bool _isOrderAscending = true;
+
   DataBloc bloc(BuildContext context) => context.bloc<DataBloc>();
+
+  Widget sortButton(String sortByText) {
+    return Container(
+      alignment: Alignment.bottomRight,
+      height: 20,
+      margin: EdgeInsets.symmetric(horizontal: 7),
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        color: Colors.blue[900],
+        onPressed: () {
+          setState(() {
+            _filter = sortByText;
+          });
+        },
+        child: Text(
+          sortByText,
+          style: TextStyle(color: Colors.white, fontSize: 10),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,47 +56,92 @@ class EmployeeManagement extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              tooltip: 'Delete All Employees.',
-              icon: const Icon(Icons.delete),
-              color: Colors.red,
+              tooltip: (_isOrderAscending)
+                  ? 'Show in Descending Order'
+                  : 'Show in Ascendsing Order',
+              icon: Icon(
+                (_isOrderAscending)
+                    ? Icons.arrow_downward_rounded
+                    : Icons.arrow_upward_rounded,
+                color: Colors.blueAccent,
+              ),
               onPressed: () {
-                bloc(context).clear();
+                setState(() {
+                  _isOrderAscending = !_isOrderAscending;
+                });
               },
-            )
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 7),
+              child: IconButton(
+                tooltip: 'Delete All Employees.',
+                icon: const Icon(Icons.delete),
+                color: Colors.red,
+                onPressed: () {
+                  bloc(context).clear();
+                },
+              ),
+            ),
           ],
         ),
         body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: StreamBuilder<List<Employee>>(
-              stream: bloc(context).showAllEmployees(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Align(
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                final List<Employee> _employees = snapshot.data;
-                if (_employees.isEmpty)
-                  return Container(
-                    height: double.infinity,
-                    padding: EdgeInsets.all(20),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "No Registered Employees",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            child: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                alignment: Alignment.bottomRight,
+                margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      child: Text(
+                        'Sort by: ',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  );
-                else
-                  return ListView.builder(
-                    itemCount: _employees.length,
-                    itemBuilder: (context, index) {
-                      return EmployeeCard(_employees[index]);
-                    },
-                  );
-              },
-            )),
+                    sortButton('Name'),
+                    sortButton('ID'),
+                    sortButton('Device'),
+                  ],
+                )),
+            Expanded(
+              child: StreamBuilder<List<Employee>>(
+                stream: bloc(context).showAllEmployees(
+                  orderBy: _filter.toLowerCase(),
+                  mode: (_isOrderAscending) ? 'asce' : 'desc',
+                ),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Align(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final List<Employee> _employees = snapshot.data;
+                  if (_employees.isEmpty)
+                    return Container(
+                      height: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No Registered Employees",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    );
+                  else
+                    return ListView.builder(
+                      itemCount: _employees.length,
+                      itemBuilder: (context, index) {
+                        return EmployeeCard(_employees[index]);
+                      },
+                    );
+                },
+              ),
+            ),
+          ],
+        )),
         floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.person_add,

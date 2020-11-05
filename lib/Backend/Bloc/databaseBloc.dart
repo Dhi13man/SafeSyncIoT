@@ -62,7 +62,7 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   Stream<List<Employee>> showAllEmployees(
-      {String orderBy = 'asce', String mode = 'name'}) {
+      {String orderBy = 'name', String mode = 'asce'}) {
     return db.watchAllEmployees(orderBy: orderBy, mode: mode);
   }
 

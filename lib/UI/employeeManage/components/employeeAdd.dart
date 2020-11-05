@@ -66,10 +66,6 @@ class _EmployeeFormState extends State<EmployeeForm> {
     };
   }
 
-  void _disposeControllers() {
-    _controlMap.forEach((key, value) => value.dispose());
-  }
-
   void _insertToDatabase(BuildContext context) {
     if (_controlMap['id'].text.isEmpty) return;
 
@@ -175,7 +171,6 @@ class _EmployeeFormState extends State<EmployeeForm> {
                         )),
                     onPressed: () {
                       _insertToDatabase(context);
-                      _disposeControllers();
                     },
                   )),
             ],

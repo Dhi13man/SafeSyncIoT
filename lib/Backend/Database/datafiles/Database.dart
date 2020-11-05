@@ -42,7 +42,7 @@ class Database extends _$Database {
   }
 
   Stream<List<Employee>> watchAllEmployees(
-          {String orderBy = 'asce', String mode = 'name'}) =>
+          {String orderBy = 'name', String mode = 'asce'}) =>
       (select(employees)
             ..orderBy([
               (u) {

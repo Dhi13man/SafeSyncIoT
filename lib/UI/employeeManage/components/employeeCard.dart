@@ -22,10 +22,14 @@ class EmployeeCard extends StatelessWidget {
       },
       child: Card(
         elevation: 10,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 10.0,
+          vertical: 5,
+        ),
         shadowColor: Colors.black,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(9.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -72,7 +76,8 @@ class EmployeeCard extends StatelessWidget {
                 (entry.deviceID != 'safesync-iot-sanitize')
                     ? IconButton(
                         icon: const Icon(Icons.delete),
-                        color: Colors.red,
+                        color: Colors.black,
+                        focusColor: Colors.red,
                         onPressed: () {
                           BlocProvider.of<DataBloc>(context)
                               .deleteEmployee(entry);
