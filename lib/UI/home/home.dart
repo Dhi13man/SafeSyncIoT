@@ -25,10 +25,11 @@ class SafeSyncHomePage extends StatelessWidget {
       ),
       drawer: SideBarDrawer(context, _drawerKey),
       floatingActionButton: FloatingActionButton(
+        elevation: 80,
         backgroundColor: importantConstants.bgGradBegin,
         foregroundColor: Colors.white,
         autofocus: true,
-        focusColor: Colors.black,
+        focusColor: importantConstants.bgGradMid,
         tooltip: 'Employee Tools',
         child: Icon(
           Icons.person,

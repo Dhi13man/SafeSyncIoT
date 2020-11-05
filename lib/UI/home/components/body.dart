@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
 import 'package:safe_sync/UI/home/components/logs/logs.dart';
@@ -45,30 +46,28 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(
           flex: 1,
           child: Container(
-            margin: EdgeInsets.only(top: 35),
+            margin: EdgeInsets.only(
+                top: (importantConstants.onSmallerScreen) ? 25 : 20),
             height: _dimensions.height,
             width: _dimensions.width,
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             alignment: Alignment.topLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.white,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.cloud_download,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => bloc.exportDatabase(),
-                ),
+                DatabaseExtractButton(type: 'Employees', bloc: bloc),
+                DatabaseExtractButton(type: 'Attendances', bloc: bloc),
+                DatabaseExtractButton(type: 'Events', bloc: bloc),
               ],
             ),
           ),
@@ -120,6 +119,67 @@ class _HomeBodyState extends State<HomeBody> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DatabaseExtractButton extends StatelessWidget {
+  const DatabaseExtractButton({
+    Key key,
+    @required this.bloc,
+    @required this.type,
+  }) : super(key: key);
+
+  final DataBloc bloc;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    String _directory = (importantConstants.onSmallerScreen)
+        ? 'App Data Folder'
+        : 'Downloads Folder';
+    String _tooltip = 'Save $type to $_directory.';
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+      child: Container(
+        child: Column(
+          children: [
+            IconButton(
+              tooltip: _tooltip,
+              icon: Icon(
+                Icons.cloud_download_outlined,
+                size: 35,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                if (type == 'Employees')
+                  bloc.exportDatabase(
+                      getEmployees: true,
+                      getAttendances: false,
+                      getEvents: false);
+                else if (type == 'Attendances')
+                  bloc.exportDatabase(
+                      getEmployees: false,
+                      getAttendances: true,
+                      getEvents: false);
+                else if (type == 'Events')
+                  bloc.exportDatabase(
+                      getEmployees: false,
+                      getAttendances: false,
+                      getEvents: true);
+              },
+            ),
+            Text(
+              type,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 9,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 
 class ImportantConstants {
   Color get textColor => Colors.black;
@@ -18,9 +17,6 @@ class ImportantConstants {
           colors: [bgGradBegin, bgGradMid],
         ),
       );
-
-  DataBloc bloc;
-  void setBloc(DataBloc _b) => bloc = _b;
 
   Widget cardText(String _text, {TextStyle style}) {
     style =
