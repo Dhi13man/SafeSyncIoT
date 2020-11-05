@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
@@ -40,6 +41,13 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     DataBloc bloc = context.bloc<DataBloc>();
 
+    Color _endBodyGradient;
+    if (tabID == 0)
+      _endBodyGradient = Colors.purple[50];
+    else if (tabID == 1)
+      _endBodyGradient = Colors.red[50];
+    else
+      _endBodyGradient = Colors.teal[50];
     Size _dimensions = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -56,12 +64,18 @@ class _HomeBodyState extends State<HomeBody> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.white,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, '/contact'),
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -103,7 +117,13 @@ class _HomeBodyState extends State<HomeBody> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white,
+                                _endBodyGradient,
+                              ]),
                           border: Border.all(width: 0, color: Colors.white),
                         ),
                         width: _dimensions.width,

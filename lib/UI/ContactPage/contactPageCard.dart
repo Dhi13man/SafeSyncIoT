@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:safe_sync/Backend/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactCard extends StatelessWidget {
@@ -28,32 +29,34 @@ class ContactCard extends StatelessWidget {
         _launchURL(githubURL);
       },
       behavior: HitTestBehavior.translucent,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '$_name',
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: IconButton(
-                      icon: Icon(Icons.email_sharp),
-                      onPressed: () => _launchURL('mailto:$emailID'),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: Card(
+          elevation: 20,
+          shadowColor: Colors.purple,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  '$_name',
+                  style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: IconButton(
+                        icon: Icon(Icons.email_sharp),
+                        onPressed: () => _launchURL('mailto:$emailID'),
+                      ),
                     ),
-                  ),
-                  Text(githubURL,
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          color: CupertinoColors.darkBackgroundGray)),
-                ],
-              ),
-            ],
+                    importantConstants.cardText(githubURL),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

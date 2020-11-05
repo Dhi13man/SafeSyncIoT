@@ -26,24 +26,30 @@ class ListItem extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.elliptical(30, 20)),
           child: Container(
             height: 40,
+            width: double.infinity,
+            alignment: Alignment.center,
             color: tabColor,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(
-                _tabIcon[tab],
-                size: _infosize,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-              ),
-              Text(
-                itemText,
-                style: TextStyle(
-                  fontSize: _infosize - 2,
-                  fontWeight: FontWeight.bold,
-                  color: importantConstants.textColor,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Icon(
+                  _tabIcon[tab],
+                  size: _infosize,
                 ),
-              ),
-            ]),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                ),
+                Text(
+                  itemText,
+                  style: TextStyle(
+                    fontSize: _infosize - 2,
+                    fontWeight: FontWeight.bold,
+                    color: importantConstants.textColor,
+                  ),
+                ),
+              ]),
+            ),
           ),
         ),
       ),
