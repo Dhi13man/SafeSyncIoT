@@ -56,7 +56,7 @@ class _HomeBodyState extends State<HomeBody> {
           flex: 1,
           child: Container(
             margin: EdgeInsets.only(
-                top: (importantConstants.onSmallerScreen) ? 25 : 20),
+                top: (importantConstants.onSmallerScreen) ? 20 : 15),
             height: _dimensions.height,
             width: _dimensions.width,
             padding: EdgeInsets.symmetric(horizontal: 20),

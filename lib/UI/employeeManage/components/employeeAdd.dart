@@ -113,6 +113,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
 
   @override
   Widget build(BuildContext context) {
+    List<bool> verifyFormData = [false, false, false];
     double _width = MediaQuery.of(context).size.width;
     return Dialog(
       child: SingleChildScrollView(
@@ -126,28 +127,62 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
-              TextField(
+              TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) return 'ID is mandatory.';
+                  if (value == 'safesync-iot-sanitize')
+                    return 'This ID is reserved for Sanitizing Station.';
+                  verifyFormData[0] = true;
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _controlMap['id'],
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: 'Employee ID',
                 ),
               ),
-              TextField(
+              TextFormField(
                 controller: _controlMap['name'],
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: 'Employee Name',
                 ),
               ),
-              TextField(
+              TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) return 'Phone Number is mandatory.';
+                  if (value.length > 1) {
+                    bool _validPhoneNo = true;
+                    try {
+                      int _ = int.parse(value.toString());
+                    } catch (e) {
+                      _validPhoneNo = false;
+                    }
+                    if (!_validPhoneNo)
+                      return 'Contact number can only have digits.';
+                  }
+                  if (value.length > 13 || value.length < 10)
+                    return 'Invalid Contact Number.';
+                  verifyFormData[1] = true;
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _controlMap['phone'],
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: 'Phone No.',
                 ),
               ),
-              TextField(
+              TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) return 'Device ID is mandatory.';
+                  if (value == 'safesync-iot-sanitize')
+                    return 'This ID is reserved for Sanitizing Station.';
+                  verifyFormData[2] = true;
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _controlMap['device'],
                 autofocus: true,
                 decoration: InputDecoration(
@@ -170,7 +205,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
                           fontWeight: FontWeight.bold,
                         )),
                     onPressed: () {
-                      _insertToDatabase(context);
+                      if (verifyFormData[0] && verifyFormData[1] && verifyFormData[2])
+                          _insertToDatabase(context);
                     },
                   )),
             ],
