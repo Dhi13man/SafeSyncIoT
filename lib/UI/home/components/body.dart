@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
+import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
 import 'package:safe_sync/UI/home/components/logs/logs.dart';
@@ -46,13 +48,25 @@ class _HomeBodyState extends State<HomeBody> {
             width: _dimensions.width,
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             alignment: Alignment.topLeft,
-            child: Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.cloud_download,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => importantConstants.bloc.exportDatabase(),
+                ),
+              ],
             ),
           ),
         ),

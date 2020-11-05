@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:safe_sync/Backend/moorSQL2CSV.dart';
 import 'package:undo/undo.dart';
 
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
@@ -9,11 +9,6 @@ import 'package:safe_sync/Backend/Server/server.dart';
 class DataBloc extends Cubit<ChangeStack> {
   final Database db;
   SafeSyncServer server;
-  int c = 0;
-
-  final BehaviorSubject<Employee> _activateEmployee =
-      BehaviorSubject.seeded(null);
-  final BehaviorSubject<Event> _activateEvent = BehaviorSubject.seeded(null);
 
   DataBloc(this.db) : super(db.cs) {
     server = SafeSyncServer(handleParsedClientRequest);
@@ -90,10 +85,6 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  void showEvent(Event event) {
-    _activateEvent.add(event);
-  }
-
   Stream<List<Event>> showAllEvents() {
     return db.watchAllEvents();
   }
@@ -136,21 +127,28 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   //Database manipulation actions
-  Future<int> exportDatabase(
+  Future<bool> exportDatabase(
       {bool getEmployees = true,
       bool getAttendances = true,
       bool getEvents = true}) async {
+    MoorSQLToCSV _csvGenerator;
+    bool didSucceed = true;
     if (getEmployees) {
-      //List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
-
+      List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+      _csvGenerator = MoorSQLToCSV(_employees, csvFileName: 'employees');
+      didSucceed = didSucceed && await _csvGenerator.wasCreated;
     }
     if (getAttendances) {
-      // List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+      List<Attendance> _attendances = await db.getAllAttendances();
+      _csvGenerator = MoorSQLToCSV(_attendances, csvFileName: 'attendances');
+      didSucceed = didSucceed && await _csvGenerator.wasCreated;
     }
     if (getEvents) {
-      //List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+      List<Event> _events = await db.getAllEvents();
+      _csvGenerator = MoorSQLToCSV(_events, csvFileName: 'events');
+      didSucceed = didSucceed && await _csvGenerator.wasCreated;
     }
-    return 0;
+    return didSucceed;
   }
 
   bool get canUndo => db.cs.canUndo;
