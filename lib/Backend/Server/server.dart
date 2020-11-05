@@ -3,7 +3,6 @@ import 'dart:io';
 
 class SafeSyncServer {
   HttpServer server;
-  List<String> _lastResponses = new List<String>(3); // Handle repetitions
   final Function(Map) sendParsedRequest;
 
   SafeSyncServer(this.sendParsedRequest) {
@@ -37,17 +36,7 @@ class SafeSyncServer {
         String content = await utf8.decoder.bind(request).join();
         Map data = jsonDecode(content) as Map;
 
-        // Duplicate Response Protection
-        bool responseHandledAlready = false;
-        for (String _response in _lastResponses) {
-          if (response.toString() == _response) responseHandledAlready = true;
-        }
-        if (!responseHandledAlready) {
-          sendParsedRequest(data);
-          _lastResponses[0] = _lastResponses[1];
-          _lastResponses[1] = _lastResponses[2];
-          _lastResponses[2] = content;
-        }
+        sendParsedRequest(data);
 
         request.response
           ..statusCode = HttpStatus.ok

@@ -55,13 +55,19 @@ class _EmployeeFormState extends State<EmployeeForm> {
   _EmployeeFormState({this.employee}) {
     _editmode = employee != null;
     _controlMap = {
-      'id': TextEditingController(text: (_editmode) ? employee.employeeID : ''),
+      'id': TextEditingController(
+        text: (_editmode) ? employee.employeeID : '',
+      ),
       'name': TextEditingController(text: (_editmode) ? employee.name : ''),
       'phone': TextEditingController(
           text: (_editmode) ? employee.phoneNo.toString() : ''),
       'device':
           TextEditingController(text: (_editmode) ? employee.deviceID : '')
     };
+  }
+
+  void _disposeControllers() {
+    _controlMap.forEach((key, value) => value.dispose());
   }
 
   void _insertToDatabase(BuildContext context) {
@@ -169,6 +175,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                         )),
                     onPressed: () {
                       _insertToDatabase(context);
+                      _disposeControllers();
                     },
                   )),
             ],

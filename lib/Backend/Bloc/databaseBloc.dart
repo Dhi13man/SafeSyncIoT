@@ -47,12 +47,15 @@ class DataBloc extends Cubit<ChangeStack> {
   //------------------- DATABASE -------------------//
   // EMPLOYEES ACTIONS
   void resetSanitizingStation() async {
+    Employee stationInDatabase =
+        await db.getEmployeebyID('safesync-iot-sanitize', type: 'device');
+    if (stationInDatabase != null) return; // Do nothing if already exists
+
     Employee _station = Employee(
         employeeID: 'safesync-iot-sanitize',
         name: 'Sanitizing Station (unmodifiable)',
         deviceID: 'safesync-iot-sanitize',
         phoneNo: 0);
-    await db.removeEmployeeSQL(_station);
     await db.createEmployee(_station);
   }
 
@@ -60,14 +63,7 @@ class DataBloc extends Cubit<ChangeStack> {
     // SANITIZING STATION WILL ALWAYS EXIST
     resetSanitizingStation();
     await db.createEmployee(employee);
-    // SANITIZING STATION WILL ALWAYS EXIST
-    resetSanitizingStation();
     emit(db.cs);
-    showEmployee(employee);
-  }
-
-  void showEmployee(Employee employee) {
-    _activateEmployee.add(employee);
   }
 
   Stream<List<Employee>> showAllEmployees(
@@ -146,6 +142,7 @@ class DataBloc extends Cubit<ChangeStack> {
       bool getEvents = true}) async {
     if (getEmployees) {
       //List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
+
     }
     if (getAttendances) {
       // List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
