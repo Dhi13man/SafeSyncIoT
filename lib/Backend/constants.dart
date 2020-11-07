@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImportantConstants {
   Color get textColor => Colors.black;
@@ -17,6 +18,17 @@ class ImportantConstants {
           colors: [bgGradBegin, bgGradMid],
         ),
       );
+
+  Future<String> fileSavePath() async {
+    Directory directory;
+    if (Platform.isAndroid || Platform.isIOS)
+      directory = await getApplicationDocumentsDirectory();
+    else if (Platform.isLinux || Platform.isWindows || Platform.isMacOS)
+      directory = await getDownloadsDirectory();
+    else
+      directory = await getTemporaryDirectory();
+    return directory.path;
+  }
 
   Widget cardText(String _text, {TextStyle style}) {
     style =

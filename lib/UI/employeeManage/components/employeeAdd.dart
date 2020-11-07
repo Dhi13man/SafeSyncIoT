@@ -115,8 +115,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
   Widget build(BuildContext context) {
     List<bool> verifyFormData = [false, false, false];
     double _width = MediaQuery.of(context).size.width;
-    return Dialog(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Dialog(
         child: Container(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -162,8 +162,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
                     if (!_validPhoneNo)
                       return 'Contact number can only have digits.';
                   }
-                  if (value.length > 13 || value.length < 10)
-                    return 'Invalid Contact Number.';
+                  if (value.length < 10) return 'Phone Number too short.';
+                  if (value.length > 13) return 'Phone Number too long.';
                   verifyFormData[1] = true;
                   return null;
                 },
@@ -205,8 +205,9 @@ class _EmployeeFormState extends State<EmployeeForm> {
                           fontWeight: FontWeight.bold,
                         )),
                     onPressed: () {
-                      if (verifyFormData[0] && verifyFormData[1] && verifyFormData[2])
-                          _insertToDatabase(context);
+                      if (verifyFormData[0] &&
+                          verifyFormData[1] &&
+                          verifyFormData[2]) _insertToDatabase(context);
                     },
                   )),
             ],

@@ -352,20 +352,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.4.0"
-  moor_db_viewer:
-    dependency: "direct main"
-    description:
-      name: moor_db_viewer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
-  moor_flutter:
-    dependency: transitive
-    description:
-      name: moor_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   moor_generator:
     dependency: "direct dev"
     description:
@@ -394,6 +380,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   package_config:
     dependency: transitive
     description:
@@ -589,7 +582,7 @@ packages:
     source: hosted
     version: "1.8.0-nullsafety.3"
   sqflite:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sqflite
       url: "https://pub.dartlang.org"

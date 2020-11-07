@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:moor/moor.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'package:safe_sync/Backend/constants.dart';
 
 class MoorSQLToCSV {
   final List<DataClass> _table;
   String csvFileName;
+  String pathToFile;
 
   Future<File> _file;
   bool _permitted = true, _prExisting;
@@ -55,19 +56,13 @@ class MoorSQLToCSV {
   }
 
   Future<String> get localPath async {
-    Directory directory;
-    if (Platform.isAndroid || Platform.isIOS)
-      directory = await getApplicationDocumentsDirectory();
-    else if (Platform.isLinux || Platform.isWindows || Platform.isMacOS)
-      directory = await getDownloadsDirectory();
-    else
-      directory = await getTemporaryDirectory();
-    return directory.path;
+    return await importantConstants.fileSavePath();
   }
 
   Future<File> _localFile(String name, {String initial = ''}) async {
     final String path = await localPath;
-    final File thisFile = File('$path/$name.csv');
+    pathToFile = '$path/$name.csv';
+    final File thisFile = File(pathToFile);
 
     if (!_permitted) _permitted = await getPermission();
 
