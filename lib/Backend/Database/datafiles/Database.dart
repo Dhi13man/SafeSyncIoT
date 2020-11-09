@@ -78,6 +78,13 @@ class Database extends _$Database {
   Stream<List<Event>> watchAllEvents() =>
       (select(events)..orderBy([(u) => OrderingTerm.desc(events.eventTime)]))
           .watch();
+  Stream<List<Event>> watchEventsForDeviceID(String deviceID) {
+    var query = select(events);
+    query.where((events) => events.deviceIDA.equals(deviceID));
+    query.orderBy([(u) => OrderingTerm.desc(events.eventTime)]);
+    return query.watch();
+  }
+
   Future<int> createEventSQL(Event event) => into(events).insert(event);
   Future updateEventSQL(Event event) => update(events).replace(event);
   Future removeEventSQL(Event event) => delete(events).delete(event);

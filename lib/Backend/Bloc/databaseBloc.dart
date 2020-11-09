@@ -11,11 +11,11 @@ class DataBloc extends Cubit<ChangeStack> {
   SafeSyncServer server;
 
   DataBloc(this.db) : super(db.cs) {
-    server = SafeSyncServer(handleParsedClientRequest);
+    server = SafeSyncServer(_handleParsedClientRequest);
   }
 
   //------------------- SERVER -------------------//
-  void handleParsedClientRequest(Map parsedRequest) {
+  void _handleParsedClientRequest(Map parsedRequest) {
     // As IoT device waits 15 seconds before making request, we make it up.
     DateTime _current = DateTime.now();
     _current.subtract(Duration(seconds: 15));
@@ -61,6 +61,11 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
+  Future<List<Employee>> getAllEmployees(
+      {String orderBy = 'name', String mode = 'asce'}) {
+    return db.getAllEmployees(orderBy: orderBy, mode: mode);
+  }
+
   Stream<List<Employee>> showAllEmployees(
       {String orderBy = 'name', String mode = 'asce'}) {
     return db.watchAllEmployees(orderBy: orderBy, mode: mode);
@@ -87,6 +92,10 @@ class DataBloc extends Cubit<ChangeStack> {
 
   Stream<List<Event>> showAllEvents() {
     return db.watchAllEvents();
+  }
+
+  Stream<List<Event>> showEventsForDeviceID(String deviceID) {
+    return db.watchEventsForDeviceID(deviceID);
   }
 
   void updateEvent(Event event) async {
