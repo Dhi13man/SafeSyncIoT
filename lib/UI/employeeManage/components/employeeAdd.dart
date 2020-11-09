@@ -12,6 +12,7 @@ class EmployeeAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size _dimensions = MediaQuery.of(context).size;
+    // As arguments are passed from other pages through Navigator.pushNamed
     Employee employee = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +27,9 @@ class EmployeeAdd extends StatelessWidget {
       ),
       body: Container(
         width: _dimensions.width,
+        height: _dimensions.height,
         decoration: importantConstants.bgGradDecoration,
+        alignment: Alignment.center,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(60),
           child: EmployeeForm(
@@ -81,7 +84,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
       phone = _controlMap['phone'].text;
     }
 
-    DataBloc _bloc = context.bloc<DataBloc>();
+    DataBloc _bloc = context.read<DataBloc>();
 
     if (_editmode)
       _bloc.updateEmployee(Employee(
@@ -113,13 +116,19 @@ class _EmployeeFormState extends State<EmployeeForm> {
 
   @override
   Widget build(BuildContext context) {
-    List<bool> verifyFormData = [false, false, false];
+    List<bool> verifyFormData = [
+      _editmode, // ID is not editable once set
+      false,
+      false
+    ];
     double _width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Dialog(
+        elevation: 8,
         child: Container(
           padding: EdgeInsets.all(20),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               Center(
                 child: Text(
@@ -128,6 +137,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 ),
               ),
               TextFormField(
+                enabled: !_editmode, // ID is not editable in edit mode.
                 validator: (value) {
                   if (value.isEmpty) return 'ID is mandatory.';
                   if (value == 'safesync-iot-sanitize')
@@ -135,11 +145,11 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   verifyFormData[0] = true;
                   return null;
                 },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.always,
                 controller: _controlMap['id'],
                 autofocus: true,
                 decoration: InputDecoration(
-                  labelText: 'Employee ID',
+                  labelText: 'Employee ID (Not modifiable once set)',
                 ),
               ),
               TextFormField(
@@ -167,7 +177,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   verifyFormData[1] = true;
                   return null;
                 },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.always,
                 controller: _controlMap['phone'],
                 autofocus: true,
                 decoration: InputDecoration(
@@ -182,7 +192,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   verifyFormData[2] = true;
                   return null;
                 },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.always,
                 controller: _controlMap['device'],
                 autofocus: true,
                 decoration: InputDecoration(

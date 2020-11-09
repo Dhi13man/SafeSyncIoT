@@ -11,7 +11,7 @@ import 'package:safe_sync/Backend/constants.dart';
 
 class EventList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEventList(BuildContext context) {
-    DataBloc _bloc = context.bloc<DataBloc>();
+    DataBloc _bloc = context.watch<DataBloc>();
 
     return BlocBuilder<DataBloc, ChangeStack>(
       builder: (_context, cs) {

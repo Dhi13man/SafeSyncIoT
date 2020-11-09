@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -176,7 +175,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    DataBloc bloc = context.bloc<DataBloc>();
+    DataBloc bloc = context.watch<DataBloc>();
 
     Color _endBodyGradient;
     if (tabID == 0)

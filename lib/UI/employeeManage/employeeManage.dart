@@ -19,8 +19,6 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
   String _filter = 'Name';
   bool _isOrderAscending = true;
 
-  DataBloc bloc(BuildContext context) => context.bloc<DataBloc>();
-
   Widget sortButton(String sortByText) {
     return Container(
       alignment: Alignment.bottomRight,
@@ -78,7 +76,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
                 icon: const Icon(Icons.delete),
                 color: Colors.red,
                 onPressed: () {
-                  bloc(context).clear();
+                  context.read<DataBloc>().clear();
                 },
               ),
             ),
@@ -107,10 +105,10 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
                 )),
             Expanded(
               child: StreamBuilder<List<Employee>>(
-                stream: bloc(context).showAllEmployees(
-                  orderBy: _filter.toLowerCase(),
-                  mode: (_isOrderAscending) ? 'asce' : 'desc',
-                ),
+                stream: context.watch<DataBloc>().showAllEmployees(
+                      orderBy: _filter.toLowerCase(),
+                      mode: (_isOrderAscending) ? 'asce' : 'desc',
+                    ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Align(

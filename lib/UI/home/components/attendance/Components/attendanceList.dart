@@ -13,7 +13,7 @@ import 'package:safe_sync/UI/Home/components/attendance/components/attendanceCar
 class AttendanceList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEmployeeList(
       BuildContext context, String criteria) {
-    DataBloc bloc = context.bloc<DataBloc>();
+    DataBloc bloc = context.watch<DataBloc>();
     Stream<List<EmployeesWithAttendance>> watchStream;
 
     if (criteria == 'present')
@@ -85,7 +85,7 @@ class AttendanceList extends StatelessWidget {
                       color: importantConstants.textLightestColor,
                       fontWeight: FontWeight.bold,
                     )),
-                onPressed: () => context.bloc<DataBloc>().resetAllAttendances(),
+                onPressed: () => context.read<DataBloc>().resetAllAttendances(),
               )),
         ),
       ],
