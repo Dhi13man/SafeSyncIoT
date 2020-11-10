@@ -62,7 +62,8 @@ class ImportantConstants {
     );
   }
 
-  final double defaultPadding = 20.0;
+  EdgeInsetsGeometry get defaultPadding =>
+      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
 }
 
 final ImportantConstants importantConstants = ImportantConstants();
