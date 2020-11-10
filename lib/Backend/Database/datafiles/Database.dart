@@ -64,8 +64,36 @@ class Database extends _$Database {
       delete(employees).delete(employee);
 
   //Attendances
-  Future<List<Attendance>> getAllAttendances() => select(attendances).get();
-  Stream<List<Attendance>> watchAllAttendances() => select(attendances).watch();
+  Future<List<Attendance>> getAllAttendances(
+          {String orderBy = 'name', String mode = 'asce'}) =>
+      (select(attendances)
+            ..orderBy([
+              (u) {
+                dynamic criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'id') criteria = attendances.employeeID;
+                if (orderBy == 'number') criteria = attendances.attendanceCount;
+                if (orderBy == 'last') criteria = attendances.lastAttendance;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
+          .get();
+  Stream<List<Attendance>> watchAllAttendances(
+          {String orderBy = 'name', String mode = 'asce'}) =>
+      (select(attendances)
+            ..orderBy([
+              (u) {
+                dynamic criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'id') criteria = attendances.employeeID;
+                if (orderBy == 'number') criteria = attendances.attendanceCount;
+                if (orderBy == 'last') criteria = attendances.lastAttendance;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
+          .watch();
   Future<int> createAttendanceSQL(Attendance attendance) =>
       into(attendances).insert(attendance);
   Future updateAttendanceSQL(Attendance attendance) =>
@@ -74,9 +102,35 @@ class Database extends _$Database {
       delete(attendances).delete(attendance);
 
   // Events
-  Future<List<Event>> getAllEvents() => select(events).get();
-  Stream<List<Event>> watchAllEvents() =>
-      (select(events)..orderBy([(u) => OrderingTerm.desc(events.eventTime)]))
+  Future<List<Event>> getAllEvents(
+          {String orderBy = 'time', String mode = 'desc'}) =>
+      (select(events)
+            ..orderBy([
+              (u) {
+                dynamic criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'idA') criteria = events.deviceIDA;
+                if (orderBy == 'idB') criteria = events.deviceIDB;
+                if (orderBy == 'time') criteria = events.eventTime;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
+          .get();
+  Stream<List<Event>> watchAllEvents(
+          {String orderBy = 'time', String mode = 'desc'}) =>
+      (select(events)
+            ..orderBy([
+              (u) {
+                dynamic criteria = employees.employeeID;
+                OrderingMode order =
+                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                if (orderBy == 'idA') criteria = events.deviceIDA;
+                if (orderBy == 'idB') criteria = events.deviceIDB;
+                if (orderBy == 'time') criteria = events.eventTime;
+                return OrderingTerm(expression: criteria, mode: order);
+              }
+            ]))
           .watch();
   Stream<List<Event>> watchEventsForDeviceID(String deviceID) {
     var query = select(events);
@@ -84,6 +138,10 @@ class Database extends _$Database {
     query.orderBy([(u) => OrderingTerm.desc(events.eventTime)]);
     return query.watch();
   }
+
+  Future<List<Event>> getEventsOfType({String type = 'contact'}) =>
+      (select(events)..where((events) => events.eventType.equals(type)))
+          .get();
 
   Future<int> createEventSQL(Event event) => into(events).insert(event);
   Future updateEventSQL(Event event) => update(events).replace(event);

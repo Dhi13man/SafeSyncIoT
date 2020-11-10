@@ -67,20 +67,11 @@ class DatabaseExtractButton extends StatelessWidget {
               onPressed: () {
                 Future<bool> _result;
                 if (type == 'Employees')
-                  _result = bloc.exportDatabase(
-                      getEmployees: true,
-                      getAttendances: false,
-                      getEvents: false);
+                  _result = bloc.exportDatabase(getEmployees: true);
                 else if (type == 'Attendances')
-                  _result = bloc.exportDatabase(
-                      getEmployees: false,
-                      getAttendances: true,
-                      getEvents: false);
+                  _result = bloc.exportDatabase(getAttendances: true);
                 else if (type == 'Events')
-                  _result = bloc.exportDatabase(
-                      getEmployees: false,
-                      getAttendances: false,
-                      getEvents: true);
+                  _result = bloc.exportDatabase(getEvents: true);
                 return _result.then((value) => (importantConstants
                     .showSaveAlert(context, value, type: type)));
               },

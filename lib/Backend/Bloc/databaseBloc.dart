@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:undo/undo.dart';
 import 'package:moor2csv/moor2csv.dart';
@@ -14,7 +16,7 @@ class DataBloc extends Cubit<ChangeStack> {
     server = SafeSyncServer(_handleParsedClientRequest);
   }
 
-  //------------------- SERVER -------------------//
+  //------------------- SERVER DATA HANDLING -------------------//
   void _handleParsedClientRequest(Map parsedRequest) {
     // As IoT device waits 15 seconds before making request, we make it up.
     DateTime _current = DateTime.now();
@@ -69,6 +71,10 @@ class DataBloc extends Cubit<ChangeStack> {
   Stream<List<Employee>> showAllEmployees(
       {String orderBy = 'name', String mode = 'asce'}) {
     return db.watchAllEmployees(orderBy: orderBy, mode: mode);
+  }
+
+  Future<Employee> getEmployeeByID(String id) {
+    return db.getEmployeebyID(id);
   }
 
   void updateEmployee(Employee employee) async {
@@ -142,9 +148,9 @@ class DataBloc extends Cubit<ChangeStack> {
 
   //Database manipulation actions
   Future<bool> exportDatabase(
-      {bool getEmployees = true,
-      bool getAttendances = true,
-      bool getEvents = true}) async {
+      {bool getEmployees = false,
+      bool getAttendances = false,
+      bool getEvents = false}) async {
     MoorSQLToCSV _csvGenerator;
     bool didSucceed = true;
     if (getEmployees) {
@@ -173,6 +179,72 @@ class DataBloc extends Cubit<ChangeStack> {
     return didSucceed;
   }
 
+  // Specific Statistics based actions
+  Future<String> getSanitizeeNamesBy(
+      {String orderBy = 'last', String mode = 'desc', int number = 1}) async {
+    List<Attendance> _attendances =
+        await db.getAllAttendances(orderBy: orderBy, mode: mode);
+    if (_attendances[0].lastAttendance == null)
+      return 'Nobody has sanitized yet!';
+
+    // Handle Multiple results, with admittedly Spaghetti Code.
+    String _names;
+    int thisMany = number = min(number, _attendances.length);
+    _attendances.forEach((element) async {
+      if (element.lastAttendance
+              .isAfter(_attendances[thisMany - 1].lastAttendance) ||
+          element.lastAttendance
+              .isAtSameMomentAs(_attendances[thisMany - 1].lastAttendance) ||
+          thisMany-- != 0) {
+        Employee _employee = await db.getEmployeebyID(element.employeeID);
+
+        _names += '${_employee.name}, ';
+      } else
+        return;
+    });
+    // Fix end Formatting
+    _names.replaceRange(_names.length - 1, _names.length, '');
+    return '$_names on or after ${_attendances[number - 1].lastAttendance}';
+  }
+
+  Future<int> getEventCount(
+      {bool considerContacts = false,
+      bool considerDangers = false,
+      bool considerRegisters = false,
+      bool considerAttendances = false}) async {
+    int _numberOfEvents = 0;
+    if (considerContacts) {
+      List<Event> _contactEvents = await db.getEventsOfType(type: 'contact');
+      _numberOfEvents += _contactEvents.length;
+    }
+    if (considerDangers) {
+      List<Event> _dangerEvents = await db.getEventsOfType(type: 'danger');
+      _numberOfEvents += _dangerEvents.length;
+    }
+    if (considerRegisters) {
+      List<Event> _registerEvents = await db.getEventsOfType(type: 'register');
+      _numberOfEvents += _registerEvents.length;
+    }
+    if (considerAttendances) {
+      List<Event> _attendanceEvents =
+          await db.getEventsOfType(type: 'attendance');
+      _numberOfEvents += _attendanceEvents.length;
+    }
+    return _numberOfEvents;
+  }
+
+  // Out of all contacts, what percent is dangerous.
+  Future<String> getDangerousContactsPercentage() async {
+    int _contacts = await getEventCount(considerContacts: true);
+    int _dangers = await getEventCount(considerDangers: true);
+    // Divide by zero handling
+    if (_contacts == 0 && _dangers == 0)
+      return '0 %  ($_contacts Contacts, $_dangers Dangerous)';
+    double percentageDanger = (_dangers * 100.0) / (_contacts + _dangers);
+    return '${percentageDanger.toStringAsPrecision(2)} %  ($_contacts Contacts, $_dangers Dangerous)';
+  }
+
+  // MISCELLANEOUS
   bool get canUndo => db.cs.canUndo;
   void undo() async {
     await db.cs.undo();

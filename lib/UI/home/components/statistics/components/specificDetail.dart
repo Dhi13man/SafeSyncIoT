@@ -15,7 +15,7 @@ class SpecificDetails extends StatefulWidget {
 }
 
 class _SpecificDetailsState extends State<SpecificDetails> {
-  String chosenValue;
+  String _employeeDeviceID;
 
   Widget dropdownEmployeeList(DataBloc bloc) => Container(
         child: StreamBuilder(
@@ -42,7 +42,8 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                     );
                   }).toList(),
                   onChanged: (_employees.isNotEmpty)
-                      ? (String value) => setState(() => chosenValue = value)
+                      ? (String value) =>
+                          setState(() => _employeeDeviceID = value)
                       : null,
                   icon: Icon(
                     Icons.person,
@@ -52,7 +53,7 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                   dropdownColor: Colors.grey[100],
                   hint: Text('Select Employee by Name here'),
                   disabledHint: Text('Add Employees to begin'),
-                  value: chosenValue,
+                  value: _employeeDeviceID,
                 ),
               );
             }),
@@ -86,15 +87,15 @@ class _SpecificDetailsState extends State<SpecificDetails> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 7),
               child: CupertinoButton(
-                onPressed: (chosenValue == 'safesync-iot-sanitize')
+                onPressed: (_employeeDeviceID == 'safesync-iot-sanitize')
                     ? null
                     : () {
-                        if (chosenValue == null) return null;
+                        if (_employeeDeviceID == null) return null;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    EmployeeEvents(chosenValue)));
+                                    EmployeeEvents(_employeeDeviceID)));
                       },
                 color: Colors.black,
                 child: Text(

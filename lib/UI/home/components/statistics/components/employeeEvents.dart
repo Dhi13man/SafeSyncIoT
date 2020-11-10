@@ -43,6 +43,16 @@ class EmployeeEvents extends StatelessWidget {
                   if (!snapshot.hasData) return CircularProgressIndicator();
 
                   List<Event> _events = snapshot.data;
+                  if (_events.isEmpty)
+                    return Container(
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No Events have occured yet for chosen Employee.",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    );
                   return ListView.builder(
                     itemCount: _events.length,
                     itemBuilder: (context, index) => FutureBuilder(

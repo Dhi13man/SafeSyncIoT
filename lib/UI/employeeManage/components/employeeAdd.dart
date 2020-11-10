@@ -217,7 +217,17 @@ class _EmployeeFormState extends State<EmployeeForm> {
                     onPressed: () {
                       if (verifyFormData[0] &&
                           verifyFormData[1] &&
-                          verifyFormData[2]) _insertToDatabase(context);
+                          verifyFormData[2]) {
+                        Future<Employee> _emp = context
+                            .read<DataBloc>()
+                            .getEmployeeByID(_controlMap['id'].text);
+                        _emp.then((value) {
+                          if (value == null)
+                            _insertToDatabase(context);
+                          else
+                            _controlMap['id'].text += '_ID_TAKEN!';
+                        });
+                      }
                     },
                   )),
             ],
