@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 
 class InformationCard extends StatelessWidget {
-  final String type;
-  const InformationCard({this.type, Key key}) : super(key: key);
+  final String type, cardName; // Type: positive, neutral, negative
+  final Map<String, Color> _cardShadowColor = {
+    'positive': Colors.green,
+    'neutral': Colors.amber,
+    'negative': Colors.red
+  };
+  InformationCard({this.cardName, this.type = 'neutral', Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(elevation: 10, shadowColor: Colors.amber, child: Text(type)),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      elevation: 5,
+      shadowColor: _cardShadowColor[type],
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 20,
+          horizontal: 10,
+        ),
+        child: Text(cardName),
+      ),
     );
   }
 }

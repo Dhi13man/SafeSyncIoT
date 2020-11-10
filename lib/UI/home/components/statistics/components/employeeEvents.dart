@@ -18,7 +18,7 @@ class EmployeeEvents extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: // Changes based on whether Adding new or editing.
-            Text('Employee Log'),
+            Text('Employee Events Log'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(

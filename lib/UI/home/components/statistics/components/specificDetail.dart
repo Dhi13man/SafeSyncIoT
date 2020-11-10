@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +15,7 @@ class SpecificDetails extends StatefulWidget {
 }
 
 class _SpecificDetailsState extends State<SpecificDetails> {
-  String _chosenValue;
+  String chosenValue;
 
   Widget dropdownEmployeeList(DataBloc bloc) => Container(
         child: StreamBuilder(
@@ -25,35 +23,37 @@ class _SpecificDetailsState extends State<SpecificDetails> {
             builder: (_, snapshot) {
               if (!snapshot.hasData) return Text('Getting employees...');
               List<Employee> _employees = snapshot.data;
-              return DropdownButton<String>(
-                items: _employees
-                    .map<DropdownMenuItem<String>>((Employee _employee) {
-                  return DropdownMenuItem<String>(
-                    value: _employee.deviceID,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: BorderDirectional(
-                              bottom:
-                                  BorderSide(color: Colors.white, width: 1))),
-                      child: Text(
-                        _employee.name,
-                        style: TextStyle(color: Colors.white),
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(vertical: 10),
+                color: Colors.grey[100],
+                child: DropdownButton<String>(
+                  items: _employees
+                      .map<DropdownMenuItem<String>>((Employee _employee) {
+                    return DropdownMenuItem<String>(
+                      value: _employee.deviceID,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          _employee.name,
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (String value) =>
-                    setState(() => _chosenValue = value),
-                icon: Icon(
-                  Icons.person,
-                  color: Colors.blue[900],
+                    );
+                  }).toList(),
+                  onChanged: (_employees.isNotEmpty)
+                      ? (String value) => setState(() => chosenValue = value)
+                      : null,
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.blue[900],
+                  ),
+                  elevation: 15,
+                  dropdownColor: Colors.grey[100],
+                  hint: Text('Select Employee by Name here'),
+                  disabledHint: Text('Add Employees to begin'),
+                  value: chosenValue,
                 ),
-                elevation: 15,
-                dropdownColor: Colors.blue[900],
-                hint: Text((_employees.isNotEmpty)
-                    ? 'Select Employee by Name here'
-                    : 'Add Employees to begin'),
-                value: _chosenValue,
               );
             }),
       );
@@ -79,18 +79,19 @@ class _SpecificDetailsState extends State<SpecificDetails> {
               ),
             ),
             dropdownEmployeeList(_bloc),
+            // BUTTON TAKING TO EMPLOYEE EVENTS LOG PAGE.
             Container(
               margin: EdgeInsets.symmetric(vertical: 7),
               child: CupertinoButton(
-                onPressed: (_chosenValue == 'safesync-iot-sanitize')
+                onPressed: (chosenValue == 'safesync-iot-sanitize')
                     ? null
                     : () {
-                        if (_chosenValue == null) return null;
+                        if (chosenValue == null) return null;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    EmployeeEvents(_chosenValue)));
+                                    EmployeeEvents(chosenValue)));
                       },
                 color: Colors.black,
                 child: Text(

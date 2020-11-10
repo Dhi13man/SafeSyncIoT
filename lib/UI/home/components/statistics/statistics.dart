@@ -12,13 +12,29 @@ class EmployeeStatistics extends StatelessWidget {
         Container(
           margin: EdgeInsets.all(10),
           child: InformationCard(
-            type: 'hot',
+            cardName: 'Most Sanitized Employee: ',
+            type: 'positive',
           ),
         ),
         Container(
           margin: EdgeInsets.all(10),
           child: InformationCard(
-            type: 'cold',
+            cardName: 'Last Sanitization: ',
+            type: 'neutral',
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: InformationCard(
+            cardName: 'Least Sanitized Employee: ',
+            type: 'negative',
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: InformationCard(
+            cardName: 'Employee with most Contacts: ',
+            type: 'negative',
           ),
         ),
       ],
