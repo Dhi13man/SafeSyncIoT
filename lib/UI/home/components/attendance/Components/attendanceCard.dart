@@ -66,7 +66,7 @@ class AttendanceCard extends StatelessWidget {
                           '${attendance.attendanceCount} Attendances',
                           style: TextStyle(
                               fontSize:
-                                  (importantConstants.onSmallerScreen) ? 7 : 10,
+                                  (importantConstants.onMobileScreen) ? 7 : 10,
                               fontWeight: FontWeight.w600,
                               color: Colors.blue[900])),
                       importantConstants

@@ -10,7 +10,7 @@ class ImportantConstants {
   Color get bgGradEnd => Colors.red;
   Color get textLighterColor => Color(0xFFACACAC);
   Color get textLightestColor => Colors.white;
-  bool get onSmallerScreen => Platform.isIOS || Platform.isAndroid;
+  bool get onMobileScreen => Platform.isIOS || Platform.isAndroid;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -47,7 +47,7 @@ class ImportantConstants {
   }
 
   showSaveAlert(BuildContext context, bool _hasSucceeded, {String type}) {
-    String _where = (onSmallerScreen) ? 'App Data Folder' : 'Downloads Folder';
+    String _where = (onMobileScreen) ? 'App Data Folder' : 'Downloads Folder';
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -92,7 +92,7 @@ class ImportantConstants {
   Widget cardSubText(String _text, {TextStyle style}) {
     style = (style) ??
         TextStyle(
-            fontSize: (onSmallerScreen) ? 6 : 9,
+            fontSize: (onMobileScreen) ? 6 : 9,
             color: importantConstants.textLighterColor);
 
     return SingleChildScrollView(

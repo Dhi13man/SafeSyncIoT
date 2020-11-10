@@ -17,7 +17,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _infosize = (importantConstants.onSmallerScreen) ? 11 : 15;
+    double _infoSize = (importantConstants.onMobileScreen) ? 11 : 15;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.25),
       child: GestureDetector(
@@ -35,7 +35,7 @@ class ListItem extends StatelessWidget {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(
                   _tabIcon[tab],
-                  size: _infosize,
+                  size: _infoSize,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5),
@@ -43,7 +43,7 @@ class ListItem extends StatelessWidget {
                 Text(
                   itemText,
                   style: TextStyle(
-                    fontSize: _infosize - 2,
+                    fontSize: _infoSize - 2,
                     fontWeight: FontWeight.bold,
                     color: importantConstants.textColor,
                   ),

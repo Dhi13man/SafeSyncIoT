@@ -103,7 +103,7 @@ class EventCard extends StatelessWidget {
                   child: Text('${_eventAndEmployees.event.eventTime}',
                       style: TextStyle(
                           fontSize:
-                              (importantConstants.onSmallerScreen) ? 5.5 : 9,
+                              (importantConstants.onMobileScreen) ? 5.5 : 9,
                           fontWeight: FontWeight.w600,
                           color: importantConstants.textLighterColor)),
                 ),

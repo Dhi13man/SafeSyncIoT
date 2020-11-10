@@ -26,7 +26,7 @@ class CustomTitleBar extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: (importantConstants.onSmallerScreen) ? 12 : 22,
+              fontSize: (importantConstants.onMobileScreen) ? 12 : 22,
               color: Colors.white,
             ),
           ),
@@ -48,7 +48,10 @@ class DatabaseExtractButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _tooltip = 'Save $type as CSV.';
+    String _where = (importantConstants.onMobileScreen)
+        ? 'App Data Folder'
+        : 'Downloads Folder';
+    String _tooltip = 'Save $type in $_where as CSV.';
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
       child: Container(
@@ -58,7 +61,7 @@ class DatabaseExtractButton extends StatelessWidget {
               tooltip: _tooltip,
               icon: Icon(
                 Icons.cloud_download_outlined,
-                size: (importantConstants.onSmallerScreen) ? 25 : 35,
+                size: (importantConstants.onMobileScreen) ? 25 : 35,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -87,7 +90,7 @@ class DatabaseExtractButton extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: (importantConstants.onSmallerScreen) ? 8 : 9,
+                fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
               ),
             ),
           ],
@@ -119,7 +122,7 @@ class SafeSyncHomePage extends StatelessWidget {
                 flex: 1,
                 child: Container(
                   margin: EdgeInsets.only(
-                      top: (importantConstants.onSmallerScreen) ? 20 : 15),
+                      top: (importantConstants.onMobileScreen) ? 20 : 15),
                   height: _dimensions.height,
                   width: _dimensions.width,
                   padding: EdgeInsets.symmetric(horizontal: 20),
