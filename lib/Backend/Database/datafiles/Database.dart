@@ -90,34 +90,23 @@ class Database extends _$Database {
   Future removeEventSQL(Event event) => delete(events).delete(event);
 
   // Relational Attendance-Employee Actions
-  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceGreater(
-      int lowerBound) {
+  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceComparitive(
+      int bound,
+      {String boundType = 'upper'}) {
     final query = select(employees).join([
       leftOuterJoin(
           attendances, employees.employeeID.equalsExp(attendances.employeeID))
     ]);
-    query.where(
-      attendances.attendanceCount.isBiggerOrEqual(Constant(lowerBound)),
-    );
-    return query.watch().map((rows) {
-      return rows.map((row) {
-        return EmployeesWithAttendance(
-          row.readTable(employees),
-          row.readTable(attendances),
-        );
-      }).toList();
-    });
-  }
 
-  Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceLesser(
-      int lowerBound) {
-    final query = select(employees).join([
-      leftOuterJoin(
-          attendances, employees.employeeID.equalsExp(attendances.employeeID))
-    ]);
-    query.where(
-      attendances.attendanceCount.isSmallerOrEqual(Constant(lowerBound)),
-    );
+    if (boundType == 'lower')
+      query.where(
+        attendances.attendanceCount.isBiggerOrEqual(Constant(bound)),
+      );
+    else
+      query.where(
+        attendances.attendanceCount.isSmallerOrEqual(Constant(bound)),
+      );
+
     return query.watch().map((rows) {
       return rows.map((row) {
         return EmployeesWithAttendance(

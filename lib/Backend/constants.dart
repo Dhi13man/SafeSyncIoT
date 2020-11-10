@@ -46,6 +46,49 @@ class ImportantConstants {
     );
   }
 
+  showSaveAlert(BuildContext context, bool _hasSucceeded, {String type}) {
+    String _where = (onSmallerScreen) ? 'App Data Folder' : 'Downloads Folder';
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: FutureBuilder(
+            future: fileSavePath(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              String _message = (!_hasSucceeded)
+                  ? 'Unable to Save. Check Permissions.'
+                  : 'Saved $type in $_where';
+              if (!snapshot.hasData)
+                return Text(_message);
+              else
+                return Column(
+                  children: [
+                    Text('$_message: '),
+                    Container(
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        child: Text(
+                          snapshot.data,
+                          style: TextStyle(
+                              color: importantConstants.textLighterColor,
+                              fontSize: 12),
+                        )),
+                  ],
+                );
+            },
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget cardSubText(String _text, {TextStyle style}) {
     style = (style) ??
         TextStyle(

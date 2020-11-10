@@ -132,8 +132,7 @@ class DataBloc extends Cubit<ChangeStack> {
 
   Stream<List<EmployeesWithAttendance>> getEmployeesWithAttendance(int bound,
       {String boundType = 'lower'}) {
-    if (boundType == 'lower') return db.watchEmployeeAttendanceGreater(bound);
-    return db.watchEmployeeAttendanceLesser(bound);
+    return db.watchEmployeeAttendanceComparitive(bound, boundType: boundType);
   }
 
   // Event-Employee Actions
@@ -157,8 +156,10 @@ class DataBloc extends Cubit<ChangeStack> {
     }
     if (getAttendances) {
       List<Attendance> _attendances = await db.getAllAttendances();
+      String _date = DateTime.now().toString();
       if (_attendances.isNotEmpty) {
-        _csvGenerator = MoorSQLToCSV(_attendances, csvFileName: 'attendances');
+        _csvGenerator = MoorSQLToCSV(_attendances,
+            csvFileName: 'attendances_${_date.substring(0, 10)}');
         didSucceed = didSucceed && await _csvGenerator.wasCreated;
       }
     }

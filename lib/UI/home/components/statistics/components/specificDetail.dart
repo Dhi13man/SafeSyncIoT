@@ -63,8 +63,8 @@ class _SpecificDetailsState extends State<SpecificDetails> {
     DataBloc _bloc = context.watch<DataBloc>();
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      elevation: 13,
-      shadowColor: Colors.purple[900],
+      elevation: 15,
+      shadowColor: Colors.black,
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 20,

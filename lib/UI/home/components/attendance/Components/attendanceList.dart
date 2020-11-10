@@ -63,6 +63,74 @@ class AttendanceList extends StatelessWidget {
     );
   }
 
+  _showResetAlert(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          title: Text(
+            'Confirm Attendance Reset',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(
+            'Are you sure about Resetting Attendances?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: importantConstants.textLighterColor, fontSize: 20),
+          ),
+          actionsPadding: EdgeInsets.all(10),
+          actions: <Widget>[
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: FlatButton(
+                child: new AlertButtonText(text: "Reset without Saving"),
+                color: importantConstants.bgGradBegin,
+                onPressed: () {
+                  context.read<DataBloc>().resetAllAttendances();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: FlatButton(
+                child:
+                    AlertButtonText(text: "Save Today's Attendances and Reset"),
+                color: importantConstants.bgGradBegin,
+                onPressed: () {
+                  DataBloc bloc = context.read<DataBloc>();
+                  Future<bool> _result = bloc.exportDatabase(
+                      getEmployees: false,
+                      getAttendances: true,
+                      getEvents: false);
+                  _result.then((value) => importantConstants
+                      .showSaveAlert(context, value, type: 'Attendances'));
+                  bloc.resetAllAttendances();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: FlatButton(
+                child: new AlertButtonText(text: "Don't Reset"),
+                color: importantConstants.bgGradBegin,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -85,10 +153,30 @@ class AttendanceList extends StatelessWidget {
                       color: importantConstants.textLightestColor,
                       fontWeight: FontWeight.bold,
                     )),
-                onPressed: () => context.read<DataBloc>().resetAllAttendances(),
+                onPressed: () => _showResetAlert(context),
               )),
         ),
       ],
+    );
+  }
+}
+
+class AlertButtonText extends StatelessWidget {
+  final String text;
+  const AlertButtonText({
+    this.text,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text(
+      '$text',
+      style: TextStyle(
+        fontSize: 13,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
