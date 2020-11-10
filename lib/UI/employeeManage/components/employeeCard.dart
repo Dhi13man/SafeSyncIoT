@@ -21,71 +21,72 @@ class EmployeeCard extends StatelessWidget {
           Navigator.pushNamed(context, '/employeeManage/add', arguments: entry);
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(30),
+        ),
         elevation: 10,
         margin: const EdgeInsets.symmetric(
           horizontal: 10.0,
           vertical: 5,
         ),
         shadowColor: Colors.black,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Container(
-            padding: const EdgeInsets.all(9.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          importantConstants.cardText(
-                            '${entry.name} ',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: importantConstants.textColor),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        importantConstants.cardText(
+                          '${entry.name} ',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: importantConstants.textColor),
+                        ),
+                        importantConstants.cardSubText(
+                          'ID: ${entry.employeeID}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        importantConstants.cardText(
+                          'Contact: ${entry.phoneNo.toString()}',
+                          style: TextStyle(
+                            fontSize: 12,
                           ),
-                          importantConstants.cardSubText(
-                            'ID: ${entry.employeeID}',
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          importantConstants.cardText(
-                            'Contact: ${entry.phoneNo.toString()}',
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                          importantConstants.cardSubText(
-                            'DeviceID: ${entry.deviceID}',
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        importantConstants.cardSubText(
+                          'DeviceID: ${entry.deviceID}',
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                (entry.deviceID != 'safesync-iot-sanitize')
-                    ? IconButton(
-                        icon: const Icon(Icons.delete),
-                        color: Colors.black,
-                        focusColor: Colors.red,
-                        onPressed: () {
-                          BlocProvider.of<DataBloc>(context)
-                              .deleteEmployee(entry);
-                        },
-                      )
-                    : Container(), // NO DELETE BUTTON FOR SANITIZING STATION
-              ],
-            ),
+              ),
+              (entry.deviceID != 'safesync-iot-sanitize')
+                  ? IconButton(
+                      icon: const Icon(Icons.delete),
+                      color: Colors.black,
+                      focusColor: Colors.red,
+                      onPressed: () {
+                        BlocProvider.of<DataBloc>(context)
+                            .deleteEmployee(entry);
+                      },
+                    )
+                  : Container(), // NO DELETE BUTTON FOR SANITIZING STATION
+            ],
           ),
         ),
       ),

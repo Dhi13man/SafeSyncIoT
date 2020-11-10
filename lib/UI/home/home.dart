@@ -154,7 +154,7 @@ class SafeSyncHomePage extends StatelessWidget {
         tooltip: 'Employee Tools',
         child: Icon(
           Icons.person,
-          size: 30,
+          size: 40,
         ),
         onPressed: () {
           _drawerKey.currentState.openDrawer();

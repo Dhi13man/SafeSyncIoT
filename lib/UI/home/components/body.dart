@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -43,7 +41,7 @@ class _HomeBodyState extends State<HomeBody> {
     else if (tabID == 1)
       _endBodyGradient = Colors.red[50];
     else
-      _endBodyGradient = Colors.teal[50];
+      _endBodyGradient = Colors.white;
     Size _dimensions = MediaQuery.of(context).size;
     return Container(
       height: double.infinity,

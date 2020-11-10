@@ -62,7 +62,10 @@ class _SpecificDetailsState extends State<SpecificDetails> {
   Widget build(BuildContext context) {
     DataBloc _bloc = context.watch<DataBloc>();
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.circular(25),
+      ),
       elevation: 15,
       shadowColor: Colors.black,
       child: Container(
@@ -73,7 +76,7 @@ class _SpecificDetailsState extends State<SpecificDetails> {
         child: Column(
           children: [
             Text(
-              'See events encountered by Employee: ',
+              'Check events encountered by Employee: ',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),

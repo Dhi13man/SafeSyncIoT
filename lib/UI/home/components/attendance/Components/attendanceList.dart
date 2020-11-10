@@ -108,10 +108,10 @@ class AttendanceList extends StatelessWidget {
                       getEmployees: false,
                       getAttendances: true,
                       getEvents: false);
-                  _result.then((value) => importantConstants
-                      .showSaveAlert(context, value, type: 'Attendances'));
                   bloc.resetAllAttendances();
                   Navigator.of(context).pop();
+                  _result.then((value) => importantConstants
+                      .showSaveAlert(context, value, type: 'Attendances'));
                 },
               ),
             ),

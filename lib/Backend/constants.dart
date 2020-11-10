@@ -33,7 +33,6 @@ class ImportantConstants {
   Widget cardText(String _text, {TextStyle style}) {
     style =
         (style) ?? TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
-
     return Expanded(
       flex: 5,
       child: SingleChildScrollView(

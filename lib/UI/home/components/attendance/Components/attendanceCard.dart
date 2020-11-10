@@ -38,7 +38,10 @@ class AttendanceCard extends StatelessWidget {
       child: Card(
         shadowColor: _getIcon().color,
         elevation: 10,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: _getIcon().color),
+          borderRadius: BorderRadius.circular(10),
+        ),
         borderOnForeground: false,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 10),
