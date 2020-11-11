@@ -20,10 +20,9 @@ class _HomeBodyState extends State<HomeBody> {
   final String title;
   _HomeBodyState({this.title});
 
-  int tabID = 0;
   void _openTab(int idResponse) {
     setState(() {
-      tabID = idResponse;
+      importantConstants.homeTabID = idResponse;
     });
   }
 
@@ -36,9 +35,9 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     Color _endBodyGradient;
-    if (tabID == 0)
+    if (importantConstants.homeTabID == 0)
       _endBodyGradient = Colors.purple[50];
-    else if (tabID == 1)
+    else if (importantConstants.homeTabID == 1)
       _endBodyGradient = Colors.red[50];
     else
       _endBodyGradient = Colors.white;
@@ -56,7 +55,7 @@ class _HomeBodyState extends State<HomeBody> {
               width: _dimensions.width,
               child: MenuList(
                 tabSelect: _openTab,
-                selectedTab: tabID,
+                selectedTab: importantConstants.homeTabID,
               ),
             ),
             Expanded(
@@ -66,9 +65,13 @@ class _HomeBodyState extends State<HomeBody> {
                   if (kIsWeb) return;
                   if (!importantConstants.onMobileScreen) return;
                   if (details.primaryVelocity > 0)
-                    _openTab((tabID != 0) ? tabID - 1 : tabID);
+                    _openTab((importantConstants.homeTabID != 0)
+                        ? importantConstants.homeTabID - 1
+                        : importantConstants.homeTabID);
                   else if (details.primaryVelocity < 0)
-                    _openTab((tabID != 2) ? tabID + 1 : tabID);
+                    _openTab((importantConstants.homeTabID != 2)
+                        ? importantConstants.homeTabID + 1
+                        : importantConstants.homeTabID);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -83,7 +86,7 @@ class _HomeBodyState extends State<HomeBody> {
                   ),
                   width: _dimensions.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: _selectedWidget[tabID],
+                  child: _selectedWidget[importantConstants.homeTabID],
                 ),
               ),
             ),

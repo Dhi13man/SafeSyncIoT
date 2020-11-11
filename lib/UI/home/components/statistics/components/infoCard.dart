@@ -24,7 +24,7 @@ class InformationCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
           side: BorderSide(color: _cardShadowColor[type]),
           borderRadius: BorderRadius.circular(25)),
-      elevation: 5,
+      elevation: 10,
       shadowColor: _cardShadowColor[type],
       borderOnForeground: true,
       child: Container(

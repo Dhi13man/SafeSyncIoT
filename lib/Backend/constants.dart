@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ImportantConstants {
+  int homeTabID = 2;
   Color get textColor => Colors.black;
   Color get textLightColor => Color(0xFF535353);
   Color get bgGradBegin => Colors.purple[900];
@@ -18,6 +19,9 @@ class ImportantConstants {
           colors: [bgGradBegin, bgGradMid],
         ),
       );
+
+  EdgeInsetsGeometry get defaultPadding =>
+      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
 
   Future<String> fileSavePath() async {
     Directory directory;
@@ -103,9 +107,6 @@ class ImportantConstants {
       ),
     );
   }
-
-  EdgeInsetsGeometry get defaultPadding =>
-      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
 }
 
 final ImportantConstants importantConstants = ImportantConstants();

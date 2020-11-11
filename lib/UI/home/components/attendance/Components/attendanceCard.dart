@@ -66,7 +66,7 @@ class AttendanceCard extends StatelessWidget {
                         ),
                       ),
                       importantConstants.cardSubText(
-                          '${attendance.attendanceCount} Attendances',
+                          '${attendance.attendanceCount} Sanitizations',
                           style: TextStyle(
                               fontSize:
                                   (importantConstants.onMobileScreen) ? 7 : 10,
