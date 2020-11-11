@@ -65,7 +65,7 @@ class Database extends _$Database {
 
   //Attendances
   Future<List<Attendance>> getAllAttendances(
-          {String orderBy = 'name', String mode = 'asce'}) =>
+          {String orderBy = 'last', String mode = 'asce'}) =>
       (select(attendances)
             ..orderBy([
               (u) {
@@ -80,7 +80,7 @@ class Database extends _$Database {
             ]))
           .get();
   Stream<List<Attendance>> watchAllAttendances(
-          {String orderBy = 'name', String mode = 'asce'}) =>
+          {String orderBy = 'last', String mode = 'asce'}) =>
       (select(attendances)
             ..orderBy([
               (u) {
@@ -132,16 +132,25 @@ class Database extends _$Database {
               }
             ]))
           .watch();
-  Stream<List<Event>> watchEventsForDeviceID(String deviceID) {
+  Stream<List<Event>> watchEventsForCriteria(String criteria,
+      {String type = 'deviceID'}) {
     var query = select(events);
-    query.where((events) => events.deviceIDA.equals(deviceID));
+    if (type == 'deviceID')
+      query.where((events) => events.deviceIDA.equals(criteria));
+    else if (type == 'eventType') {
+      if (criteria == 'contactDanger')
+        query.where((events) =>
+            events.eventType.equals('contact') |
+            events.eventType.equals('danger'));
+      else
+        query.where((events) => events.eventType.equals(criteria));
+    }
     query.orderBy([(u) => OrderingTerm.desc(events.eventTime)]);
     return query.watch();
   }
 
   Future<List<Event>> getEventsOfType({String type = 'contact'}) =>
-      (select(events)..where((events) => events.eventType.equals(type)))
-          .get();
+      (select(events)..where((events) => events.eventType.equals(type))).get();
 
   Future<int> createEventSQL(Event event) => into(events).insert(event);
   Future updateEventSQL(Event event) => update(events).replace(event);

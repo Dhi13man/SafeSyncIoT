@@ -5,7 +5,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/constants.dart';
-import 'package:safe_sync/UI/Home/components/statistics/components/employeeEvents.dart';
+import 'package:safe_sync/UI/Home/components/statistics/components/filteredEvents.dart';
 
 class SpecificDetails extends StatefulWidget {
   SpecificDetails({Key key}) : super(key: key);
@@ -25,7 +25,6 @@ class _SpecificDetailsState extends State<SpecificDetails> {
               List<Employee> _employees = snapshot.data;
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                margin: EdgeInsets.symmetric(vertical: 10),
                 color: Colors.grey[100],
                 child: DropdownButton<String>(
                   items: _employees
@@ -63,9 +62,12 @@ class _SpecificDetailsState extends State<SpecificDetails> {
   Widget build(BuildContext context) {
     DataBloc _bloc = context.watch<DataBloc>();
     return Card(
-      shape: RoundedRectangleBorder(
+      shape: BeveledRectangleBorder(
         side: BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
       ),
       elevation: 15,
       shadowColor: Colors.black,
@@ -94,8 +96,10 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    EmployeeEvents(_employeeDeviceID)));
+                                builder: (context) => FilteredEventsView(
+                                      _employeeDeviceID,
+                                      filterType: 'deviceID',
+                                    )));
                       },
                 color: Colors.black,
                 child: Text(

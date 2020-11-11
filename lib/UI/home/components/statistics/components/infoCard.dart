@@ -3,10 +3,10 @@ import 'package:safe_sync/Backend/constants.dart';
 
 class InformationCard extends StatelessWidget {
   final String type, cardName; // Type: positive, neutral, negative
-  final Stream informationStream;
+  final Future informationStream;
   final Map<String, Color> _cardShadowColor = {
     'positive': Colors.green[900],
-    'neutral': Colors.amber[700],
+    'neutral': importantConstants.bgGradBegin,
     'negative': Colors.red[900]
   };
   final Map<String, IconData> _cardIcon = {
@@ -46,8 +46,8 @@ class InformationCard extends StatelessWidget {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream: informationStream,
+            FutureBuilder(
+              future: informationStream,
               builder: (context, AsyncSnapshot snapshot) {
                 String _output;
                 if (!snapshot.hasData)

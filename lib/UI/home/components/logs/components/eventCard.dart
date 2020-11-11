@@ -17,7 +17,7 @@ class EventCard extends StatelessWidget {
       );
     else if (_eventAndEmployees.event.eventType == 'attendance')
       return Icon(
-        CupertinoIcons.checkmark_circle_fill,
+        Icons.clean_hands_rounded,
         color: Colors.green,
       );
     else if (_eventAndEmployees.event.eventType == 'contact')

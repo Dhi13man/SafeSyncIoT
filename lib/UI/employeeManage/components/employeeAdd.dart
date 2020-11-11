@@ -222,7 +222,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                             .read<DataBloc>()
                             .getEmployeeByID(_controlMap['id'].text);
                         _emp.then((value) {
-                          if (value == null)
+                          if (value == null || _editmode)
                             _insertToDatabase(context);
                           else
                             _controlMap['id'].text += '_ID_TAKEN!';

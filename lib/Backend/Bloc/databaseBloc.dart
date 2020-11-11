@@ -54,6 +54,9 @@ class DataBloc extends Cubit<ChangeStack> {
         deviceID: 'safesync-iot-sanitize',
         phoneNo: 0);
     await db.createEmployee(_station);
+    // Too avoid bugs in Statistics
+    await db.removeAttendanceSQL(
+        Attendance(employeeID: 'safesync-iot-sanitize', attendanceCount: null));
   }
 
   void createEmployee(Employee employee) async {
@@ -100,8 +103,9 @@ class DataBloc extends Cubit<ChangeStack> {
     return db.watchAllEvents();
   }
 
-  Stream<List<Event>> showEventsForDeviceID(String deviceID) {
-    return db.watchEventsForDeviceID(deviceID);
+  Stream<List<Event>> showEventsForCriteria(String criteria,
+      {String type = 'deviceID'}) {
+    return db.watchEventsForCriteria(criteria, type: type);
   }
 
   void updateEvent(Event event) async {
@@ -133,7 +137,10 @@ class DataBloc extends Cubit<ChangeStack> {
 
   void resetAllAttendances() async {
     List<Employee> _employees = await db.getAllEmployees();
-    _employees.forEach((element) => resetAttendance(element.employeeID));
+    _employees.forEach((element) {
+      if (element.deviceID != 'safesync-iot-sanitize')
+        resetAttendance(element.employeeID);
+    });
   }
 
   Stream<List<EmployeesWithAttendance>> getEmployeesWithAttendance(int bound,
@@ -184,27 +191,32 @@ class DataBloc extends Cubit<ChangeStack> {
       {String orderBy = 'last', String mode = 'desc', int number = 1}) async {
     List<Attendance> _attendances =
         await db.getAllAttendances(orderBy: orderBy, mode: mode);
-    if (_attendances[0].lastAttendance == null)
-      return 'Nobody has sanitized yet!';
+    if (_attendances.isEmpty) return 'Nobody has sanitized yet!';
 
     // Handle Multiple results, with admittedly Spaghetti Code.
-    String _names;
+    String _names = '';
     int thisMany = number = min(number, _attendances.length);
-    _attendances.forEach((element) async {
-      if (element.lastAttendance
+    for (int i = 0; i < thisMany; i++) {
+      if (mode == 'asce' || // In ascending order, first may have no attendance
+          _attendances[i]
+              .lastAttendance
               .isAfter(_attendances[thisMany - 1].lastAttendance) ||
-          element.lastAttendance
-              .isAtSameMomentAs(_attendances[thisMany - 1].lastAttendance) ||
-          thisMany-- != 0) {
-        Employee _employee = await db.getEmployeebyID(element.employeeID);
-
+          _attendances[i]
+              .lastAttendance
+              .isAtSameMomentAs(_attendances[thisMany - 1].lastAttendance)) {
+        Employee _employee =
+            await db.getEmployeebyID(_attendances[i].employeeID);
+        if (_employee == null) continue;
         _names += '${_employee.name}, ';
       } else
-        return;
-    });
-    // Fix end Formatting
+        break;
+    }
+    // Fix end Formatting.
     _names.replaceRange(_names.length - 1, _names.length, '');
-    return '$_names on or after ${_attendances[number - 1].lastAttendance}';
+    DateTime _last = _attendances[number - 1].lastAttendance;
+    if (_last == null) return '${_names}not sanitized yet.';
+    String _lastAsString = _last.toString();
+    return '${_names}last on ${_lastAsString.substring(0, _lastAsString.length - 4)}.';
   }
 
   Future<int> getEventCount(
