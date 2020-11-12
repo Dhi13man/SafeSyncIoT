@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:safe_sync/Backend/constants.dart';
+import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
 class ListItem extends StatelessWidget {
   final String itemText;
   final int tab;
-  final Function selectFunction;
   final tabColor;
 
   final List<IconData> _tabIcon = [
@@ -13,7 +14,7 @@ class ListItem extends StatelessWidget {
     Icons.format_list_numbered_sharp
   ];
 
-  ListItem({this.itemText, this.tab, this.selectFunction, this.tabColor});
+  ListItem({this.itemText, this.tab, this.tabColor});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.25),
       child: GestureDetector(
-        onTap: () => selectFunction(tab),
+        onTap: () => context.read<HomeTabState>().openTab(tab),
         child: ClipRRect(
           borderRadius: BorderRadius.vertical(top: Radius.elliptical(30, 20)),
           child: Container(

@@ -32,17 +32,19 @@ class AttendanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/employeeManage/add',
-          arguments: employee),
-      child: Card(
-        shadowColor: _getIcon().color,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: _getIcon().color),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        borderOnForeground: false,
+    return Card(
+      shadowColor: _getIcon().color,
+      elevation: 10,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: _getIcon().color),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      borderOnForeground: false,
+      child: RawMaterialButton(
+        splashColor: _getIcon().color,
+        elevation: 5,
+        onPressed: () => Navigator.pushNamed(context, '/employeeManage/add',
+            arguments: employee),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 10),
           child: Row(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
-import 'package:safe_sync/UI/Home/components/statistics/components/filteredEvents.dart';
 
 import 'package:safe_sync/UI/Home/components/statistics/components/infoCard.dart';
 import 'package:safe_sync/UI/Home/components/statistics/components/specificDetail.dart';
@@ -18,31 +17,18 @@ class EmployeeStatistics extends StatelessWidget {
         builder: (_, snapshot) => ListView(
               children: [
                 Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 10,
-                    ),
-                    child: SpecificDetails()),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 25,
+                    vertical: 10,
+                  ),
+                  child: SpecificDetails(),
+                ),
                 Container(
                   margin: _margins,
-                  child: RawMaterialButton(
-                    focusElevation: 15,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FilteredEventsView(
-                            'contactDanger',
-                            filterType: 'eventType',
-                          ),
-                        ),
-                      );
-                    },
-                    child: InformationCard(
-                      cardName: 'Dangerous Contact Percentage: ',
-                      type: 'negative',
-                      informationStream: _bloc.getDangerousContactsPercentage(),
-                    ),
+                  child: InformationCard(
+                    cardName: 'Dangerous Contact Percentage: ',
+                    type: 'negative',
+                    informationStream: _bloc.getDangerousContactsPercentage(),
                   ),
                 ),
                 Container(

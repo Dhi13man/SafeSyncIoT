@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/constants.dart';
+import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
 import 'package:safe_sync/UI/Home/components/body.dart';
 import 'package:safe_sync/UI/sidebar.dart';
@@ -131,7 +133,13 @@ class SafeSyncHomePage extends StatelessWidget {
               ),
               Flexible(
                 flex: 8,
-                child: HomeBody(title: title),
+                child: ChangeNotifierProvider<HomeTabState>(
+                  create: (context) => HomeTabState(),
+                  child: HomeBody(
+                    title: title,
+                  ),
+                  builder: (context, child) => child,
+                ),
               ),
             ],
           )),

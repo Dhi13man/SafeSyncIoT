@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:safe_sync/Backend/constants.dart';
+import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
 import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
 import 'package:safe_sync/UI/home/components/logs/logs.dart';
 import 'package:safe_sync/UI/home/components/menu_list.dart';
 import 'package:safe_sync/UI/home/components/statistics/statistics.dart';
 
-class HomeBody extends StatefulWidget {
+class HomeBody extends StatelessWidget {
   final String title;
-  HomeBody({Key key, this.title});
-
-  @override
-  _HomeBodyState createState() => _HomeBodyState(title: title);
-}
-
-class _HomeBodyState extends State<HomeBody> {
-  final String title;
-  _HomeBodyState({this.title});
-
-  void _openTab(int idResponse) {
-    setState(() {
-      importantConstants.homeTabID = idResponse;
-    });
-  }
+  HomeBody({this.title});
 
   final List<Widget> _selectedWidget = [
     RealTimeLogs(),
@@ -35,13 +23,17 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     Color _endBodyGradient;
-    if (importantConstants.homeTabID == 0)
+    HomeTabState homeTabState = context.watch<HomeTabState>();
+    int currentTabID = homeTabState.homeTabID;
+
+    if (currentTabID == 0)
       _endBodyGradient = Colors.purple[50];
-    else if (importantConstants.homeTabID == 1)
+    else if (currentTabID == 1)
       _endBodyGradient = Colors.red[50];
     else
       _endBodyGradient = Colors.white;
     Size _dimensions = MediaQuery.of(context).size;
+
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -53,10 +45,7 @@ class _HomeBodyState extends State<HomeBody> {
             Container(
               height: 40,
               width: _dimensions.width,
-              child: MenuList(
-                tabSelect: _openTab,
-                selectedTab: importantConstants.homeTabID,
-              ),
+              child: MenuList(),
             ),
             Expanded(
               // SWIPE TO CHANGE TAP CAPABILITY
@@ -65,13 +54,11 @@ class _HomeBodyState extends State<HomeBody> {
                   if (kIsWeb) return;
                   if (!importantConstants.onMobileScreen) return;
                   if (details.primaryVelocity > 0)
-                    _openTab((importantConstants.homeTabID != 0)
-                        ? importantConstants.homeTabID - 1
-                        : importantConstants.homeTabID);
+                    homeTabState.openTab(
+                        (currentTabID != 0) ? currentTabID - 1 : currentTabID);
                   else if (details.primaryVelocity < 0)
-                    _openTab((importantConstants.homeTabID != 2)
-                        ? importantConstants.homeTabID + 1
-                        : importantConstants.homeTabID);
+                    homeTabState.openTab(
+                        (currentTabID != 2) ? currentTabID + 1 : currentTabID);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -86,7 +73,7 @@ class _HomeBodyState extends State<HomeBody> {
                   ),
                   width: _dimensions.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: _selectedWidget[importantConstants.homeTabID],
+                  child: _selectedWidget[currentTabID],
                 ),
               ),
             ),

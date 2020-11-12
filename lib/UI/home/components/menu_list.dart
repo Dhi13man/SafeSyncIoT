@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
+
 import 'menu_list_item.dart';
 
 class MenuList extends StatelessWidget {
-  final Function tabSelect;
-  final int selectedTab;
   final Color _selectedColor = Colors.white, _unselectedColor = Colors.white70;
 
-  Color _giveColor(int id) {
-    return (id == selectedTab) ? _selectedColor : _unselectedColor;
+  Color _giveColor(int id, int selectedID) {
+    return (id == selectedID) ? _selectedColor : _unselectedColor;
   }
-
-  MenuList({this.selectedTab, this.tabSelect});
 
   @override
   Widget build(BuildContext context) {
+    HomeTabState homeTabState = Provider.of<HomeTabState>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -23,24 +22,21 @@ class MenuList extends StatelessWidget {
           child: ListItem(
             itemText: 'Real-Time Logs',
             tab: 0,
-            selectFunction: tabSelect,
-            tabColor: _giveColor(0),
+            tabColor: _giveColor(0, homeTabState.homeTabID),
           ),
         ),
         Flexible(
           child: ListItem(
             itemText: 'Attendance',
             tab: 1,
-            selectFunction: tabSelect,
-            tabColor: _giveColor(1),
+            tabColor: _giveColor(1, homeTabState.homeTabID),
           ),
         ),
         Flexible(
           child: ListItem(
             itemText: 'Statistics',
             tab: 2,
-            selectFunction: tabSelect,
-            tabColor: _giveColor(2),
+            tabColor: _giveColor(2, homeTabState.homeTabID),
           ),
         )
       ],
