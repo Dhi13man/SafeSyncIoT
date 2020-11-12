@@ -32,6 +32,14 @@ class AttendanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _lastAttendance;
+    if (attendance.lastAttendance == null)
+      _lastAttendance = 'Unsanitized';
+    else {
+      _lastAttendance = attendance.lastAttendance.toString();
+      _lastAttendance =
+          _lastAttendance.substring(0, _lastAttendance.length - 4);
+    }
     return Card(
       shadowColor: _getIcon().color,
       elevation: 10,
@@ -74,8 +82,7 @@ class AttendanceCard extends StatelessWidget {
                                   (importantConstants.onMobileScreen) ? 7 : 10,
                               fontWeight: FontWeight.w600,
                               color: Colors.blue[900])),
-                      importantConstants
-                          .cardSubText('Last: ${attendance.lastAttendance}')
+                      importantConstants.cardSubText('Last: $_lastAttendance')
                     ],
                   ),
                 ),

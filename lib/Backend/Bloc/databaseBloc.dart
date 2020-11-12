@@ -196,32 +196,47 @@ class DataBloc extends Cubit<ChangeStack> {
       {String orderBy = 'last', String mode = 'desc', int number = 1}) async {
     List<Attendance> _attendances =
         await db.getAllAttendances(orderBy: orderBy, mode: mode);
-    if (_attendances.isEmpty) return 'Nobody has sanitized yet!';
+
+    if (_attendances.isEmpty ||
+        (mode == 'desc' && _attendances[0].lastAttendance == null))
+      return 'Nobody has sanitized yet!';
 
     // Handle Multiple results, with admittedly Spaghetti Code.
     String _names = '';
     int thisMany = number = min(number, _attendances.length);
-    for (int i = 0; i < thisMany; i++) {
-      if (mode == 'asce' || // In ascending order, first may have no attendance
-          _attendances[i]
-              .lastAttendance
-              .isAfter(_attendances[thisMany - 1].lastAttendance) ||
-          _attendances[i]
-              .lastAttendance
-              .isAtSameMomentAs(_attendances[thisMany - 1].lastAttendance)) {
+
+    // If employees that haven't sanitized exist in ascending order
+    if (mode == 'asce' && _attendances[0].lastAttendance == null) {
+      for (int i = 0;
+          i < _attendances.length && _attendances[i].lastAttendance == null;
+          ++i) {
         Employee _employee =
             await db.getEmployeebyID(_attendances[i].employeeID);
         if (_employee == null) continue;
         _names += '${_employee.name}, ';
-      } else
-        break;
+      }
+      // Fix end Formatting.
+      _names = _names.replaceRange(_names.length - 2, _names.length, '');
+      return '$_names. Not sanitized yet';
     }
+
+    DateTime _last = _attendances[thisMany - 1].lastAttendance;
+    // Handle query Case (on or desc : before/asce : after)
+    for (int i = 0; i < _attendances.length; ++i) {
+      if (i >= thisMany &&
+          (_attendances[i].lastAttendance == null ||
+              !_attendances[i].lastAttendance.isAtSameMomentAs(_last))) break;
+      Employee _employee = await db.getEmployeebyID(_attendances[i].employeeID);
+
+      if (_employee == null) continue;
+      _names += '${_employee.name}, ';
+    }
+
     // Fix end Formatting.
-    _names.replaceRange(_names.length - 1, _names.length, '');
-    DateTime _last = _attendances[number - 1].lastAttendance;
+    _names = _names = _names.replaceRange(_names.length - 1, _names.length, '');
     if (_last == null) return '${_names}not sanitized yet.';
     String _lastAsString = _last.toString();
-    return '${_names}last on ${_lastAsString.substring(0, _lastAsString.length - 4)}.';
+    return '$_names last on ${_lastAsString.substring(0, _lastAsString.length - 4)}.';
   }
 
   Future<int> getEventCount(

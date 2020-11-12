@@ -75,6 +75,7 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _dateTime = _event.eventTime.toString();
     return GestureDetector(
       onTap: () {
         if (employees['A'] != null)
@@ -107,7 +108,8 @@ class EventCard extends StatelessWidget {
                 Flexible(
                   flex: 2,
                   child: Container(
-                    child: Text('${_event.eventTime}',
+                    child: Text(
+                        '${_dateTime.substring(0, _dateTime.length - 4)}',
                         style: TextStyle(
                             fontSize:
                                 (importantConstants.onMobileScreen) ? 5.5 : 9,

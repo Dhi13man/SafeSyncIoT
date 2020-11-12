@@ -7,6 +7,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/EmployeeManage/components/employeeCard.dart';
+import 'package:safe_sync/UI/removeAlert.dart';
 
 class EmployeeList extends StatelessWidget {
   const EmployeeList({
@@ -101,7 +102,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
       appBar: AppBar(
         title: Text('Manage your Employees'),
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradBegin,
+        backgroundColor: importantConstants.bgGradMid,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_sharp),
           onPressed: () => Navigator.pop(context),
@@ -110,7 +111,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
           IconButton(
             tooltip: (_isOrderAscending)
                 ? 'Show in Descending Order'
-                : 'Show in Ascendsing Order',
+                : 'Show in Ascending Order',
             icon: Icon(
               (_isOrderAscending)
                   ? Icons.arrow_downward_rounded
@@ -130,7 +131,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
               icon: const Icon(Icons.delete),
               color: Colors.red,
               onPressed: () {
-                context.read<DataBloc>().clear();
+                showResetAlert('Employee', context);
               },
             ),
           ),
