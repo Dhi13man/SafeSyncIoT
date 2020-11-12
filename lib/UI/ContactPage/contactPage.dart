@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/UI/ContactPage/contactPageCard.dart';
+
+import 'package:safe_sync/Backend/constants.dart';
 
 class ContactPage extends StatelessWidget {
   @override

@@ -8,6 +8,8 @@ import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/Server/server.dart';
 
+export 'package:flutter_bloc/flutter_bloc.dart';
+
 class DataBloc extends Cubit<ChangeStack> {
   final Database db;
   SafeSyncServer server;

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_sync/Backend/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:safe_sync/Backend/constants.dart';
 
 class ContactCard extends StatelessWidget {
   final String _name, githubURL, emailID;
