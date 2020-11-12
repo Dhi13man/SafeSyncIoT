@@ -96,6 +96,7 @@ class DatabaseExtractButton extends StatelessWidget {
 class SafeSyncHomePage extends StatelessWidget {
   SafeSyncHomePage({Key key, this.title}) : super(key: key);
   final String title;
+  final HomeTabState _state = HomeTabState();
 
   @override
   Widget build(BuildContext context) {
@@ -133,8 +134,8 @@ class SafeSyncHomePage extends StatelessWidget {
               ),
               Flexible(
                 flex: 8,
-                child: ChangeNotifierProvider<HomeTabState>(
-                  create: (context) => HomeTabState(),
+                child: ChangeNotifierProvider<HomeTabState>.value(
+                  value: _state,
                   child: HomeBody(
                     title: title,
                   ),

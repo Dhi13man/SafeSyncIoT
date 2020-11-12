@@ -7,8 +7,46 @@ import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 
 import 'package:safe_sync/Backend/constants.dart';
-import 'package:safe_sync/UI/Home/components/attendance/Components/infoText.dart';
 import 'package:safe_sync/UI/Home/components/attendance/components/attendanceCard.dart';
+
+class InfoText extends StatelessWidget {
+  final String _text;
+
+  const InfoText(this._text, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomLeft,
+      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(top: 20.0),
+      child: Text(
+        this._text,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+    );
+  }
+}
+
+class AlertButtonText extends StatelessWidget {
+  final String text;
+  const AlertButtonText({
+    this.text,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text(
+      '$text',
+      style: TextStyle(
+        fontSize: 13,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
 
 class AttendanceList extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEmployeeList(
@@ -28,7 +66,10 @@ class AttendanceList extends StatelessWidget {
         return StreamBuilder<List<EmployeesWithAttendance>>(
             stream: watchStream,
             builder: (_context, snapshot) {
-              if (!snapshot.hasData) return CircularProgressIndicator();
+              if (!snapshot.hasData)
+                return Center(
+                  child: Text('...'),
+                );
 
               // Nobody in given Criteria Found
               List<EmployeesWithAttendance> employeeAttendances = snapshot.data;
@@ -157,26 +198,6 @@ class AttendanceList extends StatelessWidget {
               )),
         ),
       ],
-    );
-  }
-}
-
-class AlertButtonText extends StatelessWidget {
-  final String text;
-  const AlertButtonText({
-    this.text,
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Text(
-      '$text',
-      style: TextStyle(
-        fontSize: 13,
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 }

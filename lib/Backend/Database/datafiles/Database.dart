@@ -185,10 +185,13 @@ class Database extends _$Database {
   }
 
   // Relational Event-Employee Actions
-  Future<EventWithEmployees> getEmployeeFromEvent(Event _event) async {
+
+  /// Returns A Map of two employees 'A' : EmployeeA and 'B' : Employee B
+  /// associated with the event [_event].
+  Future<Map<String, Employee>> getEmployeesFromEvent(Event _event) async {
     Employee _a = await getEmployeebyID(_event.deviceIDA, type: 'device'),
         _b = await getEmployeebyID(_event.deviceIDB, type: 'device');
-    return EventWithEmployees(_event, _a, _b);
+    return {'A': _a, 'B': _b};
   }
 
   // Dart Employee Handling

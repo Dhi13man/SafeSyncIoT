@@ -1,31 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
-import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 class EventCard extends StatelessWidget {
-  final EventWithEmployees _eventAndEmployees;
-  EventCard(this._eventAndEmployees, {Key key}) : super(key: key);
+  final Map<String, Employee> employees;
+  final Event _event;
+  EventCard(this._event, {Key key, this.employees}) : super(key: key);
 
   Icon _getIcon() {
-    if (_eventAndEmployees.event.eventType == 'register')
+    if (_event.eventType == 'register')
       return Icon(
         CupertinoIcons.person_add_solid,
         color: Colors.blue[900],
       );
-    else if (_eventAndEmployees.event.eventType == 'attendance')
+    else if (_event.eventType == 'attendance')
       return Icon(
         Icons.clean_hands_rounded,
         color: Colors.green,
       );
-    else if (_eventAndEmployees.event.eventType == 'contact')
+    else if (_event.eventType == 'contact')
       return Icon(
         Icons.group,
         color: Colors.yellow,
       );
-    else if (_eventAndEmployees.event.eventType == 'danger')
+    else if (_event.eventType == 'danger')
       return Icon(
         Icons.warning_amber_outlined,
         color: Colors.red[900],
@@ -40,28 +41,28 @@ class EventCard extends StatelessWidget {
   Widget _infoString(BuildContext context) {
     String _nameA, _nameB;
     // Handle bad info in database
-    if (_eventAndEmployees.employeeA == null)
+    if (employees['A'] == null)
       _nameA = '{device_id_A not found in employee database}';
     else
-      _nameA = _eventAndEmployees.employeeA.name;
-    if (_eventAndEmployees.employeeB == null)
+      _nameA = employees['A'].name;
+    if (employees['B'] == null)
       _nameB = '{device_id_B not found in employee database}';
     else
-      _nameB = _eventAndEmployees.employeeB.name;
+      _nameB = employees['B'].name;
 
-    if (_eventAndEmployees.event.eventType == 'register')
+    if (_event.eventType == 'register')
       return importantConstants.cardText(
         '$_nameA was added',
       );
-    else if (_eventAndEmployees.event.eventType == 'attendance')
+    else if (_event.eventType == 'attendance')
       return importantConstants.cardText(
         '$_nameA sanitized!',
       );
-    else if (_eventAndEmployees.event.eventType == 'contact')
+    else if (_event.eventType == 'contact')
       return importantConstants.cardText(
         '$_nameA and $_nameB came into contact!',
       );
-    else if (_eventAndEmployees.event.eventType == 'danger')
+    else if (_event.eventType == 'danger')
       return importantConstants.cardText(
         '$_nameA and $_nameB were in contact for too long!',
       );
@@ -76,14 +77,14 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (_eventAndEmployees.employeeA != null)
+        if (employees['A'] != null)
           Navigator.pushNamed(context, '/employeeManage/add',
-              arguments: _eventAndEmployees.employeeA);
+              arguments: employees['A']);
       },
       onDoubleTap: () {
-        if (_eventAndEmployees.employeeB != null)
+        if (employees['B'] != null)
           Navigator.pushNamed(context, '/employeeManage/add',
-              arguments: _eventAndEmployees.employeeB);
+              arguments: employees['B']);
       },
       child: Card(
         shadowColor: _getIcon().color,
@@ -100,7 +101,7 @@ class EventCard extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: Container(
-                  child: Text('${_eventAndEmployees.event.eventTime}',
+                  child: Text('${_event.eventTime}',
                       style: TextStyle(
                           fontSize:
                               (importantConstants.onMobileScreen) ? 5.5 : 9,

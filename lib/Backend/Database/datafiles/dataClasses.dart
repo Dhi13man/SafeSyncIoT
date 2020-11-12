@@ -41,10 +41,3 @@ class EmployeesWithAttendance {
 
   EmployeesWithAttendance(this.employee, this.attendance);
 }
-
-class EventWithEmployees {
-  final Employee employeeA, employeeB;
-  final Event event;
-
-  EventWithEmployees(this.event, this.employeeA, this.employeeB);
-}

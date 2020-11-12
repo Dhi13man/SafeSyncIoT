@@ -149,8 +149,11 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   // Event-Employee Actions
-  Future<EventWithEmployees> getEmployeesFromEvent(Event _event) {
-    return db.getEmployeeFromEvent(_event);
+
+  /// Returns A Map of two employees 'A' : EmployeeA and 'B' : Employee B
+  /// associated with the event [_event].
+  Future<Map<String, Employee>> getEmployeesFromEvent(Event _event) {
+    return db.getEmployeesFromEvent(_event);
   }
 
   //Database manipulation actions

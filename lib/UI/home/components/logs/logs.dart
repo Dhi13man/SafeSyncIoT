@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 import 'package:undo/undo.dart';
 
@@ -10,9 +11,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 class RealTimeLogs extends StatelessWidget {
-  BlocBuilder<DataBloc, ChangeStack> _buildEventList(BuildContext context) {
-    DataBloc _bloc = context.watch<DataBloc>();
-
+  BlocBuilder<DataBloc, ChangeStack> _buildEventList(DataBloc _bloc) {
     return BlocBuilder<DataBloc, ChangeStack>(
       builder: (_context, cs) {
         return StreamBuilder<List<Event>>(
@@ -46,8 +45,16 @@ class RealTimeLogs extends StatelessWidget {
                           future: _bloc.getEmployeesFromEvent(_events[index]),
                           builder: (_context, snapshot) {
                             if (!snapshot.hasData)
-                              return CircularProgressIndicator.adaptive();
-                            return EventCard(snapshot.data);
+                              return Center(
+                                child: importantConstants
+                                    .cardSubText('...Loading...'),
+                              );
+                            Map<String, Employee> _eventEmployees =
+                                snapshot.data;
+                            return EventCard(
+                              _events[index],
+                              employees: _eventEmployees,
+                            );
                           },
                         );
                       },
@@ -76,12 +83,13 @@ class RealTimeLogs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DataBloc _bloc = context.watch<DataBloc>();
     return Container(
       height: MediaQuery.of(context).size.height,
       margin: EdgeInsets.symmetric(
         vertical: 20,
       ),
-      child: _buildEventList(context),
+      child: _buildEventList(_bloc),
     );
   }
 }
