@@ -7,15 +7,15 @@ class ImportantConstants {
   Color get textLightColor => Color(0xFF535353);
   Color get bgGradBegin => Colors.purple[900];
   Color get bgGradMid => Colors.blue[900];
-  Color get bgGradEnd => Colors.red;
+  Color get bgGradEnd => Colors.purple[800];
   Color get textLighterColor => Color(0xFFACACAC);
   Color get textLightestColor => Colors.white;
   bool get onMobileScreen => Platform.isIOS || Platform.isAndroid;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [bgGradBegin, bgGradMid],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [bgGradMid, bgGradBegin, bgGradEnd],
         ),
       );
 

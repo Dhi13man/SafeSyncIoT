@@ -66,7 +66,10 @@ class FilteredEventsView extends StatelessWidget {
                     builder: (_context, snapshot) {
                       if (!snapshot.hasData)
                         return CircularProgressIndicator.adaptive();
-                      return EventCard(snapshot.data);
+                      return EventCard(
+                        _events[index],
+                        employees: snapshot.data,
+                      );
                     },
                   ),
                 );
