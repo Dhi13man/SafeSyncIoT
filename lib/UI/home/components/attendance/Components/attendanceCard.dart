@@ -21,7 +21,7 @@ class AttendanceCard extends StatelessWidget {
     else if (attendance.attendanceCount < optimumAttendancesNumber)
       return Icon(
         CupertinoIcons.checkmark_circle_fill,
-        color: Colors.green,
+        color: Colors.green[900],
       );
     else
       return Icon(

@@ -64,7 +64,7 @@ class RealTimeLogs extends StatelessWidget {
                   Container(
                       alignment: Alignment.bottomCenter,
                       height: 50,
-                      width: MediaQuery.of(_context).size.width,
+                      margin: EdgeInsets.all(5),
                       child: CupertinoButton(
                         color: importantConstants.bgGradMid,
                         child: Text('Clear Logs',
@@ -86,8 +86,9 @@ class RealTimeLogs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      margin: EdgeInsets.symmetric(
-        vertical: 20,
+      margin: EdgeInsets.only(
+        top: 20,
+        bottom: 8,
       ),
       child: _buildEventList(context),
     );

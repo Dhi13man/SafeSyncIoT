@@ -22,7 +22,7 @@ class ContactPage extends StatelessWidget {
         width: _dimensions.width,
         decoration: importantConstants.bgGradDecoration,
         child: ListView(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
           children: <Widget>[
             ContactCard(
               'Dhiman Seal',

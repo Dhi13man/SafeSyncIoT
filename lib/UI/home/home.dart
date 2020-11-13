@@ -21,9 +21,7 @@ class CustomTitleBar extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: RawMaterialButton(
-          highlightElevation: 50,
-          highlightColor: importantConstants.bgGradMid,
-          hoverElevation: 0,
+          focusColor: Colors.transparent,
           onPressed: () => Navigator.pushNamed(context, '/contact'),
           child: Text(
             title,

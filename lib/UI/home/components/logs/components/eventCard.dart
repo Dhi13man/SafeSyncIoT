@@ -20,12 +20,12 @@ class EventCard extends StatelessWidget {
     else if (_event.eventType == 'attendance')
       return Icon(
         Icons.clean_hands_rounded,
-        color: Colors.green,
+        color: Colors.green[800],
       );
     else if (_event.eventType == 'contact')
       return Icon(
         Icons.group,
-        color: Colors.yellow,
+        color: Colors.amber,
       );
     else if (_event.eventType == 'danger')
       return Icon(

@@ -7,9 +7,11 @@ class AttendanceTracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      margin: EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 20,
+      margin: EdgeInsets.only(
+        top: 20,
+        bottom: 13,
+        left: 20,
+        right: 20,
       ),
       child: AttendanceList(),
     );

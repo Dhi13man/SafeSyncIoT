@@ -95,7 +95,6 @@ class AttendanceList extends StatelessWidget {
         Container(
           alignment: Alignment.bottomCenter,
           height: 50,
-          width: MediaQuery.of(context).size.width,
           child: CupertinoButton(
             color: importantConstants.bgGradMid,
             child: Text(
