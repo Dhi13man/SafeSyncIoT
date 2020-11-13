@@ -18,7 +18,7 @@ class InfoText extends StatelessWidget {
     return Container(
       alignment: Alignment.bottomLeft,
       padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.only(top: 20.0),
+      margin: const EdgeInsets.only(top: 10.0),
       child: Text(
         this._text,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -41,42 +41,46 @@ class AttendanceList extends StatelessWidget {
       watchStream = bloc.getEmployeesWithAttendance(5, boundType: 'lower');
 
     return StreamBuilder<List<EmployeesWithAttendance>>(
-        stream: watchStream,
-        builder: (_context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: Text('...'),
-            );
-
-          // Nobody in given Criteria Found
-          List<EmployeesWithAttendance> employeeAttendances = snapshot.data;
-          if (employeeAttendances.isEmpty)
-            return Text(
-              "Nobody is $criteria!",
-              style: TextStyle(
-                  color: importantConstants.textLightColor,
-                  fontWeight: FontWeight.bold),
-            );
-
-          return Expanded(
-            child: ListView.builder(
-              itemCount: employeeAttendances.length,
-              itemBuilder: (BuildContext _context, int index) {
-                // Sanitizing Station attendance not needed
-                if (employeeAttendances[index].employee.deviceID ==
-                    'safesync-iot-sanitize')
-                  return Container(
-                    height: 0,
-                    width: 0,
-                  );
-                return AttendanceCard(
-                  employee: employeeAttendances[index].employee,
-                  attendance: employeeAttendances[index].attendance,
-                );
-              },
-            ),
+      stream: watchStream,
+      builder: (_context, snapshot) {
+        if (!snapshot.hasData)
+          return Center(
+            child: Text('...'),
           );
-        });
+
+        // Nobody in given Criteria Found
+        List<EmployeesWithAttendance> employeeAttendances = snapshot.data;
+        if (employeeAttendances.isEmpty)
+          return Text(
+            "Nobody is $criteria!",
+            style: TextStyle(
+                color: importantConstants.textLightColor,
+                fontWeight: FontWeight.bold),
+          );
+
+        return Expanded(
+          child: ListView.builder(
+            itemCount: employeeAttendances.length,
+            itemBuilder: (BuildContext _context, int index) {
+              // Sanitizing Station attendance not needed
+              if (employeeAttendances[index].employee.deviceID ==
+                  'safesync-iot-sanitize')
+                return Container(
+                  height: 0,
+                  width: 0,
+                );
+              return AttendanceCard(
+                employee: employeeAttendances[index].employee,
+                attendance: employeeAttendances[index].attendance,
+                key: ObjectKey(
+                  employeeAttendances[index].employee.employeeID,
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -88,21 +92,22 @@ class AttendanceList extends StatelessWidget {
         _buildEmployeeList(context, 'present'),
         InfoText('Absent: '),
         _buildEmployeeList(context, 'absent'),
-        Expanded(
-          child: Container(
-              alignment: Alignment.bottomCenter,
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              child: CupertinoButton(
-                color: importantConstants.bgGradMid,
-                child: Text('Reset Attendances',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: importantConstants.textLightestColor,
-                      fontWeight: FontWeight.bold,
-                    )),
-                onPressed: () => showResetAlert('Attendance', context),
-              )),
+        Container(
+          alignment: Alignment.bottomCenter,
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: CupertinoButton(
+            color: importantConstants.bgGradMid,
+            child: Text(
+              'Reset Attendances',
+              style: TextStyle(
+                fontSize: 15,
+                color: importantConstants.textLightestColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () => showResetAlert('Attendance', context),
+          ),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
@@ -76,48 +77,53 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _dateTime = _event.eventTime.toString();
-    return GestureDetector(
-      onTap: () {
-        if (employees['A'] != null)
-          Navigator.pushNamed(context, '/employeeManage/add',
-              arguments: employees['A']);
-      },
-      onDoubleTap: () {
-        if (employees['B'] != null)
-          Navigator.pushNamed(context, '/employeeManage/add',
-              arguments: employees['B']);
-      },
-      child: Tooltip(
-        waitDuration: Duration(milliseconds: 500),
-        message: (employees['B'] == null)
-            ? 'Click to open ${employees['A'].name}.'
-            : 'Click to open ${employees['A'].name}, Double Click to open ${employees['B'].name}.',
-        child: Card(
-          shadowColor: _getIcon().color,
-          elevation: 3,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          borderOnForeground: false,
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(flex: 1, child: _getIcon()),
-                _infoString(context),
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    child: Text(
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          if (employees['A'] != null)
+            Navigator.pushNamed(context, '/employeeManage/add',
+                arguments: employees['A']);
+        },
+        onDoubleTap: () {
+          if (employees['B'] != null)
+            Navigator.pushNamed(context, '/employeeManage/add',
+                arguments: employees['B']);
+        },
+        child: Tooltip(
+          waitDuration: Duration(milliseconds: 500),
+          message: (employees['B'] == null)
+              ? 'Click to open ${employees['A'].name}.'
+              : 'Click to open ${employees['A'].name}, Double Click to open ${employees['B'].name}.',
+          child: Card(
+            shadowColor: _getIcon().color,
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            borderOnForeground: false,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(flex: 1, child: _getIcon()),
+                  _infoString(context),
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      child: Text(
                         '${_dateTime.substring(0, _dateTime.length - 4)}',
                         style: TextStyle(
                             fontSize:
                                 (importantConstants.onMobileScreen) ? 5.5 : 9,
                             fontWeight: FontWeight.w600,
-                            color: importantConstants.textLighterColor)),
+                            color: importantConstants.textLighterColor),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

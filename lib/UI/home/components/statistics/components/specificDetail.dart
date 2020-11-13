@@ -94,12 +94,14 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                     : () {
                         if (_employeeDeviceID == null) return null;
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FilteredEventsView(
-                                      _employeeDeviceID,
-                                      filterType: 'deviceID',
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FilteredEventsView(
+                              _employeeDeviceID,
+                              filterType: 'deviceID',
+                            ),
+                          ),
+                        );
                       },
                 color: Colors.black,
                 child: Text(

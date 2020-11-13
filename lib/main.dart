@@ -55,17 +55,21 @@ class SafeSyncApp extends StatelessWidget {
           title: 'SafeSync IoT',
           routes: {
             '/': (context) => BlocProvider.value(
-                value: BlocProvider.of<DataBloc>(context),
-                child: SafeSyncHomePage(title: 'SafeSync IoT Dashboard')),
+                  value: BlocProvider.of<DataBloc>(context),
+                  child: SafeSyncHomePage(title: 'SafeSync IoT Dashboard'),
+                ),
             '/employeeManage': (context) => BlocProvider.value(
-                value: BlocProvider.of<DataBloc>(context),
-                child: EmployeeManagement()),
+                  value: BlocProvider.of<DataBloc>(context),
+                  child: EmployeeManagement(),
+                ),
             '/employeeManage/add': (context) => BlocProvider.value(
-                value: BlocProvider.of<DataBloc>(context),
-                child: EmployeeAdd()),
+                  value: BlocProvider.of<DataBloc>(context),
+                  child: EmployeeAdd(),
+                ),
             '/contact': (context) => BlocProvider.value(
-                value: BlocProvider.of<DataBloc>(context),
-                child: ContactPage()),
+                  value: BlocProvider.of<DataBloc>(context),
+                  child: ContactPage(),
+                ),
           },
           theme: ThemeData(
             primarySwatch: Colors.blue,

@@ -51,10 +51,11 @@ class DataBloc extends Cubit<ChangeStack> {
     if (stationInDatabase != null) return; // Do nothing if already exists
 
     Employee _station = Employee(
-        employeeID: 'safesync-iot-sanitize',
-        name: 'Sanitizing Station (unmodifiable)',
-        deviceID: 'safesync-iot-sanitize',
-        phoneNo: 0);
+      employeeID: 'safesync-iot-sanitize',
+      name: 'Sanitizing Station (unmodifiable)',
+      deviceID: 'safesync-iot-sanitize',
+      phoneNo: 0,
+    );
     await db.createEmployee(_station);
     // Too avoid bugs in Statistics
     await db.removeAttendanceSQL(
@@ -86,7 +87,6 @@ class DataBloc extends Cubit<ChangeStack> {
     await db.updateEmployee(employee);
     // SANITIZING STATION WILL ALWAYS EXIST
     resetSanitizingStation();
-
     emit(db.cs);
   }
 

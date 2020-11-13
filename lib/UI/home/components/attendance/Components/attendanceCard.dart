@@ -76,13 +76,14 @@ class AttendanceCard extends StatelessWidget {
                         ),
                       ),
                       importantConstants.cardSubText(
-                          '${attendance.attendanceCount} Sanitizations',
-                          style: TextStyle(
-                              fontSize:
-                                  (importantConstants.onMobileScreen) ? 7 : 10,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue[900])),
-                      importantConstants.cardSubText('Last: $_lastAttendance')
+                        '${attendance.attendanceCount} Sanitizations',
+                        style: TextStyle(
+                            fontSize:
+                                (importantConstants.onMobileScreen) ? 7 : 10,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue[900]),
+                      ),
+                      importantConstants.cardSubText('Last: $_lastAttendance'),
                     ],
                   ),
                 ),

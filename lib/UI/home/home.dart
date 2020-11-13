@@ -20,8 +20,11 @@ class CustomTitleBar extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, '/contact'),
+        child: RawMaterialButton(
+          highlightElevation: 50,
+          highlightColor: importantConstants.bgGradMid,
+          hoverElevation: 0,
+          onPressed: () => Navigator.pushNamed(context, '/contact'),
           child: Text(
             title,
             style: TextStyle(
@@ -54,29 +57,35 @@ class DatabaseExtractButton extends StatelessWidget {
     String _tooltip = 'Save $type in $_where as CSV.';
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
-      child: Container(
-        child: Column(
-          children: [
-            IconButton(
-              tooltip: _tooltip,
-              icon: Icon(
-                Icons.cloud_download_outlined,
-                size: (importantConstants.onMobileScreen) ? 25 : 35,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Future<bool> _result;
-                if (type == 'Employees')
-                  _result = bloc.exportDatabase(getEmployees: true);
-                else if (type == 'Attendances')
-                  _result = bloc.exportDatabase(getAttendances: true);
-                else if (type == 'Events')
-                  _result = bloc.exportDatabase(getEvents: true);
-                return _result.then((value) => (importantConstants
-                    .showSaveAlert(context, value, type: type)));
-              },
+      child: Column(
+        children: [
+          IconButton(
+            tooltip: _tooltip,
+            icon: Icon(
+              Icons.cloud_download_outlined,
+              size: (importantConstants.onMobileScreen) ? 25 : 35,
+              color: Colors.white,
             ),
-            Text(
+            onPressed: () {
+              Future<bool> _result;
+              if (type == 'Employees')
+                _result = bloc.exportDatabase(getEmployees: true);
+              else if (type == 'Attendances')
+                _result = bloc.exportDatabase(getAttendances: true);
+              else if (type == 'Events')
+                _result = bloc.exportDatabase(getEvents: true);
+              return _result.then(
+                (value) => importantConstants.showSaveAlert(
+                  context,
+                  value,
+                  type: type,
+                ),
+              );
+            },
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 11),
+            child: Text(
               type,
               style: TextStyle(
                 color: Colors.white,
@@ -84,8 +93,8 @@ class DatabaseExtractButton extends StatelessWidget {
                 fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -105,43 +114,43 @@ class SafeSyncHomePage extends StatelessWidget {
     return Scaffold(
       key: _drawerKey,
       body: Container(
-          height: _dimensions.height,
-          width: _dimensions.width,
-          decoration: importantConstants.bgGradDecoration,
-          child: Column(
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.only(
-                      top: (importantConstants.onMobileScreen) ? 20 : 15),
-                  height: _dimensions.height,
-                  width: _dimensions.width,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTitleBar(title: title),
-                      DatabaseExtractButton(type: 'Employees', bloc: bloc),
-                      DatabaseExtractButton(type: 'Attendances', bloc: bloc),
-                      DatabaseExtractButton(type: 'Events', bloc: bloc),
-                    ],
-                  ),
+        height: _dimensions.height,
+        width: _dimensions.width,
+        decoration: importantConstants.bgGradDecoration,
+        child: Column(
+          children: [
+            Flexible(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.only(
+                    top: (importantConstants.onMobileScreen) ? 20 : 15),
+                height: _dimensions.height,
+                width: _dimensions.width,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    CustomTitleBar(title: title),
+                    DatabaseExtractButton(type: 'Employees', bloc: bloc),
+                    DatabaseExtractButton(type: 'Attendances', bloc: bloc),
+                    DatabaseExtractButton(type: 'Events', bloc: bloc),
+                  ],
                 ),
               ),
-              Flexible(
-                flex: 8,
-                child: ChangeNotifierProvider<HomeTabState>.value(
-                  value: _state,
-                  child: HomeBody(
-                    title: title,
-                  ),
-                  builder: (context, child) => child,
+            ),
+            Flexible(
+              flex: 8,
+              child: ChangeNotifierProvider<HomeTabState>.value(
+                value: _state,
+                child: HomeBody(
+                  title: title,
                 ),
+                builder: (context, child) => child,
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
       drawer: SideBarDrawer(context, _drawerKey),
       floatingActionButton: FloatingActionButton(
         elevation: 80,

@@ -25,7 +25,7 @@ class EmployeeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocBuilder<DataBloc, ChangeStack>(
-        builder: (context, cs) {
+        builder: (context, ChangeStack cs) {
           return StreamBuilder<List<Employee>>(
             stream: context.watch<DataBloc>().showAllEmployees(
                   orderBy: _filter.toLowerCase(),
@@ -52,8 +52,11 @@ class EmployeeList extends StatelessWidget {
               else
                 return ListView.builder(
                   itemCount: _employees.length,
-                  itemBuilder: (context, index) {
-                    return EmployeeCard(_employees[index]);
+                  itemBuilder: (context, int index) {
+                    return EmployeeCard(
+                      _employees[index],
+                      key: ObjectKey(_employees[index].employeeID),
+                    );
                   },
                 );
             },
@@ -84,9 +87,11 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
         padding: EdgeInsets.zero,
         color: Colors.blue[900],
         onPressed: () {
-          setState(() {
-            _filter = sortByText;
-          });
+          setState(
+            () {
+              _filter = sortByText;
+            },
+          );
         },
         child: Text(
           sortByText,
@@ -119,9 +124,11 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
               color: Colors.blueAccent,
             ),
             onPressed: () {
-              setState(() {
-                _isOrderAscending = !_isOrderAscending;
-              });
+              setState(
+                () {
+                  _isOrderAscending = !_isOrderAscending;
+                },
+              );
             },
           ),
           Container(
@@ -138,30 +145,31 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
         ],
       ),
       body: Container(
-          child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            alignment: Alignment.bottomRight,
-            margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  child: Text(
-                    'Sort by: ',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              alignment: Alignment.bottomRight,
+              margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    child: Text(
+                      'Sort by: ',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-                sortButton('Name'),
-                sortButton('ID'),
-                sortButton('Device'),
-              ],
+                  sortButton('Name'),
+                  sortButton('ID'),
+                  sortButton('Device'),
+                ],
+              ),
             ),
-          ),
-          EmployeeList(filter: _filter, isOrderAscending: _isOrderAscending),
-        ],
-      )),
+            EmployeeList(filter: _filter, isOrderAscending: _isOrderAscending),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.person_add,

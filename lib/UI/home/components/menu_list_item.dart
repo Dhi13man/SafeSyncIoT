@@ -32,24 +32,26 @@ class ListItem extends StatelessWidget {
             color: tabColor,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Icon(
-                  _tabIcon[tab],
-                  size: _infoSize,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                ),
-                Text(
-                  itemText,
-                  style: TextStyle(
-                    fontSize: _infoSize - 2,
-                    fontWeight: FontWeight.bold,
-                    color: importantConstants.textColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    _tabIcon[tab],
+                    size: _infoSize,
                   ),
-                ),
-              ]),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                  ),
+                  Text(
+                    itemText,
+                    style: TextStyle(
+                      fontSize: _infoSize - 2,
+                      fontWeight: FontWeight.bold,
+                      color: importantConstants.textColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -19,10 +19,10 @@ class FilteredEventsView extends StatelessWidget {
     DataBloc _bloc = context.watch<DataBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: // Changes based on whether Adding new or editing.
-            Text((filterType == 'deviceID')
-                ? 'Employee Events Log'
-                : 'Showing all contacts'),
+        // Changes based on whether Adding new or editing.
+        title: Text((filterType == 'deviceID')
+            ? 'Employee Events Log'
+            : 'Showing all contacts'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradMid,
         leading: IconButton(
@@ -55,8 +55,10 @@ class FilteredEventsView extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       "No such events have occured yet.",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   );
                 return ListView.builder(

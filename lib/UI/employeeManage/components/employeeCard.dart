@@ -8,7 +8,7 @@ import 'package:safe_sync/Backend/constants.dart';
 class EmployeeCard extends StatelessWidget {
   final Employee entry;
 
-  EmployeeCard(this.entry) : super(key: ObjectKey(entry.employeeID));
+  EmployeeCard(this.entry, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +83,7 @@ class EmployeeCard extends StatelessWidget {
                         color: Colors.black,
                         focusColor: Colors.red,
                         onPressed: () {
-                          BlocProvider.of<DataBloc>(context)
-                              .deleteEmployee(entry);
+                          context.read<DataBloc>().deleteEmployee(entry);
                         },
                       )
                     : Container(), // NO DELETE BUTTON FOR SANITIZING STATION

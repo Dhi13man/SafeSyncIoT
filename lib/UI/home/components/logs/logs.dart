@@ -43,7 +43,7 @@ class RealTimeLogs extends StatelessWidget {
                       itemBuilder: (BuildContext _context, int index) {
                         return FutureBuilder(
                           future: _bloc.getEmployeesFromEvent(_events[index]),
-                          builder: (_context, snapshot) {
+                          builder: (_context, AsyncSnapshot snapshot) {
                             if (!snapshot.hasData)
                               return Center(
                                 child: importantConstants
@@ -54,6 +54,7 @@ class RealTimeLogs extends StatelessWidget {
                             return EventCard(
                               _events[index],
                               employees: _eventEmployees,
+                              key: ObjectKey(_events[index].key),
                             );
                           },
                         );

@@ -31,9 +31,7 @@ class EmployeeAdd extends StatelessWidget {
         alignment: Alignment.center,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(60),
-          child: EmployeeForm(
-            employee: employee,
-          ),
+          child: EmployeeForm(employee: employee),
         ),
       ),
     );
@@ -60,11 +58,15 @@ class _EmployeeFormState extends State<EmployeeForm> {
       'id': TextEditingController(
         text: (_editmode) ? employee.employeeID : '',
       ),
-      'name': TextEditingController(text: (_editmode) ? employee.name : ''),
+      'name': TextEditingController(
+        text: (_editmode) ? employee.name : '',
+      ),
       'phone': TextEditingController(
-          text: (_editmode) ? employee.phoneNo.toString() : ''),
-      'device':
-          TextEditingController(text: (_editmode) ? employee.deviceID : '')
+        text: (_editmode) ? employee.phoneNo.toString() : '',
+      ),
+      'device': TextEditingController(
+        text: (_editmode) ? employee.deviceID : '',
+      ),
     };
   }
 
@@ -86,18 +88,24 @@ class _EmployeeFormState extends State<EmployeeForm> {
     DataBloc _bloc = context.read<DataBloc>();
 
     if (_editmode)
-      _bloc.updateEmployee(Employee(
+      _bloc.updateEmployee(
+        Employee(
           employeeID: id,
           name: name,
           deviceID: device,
-          phoneNo: int.parse(phone)));
+          phoneNo: int.parse(phone),
+        ),
+      );
     else {
       // ADD NEW EMPLOYEE
-      _bloc.createEmployee(Employee(
+      _bloc.createEmployee(
+        Employee(
           employeeID: id,
           name: name,
           deviceID: device,
-          phoneNo: int.parse(phone)));
+          phoneNo: int.parse(phone),
+        ),
+      );
 
       // ADD EVENT THAT NEW EMPLOYEE WAS ADDED
       DateTime _current = DateTime.now();
@@ -199,36 +207,39 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 ),
               ),
               Container(
-                  alignment: Alignment.bottomCenter,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 10,
-                  ),
-                  width: _width,
-                  child: CupertinoButton(
-                    color: importantConstants.bgGradMid,
-                    child: Text(
-                        (employee == null) ? 'Add Employee' : 'Update Info',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: importantConstants.textLightestColor,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    onPressed: () {
-                      if (verifyFormData[0] &&
-                          verifyFormData[1] &&
-                          verifyFormData[2]) {
-                        Future<Employee> _emp = context
-                            .read<DataBloc>()
-                            .getEmployeeByID(_controlMap['id'].text);
-                        _emp.then((value) {
+                alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                width: _width,
+                child: CupertinoButton(
+                  color: importantConstants.bgGradMid,
+                  child:
+                      Text((employee == null) ? 'Add Employee' : 'Update Info',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: importantConstants.textLightestColor,
+                            fontWeight: FontWeight.bold,
+                          )),
+                  onPressed: () {
+                    if (verifyFormData[0] &&
+                        verifyFormData[1] &&
+                        verifyFormData[2]) {
+                      Future<Employee> _emp = context
+                          .read<DataBloc>()
+                          .getEmployeeByID(_controlMap['id'].text);
+                      _emp.then(
+                        (value) {
                           if (value == null || _editmode)
                             _insertToDatabase(context);
                           else
                             _controlMap['id'].text += '_ID_TAKEN!';
-                        });
-                      }
-                    },
-                  )),
+                        },
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

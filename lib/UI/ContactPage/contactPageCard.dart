@@ -7,7 +7,8 @@ import 'package:safe_sync/Backend/constants.dart';
 class ContactCard extends StatelessWidget {
   final String _name, githubURL, emailID;
 
-  ContactCard(this._name, {this.githubURL, this.emailID});
+  ContactCard(this._name, {this.githubURL, this.emailID, Key key})
+      : super(key: key);
 
   void _launchURL(String url) async {
     try {

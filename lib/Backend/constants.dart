@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -67,13 +68,14 @@ class ImportantConstants {
                   children: [
                     Text('$_message: '),
                     Container(
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        child: Text(
-                          snapshot.data,
-                          style: TextStyle(
-                              color: importantConstants.textLighterColor,
-                              fontSize: 12),
-                        )),
+                      padding: EdgeInsets.symmetric(vertical: 18),
+                      child: Text(
+                        snapshot.data,
+                        style: TextStyle(
+                            color: importantConstants.textLighterColor,
+                            fontSize: 12),
+                      ),
+                    ),
                   ],
                 );
             },

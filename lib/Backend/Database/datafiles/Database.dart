@@ -19,42 +19,48 @@ class Database extends _$Database {
   Future<List<Employee>> getAllEmployees(
           {String orderBy = 'asce', String mode = 'name'}) =>
       (select(employees)
-            ..orderBy([
-              (u) {
-                GeneratedTextColumn criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'id') criteria = employees.employeeID;
-                if (orderBy == 'name') criteria = employees.name;
-                if (orderBy == 'device') criteria = employees.deviceID;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  GeneratedTextColumn criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'id') criteria = employees.employeeID;
+                  if (orderBy == 'name') criteria = employees.name;
+                  if (orderBy == 'device') criteria = employees.deviceID;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .get();
 
   Future<Employee> getEmployeebyID(String id, {String type = 'employee'}) {
     final query = select(employees);
-    query.where((employees) {
-      if (type.compareTo('device') == 0) return employees.deviceID.equals(id);
-      return employees.employeeID.equals(id);
-    });
+    query.where(
+      (employees) {
+        if (type.compareTo('device') == 0) return employees.deviceID.equals(id);
+        return employees.employeeID.equals(id);
+      },
+    );
     return query.getSingle();
   }
 
   Stream<List<Employee>> watchAllEmployees(
           {String orderBy = 'name', String mode = 'asce'}) =>
       (select(employees)
-            ..orderBy([
-              (u) {
-                GeneratedTextColumn criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'id') criteria = employees.employeeID;
-                if (orderBy == 'name') criteria = employees.name;
-                if (orderBy == 'device') criteria = employees.deviceID;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  GeneratedTextColumn criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'id') criteria = employees.employeeID;
+                  if (orderBy == 'name') criteria = employees.name;
+                  if (orderBy == 'device') criteria = employees.deviceID;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .watch();
   Future<int> createEmployeeSQL(Employee employee) =>
       into(employees).insert(employee);
@@ -67,32 +73,38 @@ class Database extends _$Database {
   Future<List<Attendance>> getAllAttendances(
           {String orderBy = 'last', String mode = 'asce'}) =>
       (select(attendances)
-            ..orderBy([
-              (u) {
-                dynamic criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'id') criteria = attendances.employeeID;
-                if (orderBy == 'number') criteria = attendances.attendanceCount;
-                if (orderBy == 'last') criteria = attendances.lastAttendance;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  dynamic criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'id') criteria = attendances.employeeID;
+                  if (orderBy == 'number')
+                    criteria = attendances.attendanceCount;
+                  if (orderBy == 'last') criteria = attendances.lastAttendance;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .get();
   Stream<List<Attendance>> watchAllAttendances(
           {String orderBy = 'last', String mode = 'asce'}) =>
       (select(attendances)
-            ..orderBy([
-              (u) {
-                dynamic criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'id') criteria = attendances.employeeID;
-                if (orderBy == 'number') criteria = attendances.attendanceCount;
-                if (orderBy == 'last') criteria = attendances.lastAttendance;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  dynamic criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'id') criteria = attendances.employeeID;
+                  if (orderBy == 'number')
+                    criteria = attendances.attendanceCount;
+                  if (orderBy == 'last') criteria = attendances.lastAttendance;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .watch();
   Future<int> createAttendanceSQL(Attendance attendance) =>
       into(attendances).insert(attendance);
@@ -105,32 +117,36 @@ class Database extends _$Database {
   Future<List<Event>> getAllEvents(
           {String orderBy = 'time', String mode = 'desc'}) =>
       (select(events)
-            ..orderBy([
-              (u) {
-                dynamic criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'idA') criteria = events.deviceIDA;
-                if (orderBy == 'idB') criteria = events.deviceIDB;
-                if (orderBy == 'time') criteria = events.eventTime;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  dynamic criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'idA') criteria = events.deviceIDA;
+                  if (orderBy == 'idB') criteria = events.deviceIDB;
+                  if (orderBy == 'time') criteria = events.eventTime;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .get();
   Stream<List<Event>> watchAllEvents(
           {String orderBy = 'time', String mode = 'desc'}) =>
       (select(events)
-            ..orderBy([
-              (u) {
-                dynamic criteria = employees.employeeID;
-                OrderingMode order =
-                    (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
-                if (orderBy == 'idA') criteria = events.deviceIDA;
-                if (orderBy == 'idB') criteria = events.deviceIDB;
-                if (orderBy == 'time') criteria = events.eventTime;
-                return OrderingTerm(expression: criteria, mode: order);
-              }
-            ]))
+            ..orderBy(
+              [
+                (u) {
+                  dynamic criteria = employees.employeeID;
+                  OrderingMode order =
+                      (mode == 'desc') ? OrderingMode.desc : OrderingMode.asc;
+                  if (orderBy == 'idA') criteria = events.deviceIDA;
+                  if (orderBy == 'idB') criteria = events.deviceIDB;
+                  if (orderBy == 'time') criteria = events.eventTime;
+                  return OrderingTerm(expression: criteria, mode: order);
+                }
+              ],
+            ))
           .watch();
   Stream<List<Event>> watchEventsForCriteria(String criteria,
       {String type = 'deviceID'}) {
@@ -160,10 +176,12 @@ class Database extends _$Database {
   Stream<List<EmployeesWithAttendance>> watchEmployeeAttendanceComparitive(
       int bound,
       {String boundType = 'upper'}) {
-    final query = select(employees).join([
-      leftOuterJoin(
-          attendances, employees.employeeID.equalsExp(attendances.employeeID))
-    ]);
+    final query = select(employees).join(
+      [
+        leftOuterJoin(
+            attendances, employees.employeeID.equalsExp(attendances.employeeID))
+      ],
+    );
 
     if (boundType == 'lower')
       query.where(
@@ -175,12 +193,14 @@ class Database extends _$Database {
       );
 
     return query.watch().map((rows) {
-      return rows.map((row) {
-        return EmployeesWithAttendance(
-          row.readTable(employees),
-          row.readTable(attendances),
-        );
-      }).toList();
+      return rows.map(
+        (row) {
+          return EmployeesWithAttendance(
+            row.readTable(employees),
+            row.readTable(attendances),
+          );
+        },
+      ).toList();
     });
   }
 
@@ -226,9 +246,10 @@ class Database extends _$Database {
     if (_attendance == null) return;
 
     Attendance _newAttendance = Attendance(
-        employeeID: employeeID,
-        attendanceCount: _attendance.attendanceCount + 1,
-        lastAttendance: DateTime.now());
+      employeeID: employeeID,
+      attendanceCount: _attendance.attendanceCount + 1,
+      lastAttendance: DateTime.now(),
+    );
     return updateRow(cs, attendances, _newAttendance);
   }
 
@@ -261,7 +282,7 @@ class Database extends _$Database {
     return {
       'employees': _employees,
       'attendances': _attendances,
-      'events': _events
+      'events': _events,
     };
   }
 

@@ -28,6 +28,7 @@ class EmployeeStatistics extends StatelessWidget {
                     cardName: 'Dangerous Contact Percentage: ',
                     type: 'negative',
                     informationStream: _bloc.getDangerousContactsPercentage(),
+                    key: ObjectKey('Dangerous Contact Percentage: '),
                   ),
                 ),
                 Container(
@@ -36,7 +37,10 @@ class EmployeeStatistics extends StatelessWidget {
                     cardName: 'Last Sanitization: ',
                     type: 'neutral',
                     informationStream: _bloc.getSanitizeeNamesBy(
-                        orderBy: 'last', mode: 'desc'),
+                      orderBy: 'last',
+                      mode: 'desc',
+                    ),
+                    key: ObjectKey('Last Sanitization: '),
                   ),
                 ),
                 Container(
@@ -45,7 +49,10 @@ class EmployeeStatistics extends StatelessWidget {
                     cardName: 'Most Sanitized Employee: ',
                     type: 'positive',
                     informationStream: _bloc.getSanitizeeNamesBy(
-                        orderBy: 'number', mode: 'desc'),
+                      orderBy: 'number',
+                      mode: 'desc',
+                    ),
+                    key: ObjectKey('Most Sanitized Employee: '),
                   ),
                 ),
                 Container(
@@ -54,7 +61,10 @@ class EmployeeStatistics extends StatelessWidget {
                     cardName: 'Least Sanitized Employee: ',
                     type: 'negative',
                     informationStream: _bloc.getSanitizeeNamesBy(
-                        orderBy: 'number', mode: 'asce'),
+                      orderBy: 'number',
+                      mode: 'asce',
+                    ),
+                    key: ObjectKey('Least Sanitized Employee: '),
                   ),
                 ),
               ],

@@ -53,12 +53,10 @@ class HomeBody extends StatelessWidget {
                 onHorizontalDragEnd: (details) {
                   if (kIsWeb) return;
                   if (!importantConstants.onMobileScreen) return;
-                  if (details.primaryVelocity > 0)
-                    homeTabState.openTab(
-                        (currentTabID != 0) ? currentTabID - 1 : currentTabID);
-                  else if (details.primaryVelocity < 0)
-                    homeTabState.openTab(
-                        (currentTabID != 2) ? currentTabID + 1 : currentTabID);
+                  if (details.primaryVelocity > 0 && currentTabID != 0)
+                    homeTabState.openTab(currentTabID - 1);
+                  else if (details.primaryVelocity < 0 && currentTabID != 2)
+                    homeTabState.openTab(currentTabID + 1);
                 },
                 child: Container(
                   decoration: BoxDecoration(

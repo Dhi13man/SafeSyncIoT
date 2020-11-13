@@ -15,7 +15,7 @@ class ContactPage extends StatelessWidget {
         ),
         elevation: 3,
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradBegin,
+        backgroundColor: importantConstants.bgGradMid,
       ),
       body: Container(
         height: _dimensions.height,
@@ -24,14 +24,30 @@ class ContactPage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
           children: <Widget>[
-            ContactCard('Dhiman Seal',
-                githubURL: 'https://github.com/Dhi13man',
-                emailID: 'furyx.ds@gmail.com'),
-            ContactCard('Kaustav Moni Malakar', githubURL: '', emailID: ''),
-            ContactCard('Prantik Sarkar',
-                githubURL: '', emailID: 'prantiks44@gmail.com'),
-            ContactCard('Sabuj Saikia',
-                githubURL: '', emailID: 'sabuj.saikia2007@gmail.com'),
+            ContactCard(
+              'Dhiman Seal',
+              githubURL: 'https://github.com/Dhi13man',
+              emailID: 'furyx.ds@gmail.com',
+              key: ObjectKey('Dhiman Seal'),
+            ),
+            ContactCard(
+              'Kaustav Moni Malakar',
+              githubURL: '',
+              emailID: '',
+              key: ObjectKey('Kaustav Moni Malakar'),
+            ),
+            ContactCard(
+              'Prantik Sarkar',
+              githubURL: '',
+              emailID: 'prantiks44@gmail.com',
+              key: ObjectKey('Prantik Sarkar'),
+            ),
+            ContactCard(
+              'Sabuj Saikia',
+              githubURL: '',
+              emailID: 'sabuj.saikia2007@gmail.com',
+              key: ObjectKey('Sabuj Saikia'),
+            ),
           ],
         ),
       ),

@@ -18,16 +18,20 @@ class InformationCard extends StatelessWidget {
     'neutral': Icons.adjust,
     'negative': Icons.sick,
   };
-  InformationCard(
-      {this.cardName, this.type = 'neutral', this.informationStream, Key key})
-      : super(key: key);
+  InformationCard({
+    this.cardName,
+    this.type = 'neutral',
+    this.informationStream,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          side: BorderSide(color: _cardShadowColor[type]),
-          borderRadius: BorderRadius.circular(25)),
+        side: BorderSide(color: _cardShadowColor[type]),
+        borderRadius: BorderRadius.circular(25),
+      ),
       elevation: 10,
       shadowColor: _cardShadowColor[type],
       borderOnForeground: true,
