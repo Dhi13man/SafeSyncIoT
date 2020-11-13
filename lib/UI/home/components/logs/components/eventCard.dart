@@ -14,12 +14,12 @@ class EventCard extends StatelessWidget {
   Icon _getIcon() {
     if (_event.eventType == 'register')
       return Icon(
-        CupertinoIcons.person_add_solid,
+        CupertinoIcons.person_add,
         color: Colors.blue[900],
       );
     else if (_event.eventType == 'attendance')
       return Icon(
-        Icons.clean_hands_rounded,
+        Icons.clean_hands,
         color: Colors.green[800],
       );
     else if (_event.eventType == 'contact')
