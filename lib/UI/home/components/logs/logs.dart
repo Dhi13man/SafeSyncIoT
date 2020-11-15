@@ -7,7 +7,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
-import 'package:safe_sync/UI/removeAlert.dart';
+import 'package:safe_sync/UI/safesyncAlerts.dart';
 
 class RealTimeLogs extends StatelessWidget {
   BlocBuilder<DataBloc, ChangeStack> _buildEventList(BuildContext context) {
@@ -73,7 +73,8 @@ class RealTimeLogs extends StatelessWidget {
                               color: importantConstants.textLightestColor,
                               fontWeight: FontWeight.bold,
                             )),
-                        onPressed: () => showResetAlert('Event', context),
+                        onPressed: () =>
+                            safeSyncAlerts.showResetAlert('Event', context),
                       )),
                 ],
               );

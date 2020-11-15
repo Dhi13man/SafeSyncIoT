@@ -7,7 +7,7 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/EmployeeManage/components/employeeCard.dart';
-import 'package:safe_sync/UI/removeAlert.dart';
+import 'package:safe_sync/UI/safesyncAlerts.dart';
 
 class EmployeeList extends StatelessWidget {
   const EmployeeList({
@@ -138,7 +138,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
               icon: const Icon(Icons.delete),
               color: Colors.red,
               onPressed: () {
-                showResetAlert('Employee', context);
+                safeSyncAlerts.showResetAlert('Employee', context);
               },
             ),
           ),

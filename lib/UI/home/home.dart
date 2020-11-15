@@ -5,6 +5,7 @@ import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
 import 'package:safe_sync/UI/Home/components/body.dart';
+import 'package:safe_sync/UI/safesyncAlerts.dart';
 import 'package:safe_sync/UI/sidebar.dart';
 
 class CustomTitleBar extends StatelessWidget {
@@ -73,7 +74,7 @@ class DatabaseExtractButton extends StatelessWidget {
               else if (type == 'Events')
                 _result = bloc.exportDatabase(getEvents: true);
               return _result.then(
-                (value) => importantConstants.showSaveAlert(
+                (value) => safeSyncAlerts.showSaveAlert(
                   context,
                   value,
                   type: type,

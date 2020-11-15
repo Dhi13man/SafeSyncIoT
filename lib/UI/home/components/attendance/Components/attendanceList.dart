@@ -6,7 +6,7 @@ import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/Home/components/attendance/components/attendanceCard.dart';
-import 'package:safe_sync/UI/removeAlert.dart';
+import 'package:safe_sync/UI/safesyncAlerts.dart';
 
 class InfoText extends StatelessWidget {
   final String _text;
@@ -105,7 +105,8 @@ class AttendanceList extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () => showResetAlert('Attendance', context),
+            onPressed: () =>
+                safeSyncAlerts.showResetAlert('Attendance', context),
           ),
         ),
       ],
