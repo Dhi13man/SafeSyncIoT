@@ -72,7 +72,7 @@ class AttendanceList extends StatelessWidget {
               return AttendanceCard(
                 employee: employeeAttendances[index].employee,
                 attendance: employeeAttendances[index].attendance,
-                key: ObjectKey(
+                key: ValueKey(
                   employeeAttendances[index].employee.employeeID,
                 ),
               );

@@ -14,7 +14,7 @@ class ListItem extends StatelessWidget {
     Icons.format_list_numbered_sharp
   ];
 
-  ListItem({this.itemText, this.tab, this.tabColor});
+  ListItem({Key key, this.itemText, this.tab, this.tabColor});
 
   @override
   Widget build(BuildContext context) {

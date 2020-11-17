@@ -54,7 +54,7 @@ class RealTimeLogs extends StatelessWidget {
                             return EventCard(
                               _events[index],
                               employees: _eventEmployees,
-                              key: ObjectKey(_events[index].key),
+                              key: ValueKey(_events[index].key),
                             );
                           },
                         );

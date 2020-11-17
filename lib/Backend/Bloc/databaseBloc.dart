@@ -95,7 +95,7 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
-  // EVENTS ACTIONS. Event types: attendance, contact, join, register
+  // EVENTS ACTIONS. Event types: attendance, contact, danger, register
   void createEvent(Event event) async {
     await db.createEvent(event);
     emit(db.cs);

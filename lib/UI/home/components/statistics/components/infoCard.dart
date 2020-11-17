@@ -18,6 +18,7 @@ class InformationCard extends StatelessWidget {
     'neutral': Icons.adjust,
     'negative': Icons.sick,
   };
+  
   InformationCard({
     this.cardName,
     this.type = 'neutral',

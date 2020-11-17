@@ -55,7 +55,7 @@ class EmployeeList extends StatelessWidget {
                   itemBuilder: (context, int index) {
                     return EmployeeCard(
                       _employees[index],
-                      key: ObjectKey(_employees[index].employeeID),
+                      key: ValueKey(_employees[index].employeeID),
                     );
                   },
                 );

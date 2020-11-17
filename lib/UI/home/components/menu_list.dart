@@ -23,6 +23,7 @@ class MenuList extends StatelessWidget {
             itemText: 'Real-Time Logs',
             tab: 0,
             tabColor: _giveColor(0, homeTabState.homeTabID),
+            key: ValueKey(0),
           ),
         ),
         Flexible(
@@ -30,6 +31,7 @@ class MenuList extends StatelessWidget {
             itemText: 'Attendance',
             tab: 1,
             tabColor: _giveColor(1, homeTabState.homeTabID),
+            key: ValueKey(1),
           ),
         ),
         Flexible(
@@ -37,6 +39,7 @@ class MenuList extends StatelessWidget {
             itemText: 'Statistics',
             tab: 2,
             tabColor: _giveColor(2, homeTabState.homeTabID),
+            key: ValueKey(2),
           ),
         )
       ],

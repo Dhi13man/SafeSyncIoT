@@ -48,7 +48,7 @@ class HomeBody extends StatelessWidget {
               child: MenuList(),
             ),
             Expanded(
-              // SWIPE TO CHANGE TAP CAPABILITY
+              // SWIPE TO CHANGE TAB CAPABILITY
               child: GestureDetector(
                 onHorizontalDragEnd: (details) {
                   if (kIsWeb) return;
