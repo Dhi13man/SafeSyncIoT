@@ -44,17 +44,25 @@ class RealTimeLogs extends StatelessWidget {
                         return FutureBuilder(
                           future: _bloc.getEmployeesFromEvent(_events[index]),
                           builder: (_context, AsyncSnapshot snapshot) {
-                            if (!snapshot.hasData)
-                              return Center(
-                                child: importantConstants
-                                    .cardSubText('...Loading...'),
-                              );
                             Map<String, Employee> _eventEmployees =
                                 snapshot.data;
-                            return EventCard(
-                              _events[index],
-                              employees: _eventEmployees,
-                              key: ValueKey(_events[index].key),
+                            // Added animation during loading
+                            return AnimatedCrossFade(
+                              firstChild: Center(
+                                child: importantConstants
+                                    .cardSubText('...Loading...'),
+                              ),
+                              secondChild: (snapshot.hasData)
+                                  ? EventCard(
+                                      _events[index],
+                                      employees: _eventEmployees,
+                                      key: ValueKey(_events[index].key),
+                                    )
+                                  : Container(),
+                              duration: Duration(milliseconds: 250),
+                              crossFadeState: (!snapshot.hasData)
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
                             );
                           },
                         );
