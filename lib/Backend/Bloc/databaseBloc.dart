@@ -279,13 +279,13 @@ class DataBloc extends Cubit<ChangeStack> {
   // MISCELLANEOUS
   bool get canUndo => db.cs.canUndo;
   void undo() async {
-    await db.cs.undo();
+    db.cs.undo();
     emit(db.cs);
   }
 
   bool get canRedo => db.cs.canRedo;
   void redo() async {
-    await db.cs.redo();
+    db.cs.redo();
     emit(db.cs);
   }
 

@@ -12,7 +12,7 @@ extension TableUtils on GeneratedDatabase {
       () async => await this.delete(table).delete(val),
       (old) async => await this.into(table).insert(old),
     );
-    await cs.add(_change);
+    cs.add(_change);
   }
 
   Future<void> insertRow(
@@ -25,7 +25,7 @@ extension TableUtils on GeneratedDatabase {
       () async => await this.into(table).insert(val),
       (val) async => await this.delete(table).delete(val),
     );
-    await cs.add(_change);
+    cs.add(_change);
   }
 
   Future<void> updateRow(
@@ -39,7 +39,7 @@ extension TableUtils on GeneratedDatabase {
       () async => await this.update(table).replace(val),
       (old) async => await this.update(table).replace(old),
     );
-    await cs.add(_change);
+    cs.add(_change);
   }
 }
 

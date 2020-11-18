@@ -24,7 +24,7 @@ void setUpDatabaseForDesktop() {
   }
 }
 
-Future main() async {
+void main() {
   setUpDatabaseForDesktop();
   runApp(SafeSyncApp());
 }
