@@ -103,15 +103,15 @@ class FilteredEventsView extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             elevation: 8,
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: FilterBar(),
-                ),
-                FilteredEventsList(filter: _filter, filterType: filterType),
-              ],
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Column(
+                children: [
+                  FilterBar(),
+                  FilteredEventsList(filter: _filter, filterType: filterType),
+                ],
+              ),
             ),
           ),
         ),

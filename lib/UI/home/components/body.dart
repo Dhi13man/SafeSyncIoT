@@ -5,20 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
-import 'package:safe_sync/UI/home/components/attendance/attendance.dart';
-import 'package:safe_sync/UI/home/components/logs/logs.dart';
 import 'package:safe_sync/UI/home/components/menu_list.dart';
-import 'package:safe_sync/UI/home/components/statistics/statistics.dart';
 
 class HomeBody extends StatelessWidget {
   final String title;
   HomeBody({this.title});
-
-  final List<Widget> _selectedWidget = [
-    RealTimeLogs(),
-    AttendanceTracker(),
-    EmployeeStatistics()
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +62,7 @@ class HomeBody extends StatelessWidget {
                   ),
                   width: _dimensions.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: _selectedWidget[currentTabID],
+                  child: homeTabState.getSelectedWidget(),
                 ),
               ),
             ),

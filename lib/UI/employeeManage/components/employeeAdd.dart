@@ -5,39 +5,6 @@ import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/constants.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 
-class EmployeeAdd extends StatelessWidget {
-  const EmployeeAdd({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size _dimensions = MediaQuery.of(context).size;
-    // As arguments are passed from other pages through Navigator.pushNamed
-    Employee employee = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: // Changes based on whether Adding new or editing.
-            Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
-        centerTitle: true,
-        backgroundColor: importantConstants.bgGradMid,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_sharp),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Container(
-        width: _dimensions.width,
-        height: _dimensions.height,
-        decoration: importantConstants.bgGradDecoration,
-        alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(60),
-          child: EmployeeForm(employee: employee),
-        ),
-      ),
-    );
-  }
-}
-
 class EmployeeForm extends StatefulWidget {
   final Employee employee;
 
@@ -242,6 +209,40 @@ class _EmployeeFormState extends State<EmployeeForm> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class EmployeeAdd extends StatelessWidget {
+  const EmployeeAdd({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size _dimensions = MediaQuery.of(context).size;
+    // As arguments are passed from other pages through Navigator.pushNamed
+    Employee employee = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: // Changes based on whether Adding new or editing.
+            Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
+        centerTitle: true,
+        backgroundColor: importantConstants.bgGradMid,
+        elevation: 2,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_sharp),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Container(
+        width: _dimensions.width,
+        height: _dimensions.height,
+        decoration: importantConstants.bgGradDecoration,
+        alignment: Alignment.center,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(60),
+          child: EmployeeForm(employee: employee),
         ),
       ),
     );

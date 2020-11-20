@@ -53,6 +53,18 @@ class SideBarDrawer extends StatelessWidget {
             onTap: () {
               if (_scaffoldKey.currentState.isDrawerOpen) {
                 _scaffoldKey.currentState.openEndDrawer();
+                Navigator.pushNamed(_mainContext, '/contactEventSummary');
+              }
+            },
+            leading: Icon(Icons.book_rounded),
+            title: Text(
+              'Employee Contact Summary',
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              if (_scaffoldKey.currentState.isDrawerOpen) {
+                _scaffoldKey.currentState.openEndDrawer();
                 Navigator.pushNamed(_mainContext, '/contact');
               }
             },
