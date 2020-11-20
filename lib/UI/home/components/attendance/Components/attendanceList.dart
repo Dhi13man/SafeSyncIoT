@@ -96,7 +96,7 @@ class AttendanceList extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           height: 50,
           child: CupertinoButton(
-            color: importantConstants.bgGradMid,
+            color: importantConstants.bgGradBegin,
             child: Text(
               'Reset Attendances',
               style: TextStyle(

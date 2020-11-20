@@ -72,11 +72,12 @@ class ResetEventsButton extends StatelessWidget {
     return Container(
       alignment: Alignment.bottomCenter,
       height: 50,
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: CupertinoButton(
-        color: importantConstants.bgGradMid,
+        color: importantConstants.bgGradBegin,
         child: Text(
-          'Clear Logs',
+          'Clear All Events',
           style: TextStyle(
             fontSize: 15,
             color: importantConstants.textLightestColor,
@@ -85,6 +86,42 @@ class ResetEventsButton extends StatelessWidget {
         ),
         onPressed: () => safeSyncAlerts.showResetAlert('Event', context),
       ),
+    );
+  }
+}
+
+class SummarizeContactsButton extends StatelessWidget {
+  const SummarizeContactsButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+          child: CupertinoButton(
+            color: importantConstants.bgGradBegin,
+            child: Row(
+              children: [
+                Text(
+                  'Summarize Contacts',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              '/contactEventSummary',
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -130,25 +167,15 @@ class RealTimeLogs extends StatelessWidget {
                 value: showEventState,
                 child: Column(
                   children: [
+                    FilterBar(),
+                    EmployeeList(events: _events, bloc: _bloc),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: IconButton(
-                              icon: Icon(Icons.cloud_download_outlined),
-                              onPressed: () => Navigator.pushNamed(
-                                context,
-                                'contactSummary',
-                              ),
-                            ),
-                          ),
-                        ),
-                        FilterBar(),
+                        ResetEventsButton(),
+                        SummarizeContactsButton(),
                       ],
                     ),
-                    EmployeeList(events: _events, bloc: _bloc),
-                    ResetEventsButton(),
                   ],
                 ),
                 builder: (context, child) => child,

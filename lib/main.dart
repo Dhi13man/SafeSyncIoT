@@ -9,6 +9,7 @@ import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
 import 'package:safe_sync/Backend/Database/datafiles/Database.dart' as data;
 import 'package:safe_sync/Backend/Database/shared.dart';
 
+import 'package:safe_sync/UI/Home/components/logs/components/contactEventSummary.dart';
 import 'package:safe_sync/UI/ContactPage/contactPage.dart';
 import 'package:safe_sync/UI/EmployeeManage/components/employeeAdd.dart';
 import 'package:safe_sync/UI/EmployeeManage/employeeManage.dart';
@@ -57,6 +58,10 @@ class SafeSyncApp extends StatelessWidget {
             '/': (context) => BlocProvider.value(
                   value: BlocProvider.of<DataBloc>(context),
                   child: SafeSyncHomePage(title: 'SafeSync IoT Dashboard'),
+                ),
+            '/contactEventSummary': (context) => BlocProvider.value(
+                  value: BlocProvider.of<DataBloc>(context),
+                  child: ContactEventSummary(),
                 ),
             '/employeeManage': (context) => BlocProvider.value(
                   value: BlocProvider.of<DataBloc>(context),
