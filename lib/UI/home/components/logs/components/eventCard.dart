@@ -39,18 +39,7 @@ class EventCard extends StatelessWidget {
       );
   }
 
-  Widget _infoString(BuildContext context) {
-    String _nameA, _nameB;
-    // Handle bad info in database
-    if (employees['A'] == null)
-      _nameA = '{device_id_A not found in employee database}';
-    else
-      _nameA = employees['A'].name;
-    if (employees['B'] == null)
-      _nameB = '{device_id_B not found in employee database}';
-    else
-      _nameB = employees['B'].name;
-
+  Widget _infoString(BuildContext context, String _nameA, String _nameB) {
     if (_event.eventType == 'register')
       return importantConstants.cardText(
         '$_nameA was added',
@@ -77,6 +66,18 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _dateTime = _event.eventTime.toString();
+
+    String _nameA, _nameB;
+    // Handle bad info in database
+    if (employees['A'] == null)
+      _nameA = '{Device sending data not found in employee database}';
+    else
+      _nameA = employees['A'].name;
+    if (employees['B'] == null)
+      _nameB = '{Device being detected not found in employee database}';
+    else
+      _nameB = employees['B'].name;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -93,8 +94,8 @@ class EventCard extends StatelessWidget {
         child: Tooltip(
           waitDuration: Duration(milliseconds: 500),
           message: (employees['B'] == null)
-              ? 'Click to open ${employees['A'].name}.'
-              : 'Click to open ${employees['A'].name}, Double Click to open ${employees['B'].name}.',
+              ? 'Click to open $_nameA.'
+              : 'Click to open $_nameA, Double Click to open $_nameB.',
           child: Card(
             shadowColor: _getIcon().color,
             elevation: 3,
@@ -108,7 +109,7 @@ class EventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(flex: 1, child: _getIcon()),
-                  _infoString(context),
+                  _infoString(context, _nameA, _nameB),
                   Flexible(
                     flex: 2,
                     child: Container(

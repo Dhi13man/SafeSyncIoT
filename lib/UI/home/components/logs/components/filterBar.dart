@@ -5,12 +5,7 @@ import 'package:provider/provider.dart';
 export 'package:provider/provider.dart';
 
 class FilterChooser extends ChangeNotifier {
-  Map<String, bool> showEventOfType = {
-    'contact': true,
-    'danger': true,
-    'attendance': true,
-    'register': true,
-  };
+  Map<String, bool> showEventOfType;
 
   FilterChooser() {
     showEventOfType = {
@@ -65,11 +60,9 @@ class FilterBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-            child: Text(
-              'Show Events of Type: ',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
+          Text(
+            'Displaying Events: ',
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
           FilterButton('Attendance'),
           FilterButton('Contact'),

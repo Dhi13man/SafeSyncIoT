@@ -10,6 +10,85 @@ import 'package:safe_sync/UI/Home/components/logs/components/filterBar.dart';
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 import 'package:safe_sync/UI/safesyncAlerts.dart';
 
+class EmployeeList extends StatelessWidget {
+  const EmployeeList({
+    Key key,
+    @required List<Event> events,
+    @required DataBloc bloc,
+  })  : _events = events,
+        _bloc = bloc,
+        super(key: key);
+
+  final List<Event> _events;
+  final DataBloc _bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _events.length,
+        itemBuilder: (BuildContext _context, int index) {
+          // If not showEvent of this type, don't show event
+          if (!_context
+              .watch<FilterChooser>()
+              .showEventOfType[_events[index].eventType]) return Container();
+          // Else show
+          return FutureBuilder(
+            future: _bloc.getEmployeesFromEvent(_events[index]),
+            builder: (_context, AsyncSnapshot snapshot) {
+              Map<String, Employee> _eventEmployees = snapshot.data;
+              // Added animation during loading
+              return AnimatedCrossFade(
+                firstChild: Center(
+                  child: importantConstants.cardSubText('...Loading...'),
+                ),
+                secondChild: (snapshot.hasData)
+                    ? EventCard(
+                        _events[index],
+                        employees: _eventEmployees,
+                        key: ValueKey(_events[index].key),
+                      )
+                    : Container(),
+                duration: Duration(milliseconds: 250),
+                crossFadeState: (!snapshot.hasData)
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ResetEventsButton extends StatelessWidget {
+  const ResetEventsButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      height: 50,
+      margin: EdgeInsets.all(5),
+      child: CupertinoButton(
+        color: importantConstants.bgGradMid,
+        child: Text(
+          'Clear Logs',
+          style: TextStyle(
+            fontSize: 15,
+            color: importantConstants.textLightestColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: () => safeSyncAlerts.showResetAlert('Event', context),
+      ),
+    );
+  }
+}
+
 class RealTimeLogs extends StatelessWidget {
   RealTimeLogs({Key key}) : super(key: key);
   final FilterChooser showEventState = FilterChooser();
@@ -51,63 +130,25 @@ class RealTimeLogs extends StatelessWidget {
                 value: showEventState,
                 child: Column(
                   children: [
-                    FilterBar(),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _events.length,
-                        itemBuilder: (BuildContext _context, int index) {
-                          // If not showEvent of this type, don't show event
-                          if (!_context
-                              .watch<FilterChooser>()
-                              .showEventOfType[_events[index].eventType])
-                            return Container();
-                          // Else show
-                          return FutureBuilder(
-                            future: _bloc.getEmployeesFromEvent(_events[index]),
-                            builder: (_context, AsyncSnapshot snapshot) {
-                              Map<String, Employee> _eventEmployees =
-                                  snapshot.data;
-                              // Added animation during loading
-                              return AnimatedCrossFade(
-                                firstChild: Center(
-                                  child: importantConstants
-                                      .cardSubText('...Loading...'),
-                                ),
-                                secondChild: (snapshot.hasData)
-                                    ? EventCard(
-                                        _events[index],
-                                        employees: _eventEmployees,
-                                        key: ValueKey(_events[index].key),
-                                      )
-                                    : Container(),
-                                duration: Duration(milliseconds: 250),
-                                crossFadeState: (!snapshot.hasData)
-                                    ? CrossFadeState.showFirst
-                                    : CrossFadeState.showSecond,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      height: 50,
-                      margin: EdgeInsets.all(5),
-                      child: CupertinoButton(
-                        color: importantConstants.bgGradMid,
-                        child: Text(
-                          'Clear Logs',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: importantConstants.textLightestColor,
-                            fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              icon: Icon(Icons.cloud_download_outlined),
+                              onPressed: () => Navigator.pushNamed(
+                                context,
+                                'contactSummary',
+                              ),
+                            ),
                           ),
                         ),
-                        onPressed: () =>
-                            safeSyncAlerts.showResetAlert('Event', context),
-                      ),
+                        FilterBar(),
+                      ],
                     ),
+                    EmployeeList(events: _events, bloc: _bloc),
+                    ResetEventsButton(),
                   ],
                 ),
                 builder: (context, child) => child,
