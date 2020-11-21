@@ -86,7 +86,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         color: Colors.blue[900],
-        disabledColor: Colors.black45,
+        disabledColor: Colors.teal[900],
         child: Text(
           sortByText,
           style: TextStyle(color: Colors.white, fontSize: 10),
@@ -106,7 +106,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
 
   Container putBackgroundOn(Widget foregroundWidget) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 9),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
       child: foregroundWidget,
     );
@@ -134,6 +134,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
                     ? Icons.arrow_downward_rounded
                     : Icons.arrow_upward_rounded,
                 color: Colors.blue[900],
+                size: 20,
               ),
               onPressed: () {
                 setState(
@@ -147,7 +148,10 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
           putBackgroundOn(
             IconButton(
               tooltip: 'Delete All Employees.',
-              icon: const Icon(Icons.delete),
+              icon: const Icon(
+                Icons.delete,
+                size: 20,
+              ),
               color: Colors.red,
               onPressed: () {
                 safeSyncAlerts.showResetAlert('Employee', context);

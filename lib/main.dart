@@ -64,10 +64,6 @@ class SafeSyncApp extends StatelessWidget {
                   value: BlocProvider.of<DataBloc>(context),
                   child: EmployeeManagement(),
                 ),
-            '/contact': (context) => BlocProvider.value(
-                  value: BlocProvider.of<DataBloc>(context),
-                  child: ContactPage(),
-                ),
           },
           onGenerateRoute: (settings) {
             switch (settings.name) {
@@ -91,6 +87,17 @@ class SafeSyncApp extends StatelessWidget {
                     ),
                   ),
                   type: PageTransitionType.fade,
+                );
+              case '/contact':
+                return PageTransition(
+                  child: Builder(
+                    builder: (context) => BlocProvider.value(
+                      value: BlocProvider.of<DataBloc>(context),
+                      child: ContactPage(),
+                    ),
+                  ),
+                  type: PageTransitionType.size,
+                  alignment: Alignment.center,
                 );
               default:
                 return null;

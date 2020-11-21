@@ -101,6 +101,10 @@ class DataBloc extends Cubit<ChangeStack> {
     emit(db.cs);
   }
 
+  Future<List<Event>> getAllEvents() {
+    return db.getAllEvents();
+  }
+
   Stream<List<Event>> showAllEvents() {
     return db.watchAllEvents();
   }

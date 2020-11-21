@@ -38,7 +38,7 @@ class EmployeeCard extends StatelessWidget {
               : null, // Can't modify Sanitizing Station()
           splashColor: Colors.black,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -83,6 +83,7 @@ class EmployeeCard extends StatelessWidget {
                 ),
                 (!isSanitizingStation)
                     ? IconButton(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         icon: const Icon(Icons.delete),
                         color: Colors.black,
                         focusColor: Colors.red,

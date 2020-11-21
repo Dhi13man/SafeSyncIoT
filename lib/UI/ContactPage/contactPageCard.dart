@@ -1,29 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:safe_sync/Backend/constants.dart';
-
-import 'package:safe_sync/UI/safesyncAlerts.dart';
 
 class ContactCard extends StatelessWidget {
   final String _name, githubURL, emailID;
 
   ContactCard(this._name, {this.githubURL, this.emailID, Key key})
       : super(key: key);
-
-  void _launchURL(BuildContext context, String url) async {
-    try {
-      if (url == '') throw 'Empty URL';
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } catch (e) {
-      safeSyncAlerts.showErrorAlert(context, '$e. Valid URL was not provided.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +19,9 @@ class ContactCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: RawMaterialButton(
-        onPressed:
-            (githubURL != null) ? () => _launchURL(context, githubURL) : null,
+        onPressed: (githubURL != null)
+            ? () => importantConstants.launchURL(context, githubURL)
+            : null,
         splashColor: Colors.black,
         child: Container(
           padding: const EdgeInsets.all(20.0),
@@ -54,7 +39,8 @@ class ContactCard extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.email_sharp),
                       onPressed: (emailID != null)
-                          ? () => _launchURL(context, 'mailto:$emailID')
+                          ? () => importantConstants.launchURL(
+                              context, 'mailto:$emailID')
                           : null,
                     ),
                   ),
