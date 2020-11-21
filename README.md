@@ -15,13 +15,13 @@ A potential Server, Database and UI components for my IoT project SafeSync IoT, 
 
 ## Screenshots
 
-1. Real Time Logs: !['Real Time Logs'](Screenshots\logs.png)
+1. Real Time Logs: ![Real Time Logs](Screenshots\logs.png)
 
-2. Workspace Safety Statistics: !['Statistics'](Screenshots\stats.png)
+2. Workspace Safety Statistics: ![Statistics](Screenshots\stats.png)
 
-3. Dynamic Employee information Storage: !['Employee View'](Screenshots\employee_view.png)
+3. Dynamic Employee information Storage: ![Employee View](Screenshots\employee_view.png)
 
-4. Full Fledged Employee Management System: !['Employee Management'](Screenshots\employee_management.png)
+4. Full Fledged Employee Management System: ![Employee Management](Screenshots\employee_management.png)
 
 ### Dependencies Used
 
