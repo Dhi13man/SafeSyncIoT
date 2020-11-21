@@ -29,7 +29,6 @@ dependencies:
   moor: ^3.4.0
   moor2csv: ^1.0.2  # My own package ;)
   url_launcher: ^5.7.8
-  rxdart: ^0.24.1
 
   # DATABASE
   sqlite3_flutter_libs: ^0.2.0

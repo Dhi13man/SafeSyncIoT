@@ -217,7 +217,7 @@ class DataBloc extends Cubit<ChangeStack> {
       }
       // Fix end Formatting.
       _names = _names.replaceRange(_names.length - 2, _names.length, '');
-      return '$_names. Not sanitized yet';
+      return '$_names. Not sanitized yet!';
     }
 
     DateTime _last = _attendances[thisMany - 1].lastAttendance;
@@ -234,7 +234,7 @@ class DataBloc extends Cubit<ChangeStack> {
 
     // Fix end Formatting.
     _names = _names = _names.replaceRange(_names.length - 1, _names.length, '');
-    if (_last == null) return '${_names}not sanitized yet.';
+    if (_last == null) return '${_names}not sanitized yet!';
     String _lastAsString = _last.toString();
     return '$_names last on ${_lastAsString.substring(0, _lastAsString.length - 4)}.';
   }

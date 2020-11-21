@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:safe_sync/UI/safesyncAlerts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:safe_sync/Backend/constants.dart';
@@ -10,17 +12,16 @@ class ContactCard extends StatelessWidget {
   ContactCard(this._name, {this.githubURL, this.emailID, Key key})
       : super(key: key);
 
-  void _launchURL(String url) async {
+  void _launchURL(BuildContext context, String url) async {
     try {
+      if (url == '') throw 'Empty URL';
       if (await canLaunch(url)) {
         await launch(url);
       } else {
         throw 'Could not launch $url';
       }
     } catch (e) {
-      AlertDialog(
-        title: Text('Error: $e Provide Valid URL.'),
-      );
+      safeSyncAlerts.showErrorAlert(context, '$e. Valid URL was not provided.');
     }
   }
 
@@ -28,13 +29,14 @@ class ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 30,
-      shadowColor: Colors.purple,
+      shadowColor: importantConstants.bgGradMid,
       margin: EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
       child: RawMaterialButton(
-        onPressed: () => _launchURL(githubURL),
+        onPressed:
+            (githubURL != null) ? () => _launchURL(context, githubURL) : null,
         splashColor: Colors.black,
         child: Container(
           padding: const EdgeInsets.all(20.0),
@@ -51,7 +53,9 @@ class ContactCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 5),
                     child: IconButton(
                       icon: Icon(Icons.email_sharp),
-                      onPressed: () => _launchURL('mailto:$emailID'),
+                      onPressed: (emailID != null)
+                          ? () => _launchURL(context, 'mailto:$emailID')
+                          : null,
                     ),
                   ),
                   importantConstants.cardText(githubURL),

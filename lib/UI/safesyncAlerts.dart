@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:safe_sync/Backend/bloc/databaseBloc.dart';
@@ -156,6 +157,49 @@ class SafeSyncAlerts {
           ],
         );
       },
+    );
+  }
+
+  Future<dynamic> showErrorAlert(BuildContext context, String errorMessage) {
+    TextStyle errorTextStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: CupertinoColors.destructiveRed,
+    );
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.error,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+            Text('Error: ', style: errorTextStyle),
+            Text(
+              '$errorMessage',
+              style: errorTextStyle.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: FlatButton(
+              child: new AlertButtonText(text: "Okay"),
+              color: importantConstants.bgGradBegin,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
