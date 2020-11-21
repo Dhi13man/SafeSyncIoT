@@ -86,18 +86,29 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         color: Colors.blue[900],
-        onPressed: () {
-          setState(
-            () {
-              _filter = sortByText;
-            },
-          );
-        },
+        disabledColor: Colors.black45,
         child: Text(
           sortByText,
           style: TextStyle(color: Colors.white, fontSize: 10),
         ),
+        onPressed: (sortByText != _filter)
+            ? () {
+                setState(
+                  () {
+                    _filter = sortByText;
+                  },
+                );
+              }
+            : null,
       ),
+    );
+  }
+
+  Container putBackgroundOn(Widget foregroundWidget) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 9),
+      decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+      child: foregroundWidget,
     );
   }
 
@@ -113,27 +124,28 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            tooltip: (_isOrderAscending)
-                ? 'Show in Descending Order'
-                : 'Show in Ascending Order',
-            icon: Icon(
-              (_isOrderAscending)
-                  ? Icons.arrow_downward_rounded
-                  : Icons.arrow_upward_rounded,
-              color: Colors.blueAccent,
+          putBackgroundOn(
+            IconButton(
+              tooltip: (_isOrderAscending)
+                  ? 'Show in Descending Order'
+                  : 'Show in Ascending Order',
+              icon: Icon(
+                (_isOrderAscending)
+                    ? Icons.arrow_downward_rounded
+                    : Icons.arrow_upward_rounded,
+                color: Colors.blue[900],
+              ),
+              onPressed: () {
+                setState(
+                  () {
+                    _isOrderAscending = !_isOrderAscending;
+                  },
+                );
+              },
             ),
-            onPressed: () {
-              setState(
-                () {
-                  _isOrderAscending = !_isOrderAscending;
-                },
-              );
-            },
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 7),
-            child: IconButton(
+          putBackgroundOn(
+            IconButton(
               tooltip: 'Delete All Employees.',
               icon: const Icon(Icons.delete),
               color: Colors.red,
