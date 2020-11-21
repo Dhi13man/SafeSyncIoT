@@ -107,7 +107,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
       appBar: AppBar(
         title: Text('Manage your Employees'),
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradMid,
+        backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_sharp),
           onPressed: () => Navigator.pop(context),

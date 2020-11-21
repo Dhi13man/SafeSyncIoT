@@ -14,10 +14,10 @@ class ImportantConstants {
   bool get onMobileScreen => Platform.isIOS || Platform.isAndroid;
   BoxDecoration get bgGradDecoration => BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           tileMode: TileMode.mirror,
-          colors: [bgGradMid, bgGradBegin, bgGradEnd],
+          colors: [bgGradBegin, bgGradMid, bgGradEnd],
         ),
       );
 

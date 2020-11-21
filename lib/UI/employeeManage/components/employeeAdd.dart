@@ -228,8 +228,8 @@ class EmployeeAdd extends StatelessWidget {
         title: // Changes based on whether Adding new or editing.
             Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradMid,
-        elevation: 2,
+        backgroundColor: importantConstants.bgGradBegin,
+        elevation: 1,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_sharp),
           onPressed: () => Navigator.pop(context),

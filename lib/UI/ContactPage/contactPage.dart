@@ -13,9 +13,9 @@ class ContactPage extends StatelessWidget {
           'Contact the Creators!',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        elevation: 3,
+        elevation: 1,
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradMid,
+        backgroundColor: importantConstants.bgGradBegin,
       ),
       body: Container(
         height: _dimensions.height,

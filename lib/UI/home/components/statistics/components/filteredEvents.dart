@@ -84,7 +84,7 @@ class FilteredEventsView extends StatelessWidget {
             ? 'Employee Events Log'
             : 'Showing all contacts'),
         centerTitle: true,
-        backgroundColor: importantConstants.bgGradMid,
+        backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_sharp),
           onPressed: () => Navigator.pop(context),
