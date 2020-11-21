@@ -21,7 +21,14 @@ class _SpecificDetailsState extends State<SpecificDetails> {
         child: StreamBuilder(
             stream: bloc.showAllEmployees(),
             builder: (_, snapshot) {
-              if (!snapshot.hasData) return Text('Getting employees...');
+              if (!snapshot.hasData)
+                return Text(
+                  'Getting employees...',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
               List<Employee> _employees = snapshot.data;
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),

@@ -7,8 +7,12 @@ import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 import 'package:safe_sync/UI/Home/components/logs/components/filterBar.dart';
+import 'package:safe_sync/UI/Home/components/logs/logs.dart';
 
 class FilteredEventsList extends StatelessWidget {
+  /// Produces a Filtered list of events for Statistics Tab page
+  /// [filterType] can be deviceID, employeeA, employeeB or eventType
+  /// [filter] is the actual filter ([filter] can also be 'contactDanger' when [filterType] is 'eventType')
   const FilteredEventsList({
     Key key,
     @required String filter,
@@ -23,47 +27,62 @@ class FilteredEventsList extends StatelessWidget {
   Widget build(BuildContext context) {
     DataBloc _bloc = context.watch<DataBloc>();
 
-    return Expanded(
-      child: StreamBuilder(
-        stream: _bloc.showEventsForCriteria(_filter, type: filterType),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator();
+    return StreamBuilder(
+      stream: _bloc.showEventsForCriteria(_filter, type: filterType),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) return CircularProgressIndicator();
 
-          List<Event> _events = snapshot.data;
-          if (_events.isEmpty)
-            return Container(
-              padding: EdgeInsets.all(20),
-              alignment: Alignment.center,
-              child: Text(
-                "No such events have occured yet.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+        List<Event> _events = snapshot.data;
+        if (_events.isEmpty)
+          return Container(
+            padding: EdgeInsets.all(20),
+            alignment: Alignment.center,
+            child: Text(
+              "No such events have occured yet.",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
-            );
-          return ListView.builder(
-            itemCount: _events.length,
-            itemBuilder: (context, index) => FutureBuilder(
-              future: _bloc.getEmployeesFromEvent(_events[index]),
-              builder: (_context, snapshot) {
-                if (!snapshot.hasData)
-                  return CircularProgressIndicator.adaptive();
-
-                // If not showEvent of this type, don't show event
-                if (!_context
-                    .watch<FilterChooser>()
-                    .showEventOfType[_events[index].eventType])
-                  return Container();
-                return EventCard(
-                  _events[index],
-                  employees: snapshot.data,
-                );
-              },
             ),
           );
-        },
-      ),
+        return Column(
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
+              child: FilterBar(),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _events.length,
+                itemBuilder: (context, index) => FutureBuilder(
+                  future: _bloc.getEmployeesFromEvent(_events[index]),
+                  builder: (_context, snapshot) {
+                    if (!snapshot.hasData)
+                      return CircularProgressIndicator.adaptive();
+
+                    // If not showEvent of this type, don't show event
+                    if (!_context
+                        .watch<FilterChooser>()
+                        .showEventOfType[_events[index].eventType])
+                      return Container();
+                    return EventCard(
+                      _events[index],
+                      employees: snapshot.data,
+                    );
+                  },
+                ),
+              ),
+            ),
+            // If contacts and dangers are being viewed, give option to summarize.
+            (_filter.compareTo('contactDanger') == 0)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [SummarizeContactsButton()])
+                : Container(),
+          ],
+        );
+      },
     );
   }
 }
@@ -103,16 +122,7 @@ class FilteredEventsView extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             elevation: 8,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: Column(
-                children: [
-                  FilterBar(),
-                  FilteredEventsList(filter: _filter, filterType: filterType),
-                ],
-              ),
-            ),
+            child: FilteredEventsList(filter: _filter, filterType: filterType),
           ),
         ),
         builder: (context, child) => child,

@@ -62,7 +62,7 @@ class AttendanceList extends StatelessWidget {
                 );
               },
             ),
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 150),
             crossFadeState: (snapshot.hasData)
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,

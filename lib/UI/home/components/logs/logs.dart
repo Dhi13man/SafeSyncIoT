@@ -47,7 +47,7 @@ class EmployeeList extends StatelessWidget {
                         key: ValueKey(_events[index].key),
                       )
                     : Container(),
-                duration: Duration(milliseconds: 400),
+                duration: Duration(milliseconds: 450),
                 crossFadeState: (!snapshot.hasData)
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,

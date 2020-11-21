@@ -22,7 +22,7 @@ class BoredClock extends StatelessWidget {
           snapshot.data,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: (importantConstants.onMobileScreen) ? 10 : 20,
             color: Colors.white,
             letterSpacing: 1.5,
           ),
@@ -98,7 +98,7 @@ class SideBarDrawer extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 30.0,
+                    fontSize: (importantConstants.onMobileScreen) ? 15 : 30.0,
                     letterSpacing: 1.5,
                   ),
                 ),

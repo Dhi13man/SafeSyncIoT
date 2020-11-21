@@ -5,7 +5,7 @@ import 'package:safe_sync/Backend/providers/homepagetabprovider.dart';
 
 import 'package:safe_sync/UI/Home/components/statistics/components/filteredEvents.dart';
 
-class InformationCard extends StatelessWidget {
+class StatisticsInformationCard extends StatelessWidget {
   final String type, cardName; // Type: positive, neutral, negative
   final Future informationStream;
   final Map<String, Color> _cardShadowColor = {
@@ -18,8 +18,8 @@ class InformationCard extends StatelessWidget {
     'neutral': Icons.adjust,
     'negative': Icons.sick,
   };
-  
-  InformationCard({
+
+  StatisticsInformationCard({
     this.cardName,
     this.type = 'neutral',
     this.informationStream,

@@ -78,6 +78,22 @@ class ContactEventSummary extends StatelessWidget {
           );
 
         List<EmployeeEventData> summarizedData = futureSnapshot.data;
+        if (summarizedData.length == 0) {
+          String _criteria = (queryEventType.compareTo('contact') == 0)
+              ? 'Short'
+              : 'Dangerous';
+          return Center(
+            heightFactor: 5,
+            widthFactor: 5,
+            child: Text(
+              "Nobody had $_criteria Contacts yet!",
+              style: TextStyle(
+                color: importantConstants.textLightColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        }
         return Expanded(
           child: ListView.builder(
             itemCount: summarizedData.length,
