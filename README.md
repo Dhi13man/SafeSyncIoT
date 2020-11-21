@@ -55,7 +55,7 @@ A potential Server, Database and UI components for my IoT project SafeSync IoT, 
 </td>
 <td>
 
-[<img height="300" width="500" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
+[<img height="200" width="400" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
 </td>
 </tr>
 
