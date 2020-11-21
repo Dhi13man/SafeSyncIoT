@@ -13,26 +13,30 @@ class EmployeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSanitizingStation = entry.deviceID == 'safesync-iot-sanitize';
-    return GestureDetector(
-      onTap: () {
-        if (!isSanitizingStation) // Can't modify Sanitizing Station
-          Navigator.pushNamed(context, '/employeeManage/add', arguments: entry);
-      },
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      elevation: 10,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 5,
+      ),
+      shadowColor: Colors.black,
       child: Tooltip(
         message: (!isSanitizingStation)
             ? 'Click to Edit ${entry.name}'
             : 'Unmodifiable',
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          elevation: 10,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: 5,
-          ),
-          shadowColor: Colors.black,
+        child: RawMaterialButton(
+          onPressed: (!isSanitizingStation)
+              ? () => Navigator.pushNamed(
+                    context,
+                    '/employeeManage/add',
+                    arguments: entry,
+                  )
+              : null, // Can't modify Sanitizing Station()
+          splashColor: Colors.black,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Row(

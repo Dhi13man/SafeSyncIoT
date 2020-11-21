@@ -29,26 +29,28 @@ A potential Server, Database and UI components for my IoT project SafeSync IoT, 
 
 2. [cupertino](https://flutter.dev/docs/development/ui/widgets/cupertino) and [cupertino_icons](https://pub.dev/packages/cupertino_icons) for UI
 
-3. [moor](https://moor.simonbinder.eu/) and supporting Libraries for Cross Platform SQL Database Handling
+3. [page_transition](https://pub.dev/packages/page_transition) for page transition animations
+
+4. [moor](https://moor.simonbinder.eu/) and supporting Libraries for Cross Platform SQL Database Handling
     1. [moor2csv](https://pub.dev/packages/moor2csv) for exporting Moor SQL databases to CSV form.
     2. [moor_generator](https://pub.dev/packages/moor_generator) developer dependency that works with moor to turn Table classes from moor into database code
 
-4. [sqflite](https://pub.dev/packages/sqflite) and supporting Libraries for SQL Database
+5. [sqflite](https://pub.dev/packages/sqflite) and supporting Libraries for SQL Database
     1. [sqlite3_flutter_libs](https://pub.dev/packages/sqlite3_flutter_libs) helper dependency for sqflite in Flutter
     2. [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi) developer dependency that provides SQL ffi File handling capability to desktop platform
 
-5. [undo](https://pub.dev/packages/undo) for facilitating Moor based SQL database through bloc State Management
+6. [undo](https://pub.dev/packages/undo) for facilitating Moor based SQL database through bloc State Management
 
-6. [bloc](https://pub.dev/packages/bloc) and [flutter_bloc](https://pub.dev/packages/flutter_bloc) for State Management
+7. [bloc](https://pub.dev/packages/bloc) and [flutter_bloc](https://pub.dev/packages/flutter_bloc) for State Management
 
-7. [provider](https://pub.dev/packages/provider) for less intensive State Management
+8. [provider](https://pub.dev/packages/provider) for less intensive State Management
 
-8. [path_provider](https://pub.dev/packages/path_provider) for File Handling
+9. [path_provider](https://pub.dev/packages/path_provider) for File Handling
 
-9. [permission_handler](https://pub.dev/packages/permission_handler) *(only required to build for mobile devices)*
+10. [permission_handler](https://pub.dev/packages/permission_handler) *(only required to build for mobile devices)*
 
-10. [url_launcher](https://pub.dev/packages/url_launcher) for launching URLs, including `mailto:` links
+11. [url_launcher](https://pub.dev/packages/url_launcher) for launching URLs, including `mailto:` links
 
-11. [build_runner](https://pub.dev/packages/build_runner) developer dependency for building Moor database tables
+12. [build_runner](https://pub.dev/packages/build_runner) developer dependency for building Moor database tables
 
-12. [build_web_compilers](https://pub.dev/packages/build_web_compilers) used as a development dependency for users of `package:build` who want to run code in a browser (Flutter Web)
+13. [build_web_compilers](https://pub.dev/packages/build_web_compilers) used as a development dependency for users of `package:build` who want to run code in a browser (Flutter Web)

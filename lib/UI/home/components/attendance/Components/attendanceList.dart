@@ -6,36 +6,20 @@ import 'package:safe_sync/Backend/Database/datafiles/dataClasses.dart';
 import 'package:safe_sync/Backend/constants.dart';
 
 import 'package:safe_sync/UI/Home/components/attendance/components/attendanceCard.dart';
-import 'package:safe_sync/UI/safesyncAlerts.dart';
 
-class InfoText extends StatelessWidget {
-  final String _text;
+class AttendanceList extends StatelessWidget {
+  final String _criteria;
 
-  const InfoText(this._text, {Key key}) : super(key: key);
+  const AttendanceList(this._criteria, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.only(top: 10.0),
-      child: Text(
-        this._text,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-      ),
-    );
-  }
-}
-
-class AttendanceList extends StatelessWidget {
-  StreamBuilder<List<EmployeesWithAttendance>> _buildEmployeeList(
-      BuildContext context, String criteria) {
     DataBloc bloc = context.watch<DataBloc>();
     Stream<List<EmployeesWithAttendance>> watchStream;
 
-    if (criteria == 'present')
+    if (_criteria == 'present')
       watchStream = bloc.getEmployeesWithAttendance(1, boundType: 'lower');
-    else if (criteria == 'absent')
+    else if (_criteria == 'absent')
       watchStream = bloc.getEmployeesWithAttendance(0, boundType: 'upper');
     else
       watchStream = bloc.getEmployeesWithAttendance(5, boundType: 'lower');
@@ -43,73 +27,48 @@ class AttendanceList extends StatelessWidget {
     return StreamBuilder<List<EmployeesWithAttendance>>(
       stream: watchStream,
       builder: (_context, snapshot) {
-        if (!snapshot.hasData)
-          return Center(
-            child: Text('...'),
-          );
-
-        // Nobody in given Criteria Found
-        List<EmployeesWithAttendance> employeeAttendances = snapshot.data;
-        if (employeeAttendances.isEmpty)
-          return Text(
-            "Nobody is $criteria!",
-            style: TextStyle(
-                color: importantConstants.textLightColor,
-                fontWeight: FontWeight.bold),
-          );
-
         return Expanded(
-          child: ListView.builder(
-            itemCount: employeeAttendances.length,
-            itemBuilder: (BuildContext _context, int index) {
-              // Sanitizing Station attendance not needed
-              if (employeeAttendances[index].employee.deviceID ==
-                  'safesync-iot-sanitize')
-                return Container(
-                  height: 0,
-                  width: 0,
+          child: AnimatedCrossFade(
+            firstChild: Text('...'),
+            secondChild: Builder(
+              builder: (_context) {
+                if (!snapshot.hasData) return Text('...');
+
+                // Nobody in given Criteria Found
+                List<EmployeesWithAttendance> employeeAttendances =
+                    snapshot.data;
+                if (employeeAttendances.isEmpty)
+                  return Text(
+                    "Nobody is $_criteria!",
+                    style: TextStyle(
+                        color: importantConstants.textLightColor,
+                        fontWeight: FontWeight.bold),
+                  );
+
+                return ListView.builder(
+                  itemCount: employeeAttendances.length,
+                  itemBuilder: (BuildContext _context, int index) {
+                    // Sanitizing Station attendance not needed
+                    if (employeeAttendances[index].employee.deviceID ==
+                        'safesync-iot-sanitize') return Container();
+                    return AttendanceCard(
+                      employee: employeeAttendances[index].employee,
+                      attendance: employeeAttendances[index].attendance,
+                      key: ValueKey(
+                        employeeAttendances[index].employee.employeeID,
+                      ),
+                    );
+                  },
                 );
-              return AttendanceCard(
-                employee: employeeAttendances[index].employee,
-                attendance: employeeAttendances[index].attendance,
-                key: ValueKey(
-                  employeeAttendances[index].employee.employeeID,
-                ),
-              );
-            },
+              },
+            ),
+            duration: Duration(milliseconds: 200),
+            crossFadeState: (snapshot.hasData)
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        InfoText('Present: '),
-        _buildEmployeeList(context, 'present'),
-        InfoText('Absent: '),
-        _buildEmployeeList(context, 'absent'),
-        Container(
-          alignment: Alignment.bottomCenter,
-          height: 50,
-          child: CupertinoButton(
-            color: importantConstants.bgGradBegin,
-            child: Text(
-              'Reset Attendances',
-              style: TextStyle(
-                fontSize: 15,
-                color: importantConstants.textLightestColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: () =>
-                safeSyncAlerts.showResetAlert('Attendance', context),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -97,6 +97,7 @@ class EventCard extends StatelessWidget {
               ? 'Click to open $_nameA.'
               : 'Click to open $_nameA, Double Click to open $_nameB.',
           child: Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             shadowColor: _getIcon().color,
             elevation: 3,
             shape: RoundedRectangleBorder(

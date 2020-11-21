@@ -35,8 +35,7 @@ class EmployeeList extends StatelessWidget {
           return FutureBuilder(
             future: _bloc.getEmployeesFromEvent(_events[index]),
             builder: (_context, AsyncSnapshot snapshot) {
-              Map<String, Employee> _eventEmployees = snapshot.data;
-              // Added animation during loading
+              // Animated List Loading
               return AnimatedCrossFade(
                 firstChild: Center(
                   child: importantConstants.cardSubText('...Loading...'),
@@ -44,11 +43,11 @@ class EmployeeList extends StatelessWidget {
                 secondChild: (snapshot.hasData)
                     ? EventCard(
                         _events[index],
-                        employees: _eventEmployees,
+                        employees: snapshot.data,
                         key: ValueKey(_events[index].key),
                       )
                     : Container(),
-                duration: Duration(milliseconds: 450),
+                duration: Duration(milliseconds: 400),
                 crossFadeState: (!snapshot.hasData)
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,

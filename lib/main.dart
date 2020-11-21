@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -59,22 +60,41 @@ class SafeSyncApp extends StatelessWidget {
                   value: BlocProvider.of<DataBloc>(context),
                   child: SafeSyncHomePage(title: 'SafeSync IoT Dashboard'),
                 ),
-            '/contactEventSummary': (context) => BlocProvider.value(
-                  value: BlocProvider.of<DataBloc>(context),
-                  child: ContactEventSummary(),
-                ),
             '/employeeManage': (context) => BlocProvider.value(
                   value: BlocProvider.of<DataBloc>(context),
                   child: EmployeeManagement(),
-                ),
-            '/employeeManage/add': (context) => BlocProvider.value(
-                  value: BlocProvider.of<DataBloc>(context),
-                  child: EmployeeAdd(),
                 ),
             '/contact': (context) => BlocProvider.value(
                   value: BlocProvider.of<DataBloc>(context),
                   child: ContactPage(),
                 ),
+          },
+          onGenerateRoute: (settings) {
+            switch (settings.name) {
+              case '/employeeManage/add':
+                return PageTransition(
+                  child: Builder(
+                    builder: (context) => BlocProvider.value(
+                      value: BlocProvider.of<DataBloc>(context),
+                      child: EmployeeAdd(),
+                    ),
+                  ),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  settings: settings,
+                );
+              case '/contactEventSummary':
+                return PageTransition(
+                  child: Builder(
+                    builder: (context) => BlocProvider.value(
+                      value: BlocProvider.of<DataBloc>(context),
+                      child: ContactEventSummary(),
+                    ),
+                  ),
+                  type: PageTransitionType.fade,
+                );
+              default:
+                return null;
+            }
           },
           theme: ThemeData(
             primarySwatch: Colors.blue,

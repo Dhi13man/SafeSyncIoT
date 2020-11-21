@@ -43,6 +43,7 @@ class AttendanceCard extends StatelessWidget {
     return Card(
       shadowColor: _getIcon().color,
       elevation: 10,
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 8),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: _getIcon().color),
         borderRadius: BorderRadius.circular(10),
