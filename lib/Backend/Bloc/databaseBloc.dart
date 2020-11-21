@@ -79,8 +79,8 @@ class DataBloc extends Cubit<ChangeStack> {
     return db.watchAllEmployees(orderBy: orderBy, mode: mode);
   }
 
-  Future<Employee> getEmployeeByID(String id) {
-    return db.getEmployeebyID(id);
+  Future<Employee> getEmployeeByID(String id, {String type = 'employee'}) {
+    return db.getEmployeebyID(id, type: type);
   }
 
   void updateEmployee(Employee employee) async {
