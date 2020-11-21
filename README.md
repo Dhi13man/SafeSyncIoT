@@ -15,21 +15,51 @@ A potential Server, Database and UI components for my IoT project SafeSync IoT, 
 
 ## Screenshots
 
-1. Real Time Logs:
+<table border=3>
+<tr>
+<th>
+<center><b>Real Time Logs:</b></center>
+</th>
+<th>
+<center><b>Employee Safety Statistics:</b></center>
+</th>
+</tr>
 
-    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png" alt="Real Time Logs">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png)
+<tr>
+<td>
 
-2. Workspace Safety Statistics:
+[<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png" alt="Real Time Logs">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png)
+</td>
+<td>
 
-    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png" alt="Statistics">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png)
+[<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png" alt="Statistics">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png)
 
-3. Dynamic Employee information Storage:
+</td>
+</tr>
+</table>
 
-    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png" alt="Employee View">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png)
+<table border=3>
+<tr>
+<th>
+<center><b>Dynamic Employee information Storage:</b></center>
+</th>
+<th>
+<center><b>Full Fledged Employee Management System:</b></center>
+</th>
+</tr>
 
-4. Full Fledged Employee Management System:
+<tr>
+<td>
 
-    [<img height="300" width="500" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
+[<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png" alt="Employee View">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png)
+</td>
+<td>
+
+[<img height="300" width="500" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
+</td>
+</tr>
+
+</table>
 
 ### Dependencies Used
 
