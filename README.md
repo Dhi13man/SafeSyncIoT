@@ -15,13 +15,21 @@ A potential Server, Database and UI components for my IoT project SafeSync IoT, 
 
 ## Screenshots
 
-1. Real Time Logs: ![Real Time Logs](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png)
+1. Real Time Logs:
 
-2. Workspace Safety Statistics: ![Statistics](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png)
+    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png" alt="Real Time Logs">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png)
 
-3. Dynamic Employee information Storage: ![Employee View](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png)
+2. Workspace Safety Statistics:
 
-4. Full Fledged Employee Management System: ![Employee Management](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
+    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png" alt="Statistics">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png)
+
+3. Dynamic Employee information Storage:
+
+    [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png" alt="Employee View">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png)
+
+4. Full Fledged Employee Management System:
+
+    [<img height="300" width="500" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png)
 
 ### Dependencies Used
 
