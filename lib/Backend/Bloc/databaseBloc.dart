@@ -169,26 +169,36 @@ class DataBloc extends Cubit<ChangeStack> {
       bool getEvents = false}) async {
     MoorSQLToCSV _csvGenerator;
     bool didSucceed = true;
+    String _date = DateTime.now().toString();
+    String fileNameSuffix = '_${_date.substring(0, 10)}';
+
     if (getEmployees) {
       List<Employee> _employees = await db.getAllEmployees(orderBy: 'id');
       if (_employees.isNotEmpty) {
-        _csvGenerator = MoorSQLToCSV(_employees, csvFileName: 'employees');
+        _csvGenerator = MoorSQLToCSV(
+          _employees,
+          csvFileName: 'employees$fileNameSuffix',
+        );
         didSucceed = didSucceed && await _csvGenerator.wasCreated;
       }
     }
     if (getAttendances) {
       List<Attendance> _attendances = await db.getAllAttendances();
-      String _date = DateTime.now().toString();
       if (_attendances.isNotEmpty) {
-        _csvGenerator = MoorSQLToCSV(_attendances,
-            csvFileName: 'attendances_${_date.substring(0, 10)}');
+        _csvGenerator = MoorSQLToCSV(
+          _attendances,
+          csvFileName: 'attendances$fileNameSuffix',
+        );
         didSucceed = didSucceed && await _csvGenerator.wasCreated;
       }
     }
     if (getEvents) {
       List<Event> _events = await db.getAllEvents();
       if (_events.isNotEmpty) {
-        _csvGenerator = MoorSQLToCSV(_events, csvFileName: 'events');
+        _csvGenerator = MoorSQLToCSV(
+          _events,
+          csvFileName: 'events$fileNameSuffix',
+        );
         didSucceed = didSucceed && await _csvGenerator.wasCreated;
       }
     }

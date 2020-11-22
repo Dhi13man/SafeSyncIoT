@@ -41,15 +41,14 @@ class CustomTitleBar extends StatelessWidget {
 class DatabaseExtractButton extends StatelessWidget {
   const DatabaseExtractButton({
     Key key,
-    @required this.bloc,
     @required this.type,
   }) : super(key: key);
 
-  final DataBloc bloc;
   final String type;
 
   @override
   Widget build(BuildContext context) {
+    DataBloc bloc = context.watch<DataBloc>();
     String _where = (importantConstants.onMobileScreen)
         ? 'App Data Folder'
         : 'Downloads Folder';
@@ -107,7 +106,6 @@ class SafeSyncHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-    DataBloc bloc = context.watch<DataBloc>();
 
     Size _dimensions = MediaQuery.of(context).size;
     return Scaffold(
@@ -130,9 +128,9 @@ class SafeSyncHomePage extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomTitleBar(title: title),
-                    DatabaseExtractButton(type: 'Employees', bloc: bloc),
-                    DatabaseExtractButton(type: 'Attendances', bloc: bloc),
-                    DatabaseExtractButton(type: 'Events', bloc: bloc),
+                    DatabaseExtractButton(type: 'Employees'),
+                    DatabaseExtractButton(type: 'Attendances'),
+                    DatabaseExtractButton(type: 'Events'),
                   ],
                 ),
               ),
