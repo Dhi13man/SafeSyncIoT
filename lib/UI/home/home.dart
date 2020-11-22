@@ -148,7 +148,7 @@ class SafeSyncHomePage extends StatelessWidget {
           ],
         ),
       ),
-      drawer: SideBarDrawer(context, _drawerKey),
+      drawer: SideBarDrawer(_drawerKey),
       floatingActionButton: FloatingActionButton(
         elevation: 80,
         backgroundColor: importantConstants.bgGradBegin,

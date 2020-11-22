@@ -16,6 +16,10 @@ class ContactPage extends StatelessWidget {
         elevation: 1,
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_sharp),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Container(
         height: _dimensions.height,

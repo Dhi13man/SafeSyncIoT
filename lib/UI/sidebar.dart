@@ -70,9 +70,8 @@ class SidebarTileText extends StatelessWidget {
 
 class SideBarDrawer extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey;
-  final BuildContext _mainContext;
 
-  SideBarDrawer(this._mainContext, this._scaffoldKey);
+  SideBarDrawer(this._scaffoldKey);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -112,7 +111,7 @@ class SideBarDrawer extends StatelessWidget {
             onTap: () {
               if (_scaffoldKey.currentState.isDrawerOpen) {
                 _scaffoldKey.currentState.openEndDrawer();
-                Navigator.pushNamed(_mainContext, '/employeeManage');
+                Navigator.pushNamed(context, '/employeeManage');
               }
             },
           ),
@@ -124,7 +123,7 @@ class SideBarDrawer extends StatelessWidget {
             onTap: () {
               if (_scaffoldKey.currentState.isDrawerOpen) {
                 _scaffoldKey.currentState.openEndDrawer();
-                Navigator.pushNamed(_mainContext, '/contactEventSummary');
+                Navigator.pushNamed(context, '/contactEventSummary');
               }
             },
           ),
@@ -149,7 +148,7 @@ class SideBarDrawer extends StatelessWidget {
             onTap: () {
               if (_scaffoldKey.currentState.isDrawerOpen) {
                 _scaffoldKey.currentState.openEndDrawer();
-                Navigator.pushNamed(_mainContext, '/contact');
+                Navigator.pushNamed(context, '/contact');
               }
             },
           ),
