@@ -29,21 +29,41 @@ class EmployeeSubInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      width: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            margin: const EdgeInsets.all(3.0),
-            child: importantConstants.cardSubText(
-              'ID: ${summarizedDataItem.employee.employeeID}    Device ID: ${summarizedDataItem.employee.deviceID}',
+            margin: EdgeInsets.symmetric(vertical: 3),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: importantConstants.cardSubText(
+                    'ID: ${summarizedDataItem.employee.employeeID}',
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: importantConstants.cardSubText(
+                    'Device ID: ${summarizedDataItem.employee.deviceID}',
+                  ),
+                ),
+              ],
             ),
           ),
-          importantConstants.cardSubText(
-            'Contact: ${summarizedDataItem.employee.phoneNo}',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 13,
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 3),
+            child: Text(
+              'Contact: ${summarizedDataItem.employee.phoneNo}',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+              ),
             ),
           ),
         ],
@@ -134,9 +154,10 @@ class ContactEventSummary extends StatelessWidget {
                 ),
                 child: ListTile(
                   leading: _iconChooser(queryEventType),
-                  title: importantConstants.cardText(
+                  title: Text(
                     summarizedData[index].employee.name,
                     style: TextStyle(fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   trailing: EmployeeSubInformation(
                     summarizedDataItem: summarizedData[index],
