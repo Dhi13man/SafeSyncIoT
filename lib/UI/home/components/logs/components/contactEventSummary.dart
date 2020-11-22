@@ -8,49 +8,52 @@ import 'package:safe_sync/Backend/Database/datafiles/Database.dart';
 import 'package:safe_sync/UI/Home/components/attendance/attendance.dart';
 
 /// Specific Class used only in this UI component to summarise contacts by employees.
-class EmployeeEventData {
+class EmployeeContactData {
   Employee employee;
   int contacts;
-  int dangerousContacts;
 
-  EmployeeEventData(
+  EmployeeContactData(
     this.employee, {
     this.contacts = 0,
-    this.dangerousContacts = 0,
   });
+}
+
+class EmployeeSubInformation extends StatelessWidget {
+  const EmployeeSubInformation({
+    Key key,
+    @required this.summarizedDataItem,
+  }) : super(key: key);
+
+  final EmployeeContactData summarizedDataItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.all(3.0),
+            child: importantConstants.cardSubText(
+              'ID: ${summarizedDataItem.employee.employeeID}    Device ID: ${summarizedDataItem.employee.deviceID}',
+            ),
+          ),
+          importantConstants.cardSubText(
+            'Contact: ${summarizedDataItem.employee.phoneNo}',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// Specific Helper Function used only in this UI component to summarise contacts by employees.
 class ContactEventSummary extends StatelessWidget {
-  Future<List<EmployeeEventData>> _getSummarisedData(
-      List<Event> events, DataBloc bloc, String queryEventType) async {
-    Map<String, EmployeeEventData> outputSummarisedDataMap = {};
-    for (Event event in events) {
-      // If not an event of queryEventType, it won't be included anyway
-      if (event.eventType != queryEventType) continue;
-
-      if (outputSummarisedDataMap.containsKey(event.deviceIDA)) {
-        if (event.eventType == 'contact')
-          ++outputSummarisedDataMap[event.deviceIDA].contacts;
-        else if (event.eventType == 'danger')
-          ++outputSummarisedDataMap[event.deviceIDA].dangerousContacts;
-      } else {
-        Employee employee = (await bloc.getEmployeesFromEvent(event))['A'];
-        if (event.eventType == 'contact')
-          outputSummarisedDataMap[event.deviceIDA] = EmployeeEventData(
-            employee,
-            contacts: 1,
-          );
-        else if (event.eventType == 'danger')
-          outputSummarisedDataMap[event.deviceIDA] = EmployeeEventData(
-            employee,
-            dangerousContacts: 1,
-          );
-      }
-    }
-    return outputSummarisedDataMap.values.toList();
-  }
-
   Icon _iconChooser(String eventType) {
     if (eventType == 'contact')
       return Icon(
@@ -62,6 +65,28 @@ class ContactEventSummary extends StatelessWidget {
         Icons.warning_amber_outlined,
         color: Colors.red[900],
       );
+  }
+
+  /// Simple helper function to count [queryEventType] contacts for each employee
+  /// from List<Event> [events] using DataBloc [bloc]'s getEmployeesFromEvent method
+  Future<List<EmployeeContactData>> _getSummarisedData(
+      List<Event> events, DataBloc bloc, String queryEventType) async {
+    Map<String, EmployeeContactData> outputSummarisedDataMap = {};
+    for (Event event in events) {
+      // If not an event of queryEventType, it won't be included anyway
+      if (event.eventType != queryEventType) continue;
+
+      if (outputSummarisedDataMap.containsKey(event.deviceIDA))
+        ++outputSummarisedDataMap[event.deviceIDA].contacts;
+      else {
+        Employee employee = (await bloc.getEmployeesFromEvent(event))['A'];
+        outputSummarisedDataMap[event.deviceIDA] = EmployeeContactData(
+          employee,
+          contacts: 1,
+        );
+      }
+    }
+    return outputSummarisedDataMap.values.toList();
   }
 
   Widget _getSummarisedList(
@@ -77,7 +102,7 @@ class ContactEventSummary extends StatelessWidget {
             ),
           );
 
-        List<EmployeeEventData> summarizedData = futureSnapshot.data;
+        List<EmployeeContactData> summarizedData = futureSnapshot.data;
         if (summarizedData.length == 0) {
           String _criteria = (queryEventType.compareTo('contact') == 0)
               ? 'Short'
@@ -98,20 +123,23 @@ class ContactEventSummary extends StatelessWidget {
           child: ListView.builder(
             itemCount: summarizedData.length,
             itemBuilder: (context, index) {
-              int numberContacts;
-              if ((queryEventType.compareTo('contact') == 0)) {
-                numberContacts = summarizedData[index].contacts;
-              } else {
-                numberContacts = summarizedData[index].dangerousContacts;
-              }
+              int numberContacts = summarizedData[index].contacts;
               return Card(
+                borderOnForeground: true,
                 shadowColor: _iconChooser(queryEventType).color,
-                elevation: 2,
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: _iconChooser(queryEventType).color),
+                  borderRadius: BorderRadius.circular(25),
+                ),
                 child: ListTile(
                   leading: _iconChooser(queryEventType),
-                  title: Text(
+                  title: importantConstants.cardText(
                     summarizedData[index].employee.name,
                     style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  trailing: EmployeeSubInformation(
+                    summarizedDataItem: summarizedData[index],
                   ),
                   subtitle: Text(
                     '$numberContacts times',
@@ -119,8 +147,10 @@ class ContactEventSummary extends StatelessWidget {
                   ),
                   onTap: (summarizedData[index].employee != null)
                       ? () => Navigator.pushNamed(
-                          context, '/employeeManage/add',
-                          arguments: summarizedData[index].employee)
+                            context,
+                            '/employeeManage/add',
+                            arguments: summarizedData[index].employee,
+                          )
                       : null,
                 ),
               );
@@ -154,8 +184,8 @@ class ContactEventSummary extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           elevation: 8,
-          child: FutureBuilder(
-            future: _bloc.getAllEvents(),
+          child: StreamBuilder(
+            stream: _bloc.showAllEvents(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return const Align(
