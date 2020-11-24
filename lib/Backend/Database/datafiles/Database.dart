@@ -36,13 +36,15 @@ class Database extends _$Database {
 
   Future<Employee> getEmployeebyID(String id, {String type = 'employee'}) {
     final query = select(employees);
-    query.where(
-      (employees) {
-        if (type.compareTo('device') == 0) return employees.deviceID.equals(id);
-        return employees.employeeID.equals(id);
-      },
-    );
-    return query.getSingle();
+    return (query
+          ..where(
+            (employees) {
+              if (type.compareTo('device') == 0)
+                return employees.deviceID.equals(id);
+              return employees.employeeID.equals(id);
+            },
+          ))
+        .getSingle();
   }
 
   Stream<List<Employee>> watchAllEmployees(

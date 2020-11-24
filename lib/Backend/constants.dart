@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:safe_sync/UI/safesyncAlerts.dart';
@@ -26,6 +27,17 @@ class ImportantConstants {
           tileMode: TileMode.mirror,
           colors: [bgGradBegin, bgGradMid, bgGradEnd],
         ),
+      );
+
+  Plasma withBackgroundPlasma({Widget child}) => Plasma(
+        particles: 18,
+        foregroundColor: importantConstants.bgGradBegin,
+        backgroundColor: importantConstants.bgGradMid,
+        size: 0.6,
+        speed: 4.76,
+        offset: 0.00,
+        blendMode: BlendMode.color,
+        child: child,
       );
 
   EdgeInsetsGeometry get defaultPadding =>

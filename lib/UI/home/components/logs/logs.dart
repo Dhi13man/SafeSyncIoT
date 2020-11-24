@@ -9,8 +9,8 @@ import 'package:safe_sync/UI/Home/components/logs/components/filterBar.dart';
 import 'package:safe_sync/UI/Home/components/logs/components/eventCard.dart';
 import 'package:safe_sync/UI/safesyncAlerts.dart';
 
-class EmployeeList extends StatelessWidget {
-  const EmployeeList({
+class EventList extends StatelessWidget {
+  const EventList({
     Key key,
     @required List<Event> events,
     @required DataBloc bloc,
@@ -23,14 +23,15 @@ class EmployeeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FilterChooser _filterState = context.watch<FilterChooser>();
+
     return Expanded(
       child: ListView.builder(
         itemCount: _events.length,
         itemBuilder: (BuildContext _context, int index) {
           // If not showEvent of this type, don't show event
-          if (!_context
-              .watch<FilterChooser>()
-              .showEventOfType[_events[index].eventType]) return Container();
+          if (!_filterState.showEventOfType[_events[index].eventType])
+            return Container();
           // Else show
           return FutureBuilder(
             future: _bloc.getEmployeesFromEvent(_events[index]),
@@ -181,7 +182,7 @@ class RealTimeLogs extends StatelessWidget {
             return Column(
               children: [
                 FilterBar(),
-                EmployeeList(events: _events, bloc: _bloc),
+                EventList(events: _events, bloc: _bloc),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

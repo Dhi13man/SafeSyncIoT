@@ -104,7 +104,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
     );
   }
 
-  Container putBackgroundOn(Widget foregroundWidget) {
+  Container putBackgroundOnAppBarButton(Widget foregroundWidget) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
@@ -124,7 +124,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          putBackgroundOn(
+          putBackgroundOnAppBarButton(
             IconButton(
               tooltip: (_isOrderAscending)
                   ? 'Show in Descending Order'
@@ -145,7 +145,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
               },
             ),
           ),
-          putBackgroundOn(
+          putBackgroundOnAppBarButton(
             IconButton(
               tooltip: 'Delete All Employees.',
               icon: const Icon(
@@ -160,30 +160,39 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              alignment: Alignment.bottomRight,
-              margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    child: Text(
-                      'Sort by: ',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+      body: importantConstants.withBackgroundPlasma(
+        child: Container(
+          color: Colors.white12,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                alignment: Alignment.bottomRight,
+                margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      child: Text(
+                        'Sort by: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                  sortButton('Name'),
-                  sortButton('ID'),
-                  sortButton('Device'),
-                ],
+                    sortButton('Name'),
+                    sortButton('ID'),
+                    sortButton('Device'),
+                  ],
+                ),
               ),
-            ),
-            EmployeeList(filter: _filter, isOrderAscending: _isOrderAscending),
-          ],
+              EmployeeList(
+                filter: _filter,
+                isOrderAscending: _isOrderAscending,
+              ),
+            ],
+          ), // your UI here
         ),
       ),
       floatingActionButton: FloatingActionButton(

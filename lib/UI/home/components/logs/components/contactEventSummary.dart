@@ -198,47 +198,49 @@ class ContactEventSummary extends StatelessWidget {
         ),
       ),
       body: Container(
-        decoration: importantConstants.bgGradDecoration,
-        child: Card(
-          margin: EdgeInsets.all(40),
-          shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
-          elevation: 8,
-          child: StreamBuilder(
-            stream: _bloc.showAllEvents(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return const Align(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(),
-                );
+        child: importantConstants.withBackgroundPlasma(
+          child: Card(
+            margin: EdgeInsets.all(40),
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            elevation: 8,
+            child: StreamBuilder(
+              stream: _bloc.showAllEvents(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return const Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  );
 
-              // No Events Found
-              List<Event> _events = snapshot.data;
-              if (_events.isEmpty)
+                // No Events Found
+                List<Event> _events = snapshot.data;
+                if (_events.isEmpty)
+                  return Container(
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "No Events have occured yet.",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                  );
+
                 return Container(
-                  padding: EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "No Events have occured yet.",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Column(
+                    children: [
+                      InfoText('Employees that had Dangerous contacts:'),
+                      _getSummarisedList(_events, _bloc, 'danger'),
+                      InfoText('Employees that had Short contacts:'),
+                      _getSummarisedList(_events, _bloc, 'contact'),
+                    ],
                   ),
                 );
-
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: Column(
-                  children: [
-                    InfoText('Employees that had Dangerous contacts:'),
-                    _getSummarisedList(_events, _bloc, 'danger'),
-                    InfoText('Employees that had Short contacts:'),
-                    _getSummarisedList(_events, _bloc, 'contact'),
-                  ],
-                ),
-              );
-            },
+              },
+            ),
           ),
         ),
       ),

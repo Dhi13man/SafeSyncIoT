@@ -32,6 +32,7 @@ dependencies:
   # UI
   cupertino_icons: ^1.0.0
   page_transition:
+  simple_animations:
 
   # DATABASE
   sqlite3_flutter_libs: ^0.2.0

@@ -24,35 +24,36 @@ class ContactPage extends StatelessWidget {
       body: Container(
         height: _dimensions.height,
         width: _dimensions.width,
-        decoration: importantConstants.bgGradDecoration,
-        child: ListView(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
-          children: <Widget>[
-            ContactCard(
-              'Dhiman Seal',
-              githubURL: 'https://github.com/Dhi13man',
-              emailID: 'furyx.ds@gmail.com',
-              key: ValueKey('Dhiman Seal'),
-            ),
-            ContactCard(
-              'Kaustav Moni Malakar',
-              githubURL: '',
-              emailID: '',
-              key: ValueKey('Kaustav Moni Malakar'),
-            ),
-            ContactCard(
-              'Prantik Sarkar',
-              githubURL: '',
-              emailID: 'prantiks44@gmail.com',
-              key: ValueKey('Prantik Sarkar'),
-            ),
-            ContactCard(
-              'Sabuj Saikia',
-              githubURL: '',
-              emailID: 'sabuj.saikia2007@gmail.com',
-              key: ValueKey('Sabuj Saikia'),
-            ),
-          ],
+        child: importantConstants.withBackgroundPlasma(
+          child: ListView(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
+            children: <Widget>[
+              ContactCard(
+                'Dhiman Seal',
+                githubURL: 'https://github.com/Dhi13man',
+                emailID: 'furyx.ds@gmail.com',
+                key: ValueKey('Dhiman Seal'),
+              ),
+              ContactCard(
+                'Kaustav Moni Malakar',
+                githubURL: '',
+                emailID: '',
+                key: ValueKey('Kaustav Moni Malakar'),
+              ),
+              ContactCard(
+                'Prantik Sarkar',
+                githubURL: '',
+                emailID: 'prantiks44@gmail.com',
+                key: ValueKey('Prantik Sarkar'),
+              ),
+              ContactCard(
+                'Sabuj Saikia',
+                githubURL: '',
+                emailID: 'sabuj.saikia2007@gmail.com',
+                key: ValueKey('Sabuj Saikia'),
+              ),
+            ],
+          ),
         ),
       ),
     );

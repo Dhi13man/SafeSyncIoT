@@ -111,18 +111,21 @@ class FilteredEventsView extends StatelessWidget {
       ),
       body: ChangeNotifierProvider.value(
         value: showEventState,
-        child: Container(
-          width: _dimensions.width,
-          height: _dimensions.height,
-          decoration: importantConstants.bgGradDecoration,
-          alignment: Alignment.center,
-          child: Card(
-            margin: EdgeInsets.all(40),
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+        child: importantConstants.withBackgroundPlasma(
+          child: Container(
+            width: _dimensions.width,
+            height: _dimensions.height,
+            color: Colors.transparent,
+            alignment: Alignment.center,
+            child: Card(
+              margin: EdgeInsets.all(40),
+              shape: ContinuousRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              elevation: 8,
+              child:
+                  FilteredEventsList(filter: _filter, filterType: filterType),
             ),
-            elevation: 8,
-            child: FilteredEventsList(filter: _filter, filterType: filterType),
           ),
         ),
         builder: (context, child) => child,

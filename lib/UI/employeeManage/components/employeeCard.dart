@@ -15,15 +15,15 @@ class EmployeeCard extends StatelessWidget {
     bool isSanitizingStation = entry.deviceID == 'safesync-iot-sanitize';
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.black),
+        side: BorderSide(color: importantConstants.bgGradMid),
         borderRadius: BorderRadius.circular(30),
       ),
-      elevation: 10,
+      elevation: 5,
       margin: const EdgeInsets.symmetric(
         horizontal: 10.0,
         vertical: 5,
       ),
-      shadowColor: Colors.black,
+      shadowColor: importantConstants.bgGradMid,
       child: Tooltip(
         message: (!isSanitizingStation)
             ? 'Click to Edit ${entry.name}'

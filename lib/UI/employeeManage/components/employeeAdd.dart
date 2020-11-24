@@ -235,14 +235,16 @@ class EmployeeAdd extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Container(
-        width: _dimensions.width,
-        height: _dimensions.height,
-        decoration: importantConstants.bgGradDecoration,
-        alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(60),
-          child: EmployeeForm(employee: employee),
+      body: importantConstants.withBackgroundPlasma(
+        child: Container(
+          width: _dimensions.width,
+          height: _dimensions.height,
+          color: Colors.transparent,
+          alignment: Alignment.center,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(60),
+            child: EmployeeForm(employee: employee),
+          ),
         ),
       ),
     );

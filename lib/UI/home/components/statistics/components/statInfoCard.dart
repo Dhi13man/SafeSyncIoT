@@ -33,7 +33,7 @@ class StatisticsInformationCard extends StatelessWidget {
         side: BorderSide(color: _cardShadowColor[type]),
         borderRadius: BorderRadius.circular(25),
       ),
-      elevation: 8,
+      elevation: 4,
       shadowColor: _cardShadowColor[type],
       borderOnForeground: true,
       child: RawMaterialButton(

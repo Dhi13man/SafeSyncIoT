@@ -25,7 +25,7 @@ class AttendanceCard extends StatelessWidget {
       );
     else
       return Icon(
-        CupertinoIcons.checkmark_circle_fill,
+        CupertinoIcons.checkmark_shield_fill,
         color: Colors.indigo[600],
       );
   }
@@ -42,8 +42,8 @@ class AttendanceCard extends StatelessWidget {
     }
     return Card(
       shadowColor: _getIcon().color,
-      elevation: 10,
-      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+      elevation: 4,
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 4),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: _getIcon().color),
         borderRadius: BorderRadius.circular(10),
@@ -51,11 +51,10 @@ class AttendanceCard extends StatelessWidget {
       borderOnForeground: false,
       child: RawMaterialButton(
         splashColor: _getIcon().color,
-        elevation: 5,
         onPressed: () => Navigator.pushNamed(context, '/employeeManage/add',
             arguments: employee),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

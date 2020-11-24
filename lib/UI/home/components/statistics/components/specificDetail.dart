@@ -76,7 +76,7 @@ class _SpecificDetailsState extends State<SpecificDetails> {
           topRight: Radius.circular(40),
         ),
       ),
-      elevation: 15,
+      elevation: 10,
       shadowColor: Colors.black,
       child: Container(
         padding: EdgeInsets.symmetric(
