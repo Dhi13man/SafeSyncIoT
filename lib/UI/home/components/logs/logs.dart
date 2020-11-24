@@ -183,12 +183,16 @@ class RealTimeLogs extends StatelessWidget {
               children: [
                 FilterBar(),
                 EventList(events: _events, bloc: _bloc),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ResetEventsButton(),
-                    SummarizeContactsButton(),
-                  ],
+                SingleChildScrollView(
+                  clipBehavior: Clip.hardEdge,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ResetEventsButton(),
+                      SummarizeContactsButton(),
+                    ],
+                  ),
                 ),
               ],
             );

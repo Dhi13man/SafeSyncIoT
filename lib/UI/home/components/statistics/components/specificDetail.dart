@@ -30,36 +30,39 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                   ),
                 );
               List<Employee> _employees = snapshot.data;
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                color: Colors.grey[100],
-                child: DropdownButton<String>(
-                  items: _employees
-                      .map<DropdownMenuItem<String>>((Employee _employee) {
-                    return DropdownMenuItem<String>(
-                      value: _employee.deviceID,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          _employee.name,
-                          style: TextStyle(color: Colors.black),
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  color: Colors.grey[100],
+                  child: DropdownButton<String>(
+                    items: _employees
+                        .map<DropdownMenuItem<String>>((Employee _employee) {
+                      return DropdownMenuItem<String>(
+                        value: _employee.deviceID,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            _employee.name,
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (_employees.isNotEmpty)
-                      ? (String value) =>
-                          setState(() => _employeeDeviceID = value)
-                      : null,
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.blue[900],
+                      );
+                    }).toList(),
+                    onChanged: (_employees.isNotEmpty)
+                        ? (String value) =>
+                            setState(() => _employeeDeviceID = value)
+                        : null,
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.blue[900],
+                    ),
+                    elevation: 15,
+                    dropdownColor: Colors.grey[100],
+                    hint: Text('Select Employee by Name here'),
+                    disabledHint: Text('Add Employees to begin'),
+                    value: _employeeDeviceID,
                   ),
-                  elevation: 15,
-                  dropdownColor: Colors.grey[100],
-                  hint: Text('Select Employee by Name here'),
-                  disabledHint: Text('Add Employees to begin'),
-                  value: _employeeDeviceID,
                 ),
               );
             }),

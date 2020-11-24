@@ -19,6 +19,7 @@ class CustomTitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 10,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: RawMaterialButton(
@@ -53,46 +54,49 @@ class DatabaseExtractButton extends StatelessWidget {
         ? 'App Data Folder'
         : 'Downloads Folder';
     String _tooltip = 'Save $type in $_where as CSV.';
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
-      child: Column(
-        children: [
-          IconButton(
-            tooltip: _tooltip,
-            icon: Icon(
-              Icons.cloud_download_outlined,
-              size: (importantConstants.onMobileScreen) ? 25 : 35,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Future<bool> _result;
-              if (type == 'Employees')
-                _result = bloc.exportDatabase(getEmployees: true);
-              else if (type == 'Attendances')
-                _result = bloc.exportDatabase(getAttendances: true);
-              else if (type == 'Events')
-                _result = bloc.exportDatabase(getEvents: true);
-              return _result.then(
-                (value) => safeSyncAlerts.showSaveAlert(
-                  context,
-                  value,
-                  type: type,
-                ),
-              );
-            },
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 11),
-            child: Text(
-              type,
-              style: TextStyle(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+        child: Column(
+          children: [
+            IconButton(
+              tooltip: _tooltip,
+              icon: Icon(
+                Icons.cloud_download_outlined,
+                size: (importantConstants.onMobileScreen) ? 25 : 35,
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
+              ),
+              onPressed: () {
+                Future<bool> _result;
+                if (type == 'Employees')
+                  _result = bloc.exportDatabase(getEmployees: true);
+                else if (type == 'Attendances')
+                  _result = bloc.exportDatabase(getAttendances: true);
+                else if (type == 'Events')
+                  _result = bloc.exportDatabase(getEvents: true);
+                return _result.then(
+                  (value) => safeSyncAlerts.showSaveAlert(
+                    context,
+                    value,
+                    type: type,
+                  ),
+                );
+              },
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 11),
+              child: Text(
+                type,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -57,18 +57,22 @@ class FilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            'Displaying Events: ',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          FilterButton('Attendance'),
-          FilterButton('Contact'),
-          FilterButton('Danger'),
-          FilterButton('Register'),
-        ],
+      alignment: Alignment.bottomRight,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Displaying Events: ',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            FilterButton('Attendance'),
+            FilterButton('Contact'),
+            FilterButton('Danger'),
+            FilterButton('Register'),
+          ],
+        ),
       ),
     );
   }

@@ -54,23 +54,26 @@ class ResetAttendancesButton extends StatelessWidget {
 class AttendanceTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      margin: EdgeInsets.only(
-        top: 20,
-        bottom: 13,
-        left: 20,
-        right: 20,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InfoText('Present: '),
-          AttendanceList('present'),
-          InfoText('Absent: '),
-          AttendanceList('absent'),
-          ResetAttendancesButton(),
-        ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        margin: EdgeInsets.only(
+          top: 20,
+          bottom: 13,
+          left: 20,
+          right: 20,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InfoText('Present: '),
+            AttendanceList('present'),
+            InfoText('Absent: '),
+            AttendanceList('absent'),
+            ResetAttendancesButton(),
+          ],
+        ),
       ),
     );
   }

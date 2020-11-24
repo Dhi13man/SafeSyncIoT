@@ -15,12 +15,15 @@ class EmployeeStatistics extends StatelessWidget {
       stream: _bloc.showAllEvents(),
       builder: (_, snapshot) => ListView(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 25,
-              vertical: 10,
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: 25,
+                vertical: 10,
+              ),
+              child: SpecificDetails(),
             ),
-            child: SpecificDetails(),
           ),
           Container(
             margin: _margins,
