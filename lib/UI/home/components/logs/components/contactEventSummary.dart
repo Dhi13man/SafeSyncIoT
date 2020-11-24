@@ -166,6 +166,7 @@ class ContactEventSummary extends StatelessWidget {
                     '$numberContacts times',
                     style: TextStyle(fontSize: 13),
                   ),
+                  focusColor: _iconChooser(queryEventType).color,
                   onTap: (summarizedData[index].employee != null)
                       ? () => Navigator.pushNamed(
                             context,
@@ -188,7 +189,10 @@ class ContactEventSummary extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // Changes based on whether Adding new or editing.
-        title: Text('Summary of Contacts'),
+        title: Text(
+          'Summary of Contacts',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         elevation: 1,

@@ -99,9 +99,12 @@ class FilteredEventsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // Changes based on whether Adding new or editing.
-        title: Text((filterType == 'deviceID')
-            ? 'Employee Events Log'
-            : 'Showing all contacts'),
+        title: Text(
+          (filterType == 'deviceID')
+              ? 'Employee Events Log'
+              : 'Showing all contacts',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(

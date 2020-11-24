@@ -116,7 +116,10 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage your Employees'),
+        title: Text(
+          'Manage your Employees',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(

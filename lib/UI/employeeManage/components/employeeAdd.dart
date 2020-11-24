@@ -107,7 +107,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
               Center(
                 child: Text(
                   'Employee Details',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
               ),
               TextFormField(
@@ -226,7 +226,10 @@ class EmployeeAdd extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: // Changes based on whether Adding new or editing.
-            Text((employee == null) ? 'Add a new Employee' : 'Update Employee'),
+            Text(
+          (employee == null) ? 'Add a new Employee' : 'Update Employee',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         elevation: 1,

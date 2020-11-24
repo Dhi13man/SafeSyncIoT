@@ -70,11 +70,11 @@ class EventCard extends StatelessWidget {
     String _nameA, _nameB;
     // Handle bad info in database
     if (employees['A'] == null)
-      _nameA = '{Device sending data not found in employee database}';
+      _nameA = '{${_event.deviceIDA} device not assigned to anybody}';
     else
       _nameA = employees['A'].name;
     if (employees['B'] == null)
-      _nameB = '{Device being detected not found in employee database}';
+      _nameB = '{${_event.deviceIDB} device not assigned to anybody}';
     else
       _nameB = employees['B'].name;
 
