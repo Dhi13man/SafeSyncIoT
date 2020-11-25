@@ -52,12 +52,13 @@ class HomeBody extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.white,
-                          _endBodyGradient,
-                        ]),
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white,
+                        _endBodyGradient,
+                      ],
+                    ),
                     border: Border.all(width: 0, color: Colors.white),
                   ),
                   width: _dimensions.width,

@@ -74,7 +74,7 @@ class AttendanceCard extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.all(3.0),
-                width: 50,
+                width: 70,
                 child: Column(
                   children: [
                     importantConstants.cardSubText(

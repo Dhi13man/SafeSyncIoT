@@ -125,12 +125,18 @@ class SafeSyncHomePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 alignment: Alignment.center,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     CustomTitleBar(title: title),
-                    DatabaseExtractButton(type: 'Employees'),
-                    DatabaseExtractButton(type: 'Attendances'),
-                    DatabaseExtractButton(type: 'Events'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        DatabaseExtractButton(type: 'Employees'),
+                        DatabaseExtractButton(type: 'Attendances'),
+                        DatabaseExtractButton(type: 'Events'),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -150,7 +156,6 @@ class SafeSyncHomePage extends StatelessWidget {
       ),
       drawer: SideBarDrawer(_drawerKey),
       floatingActionButton: FloatingActionButton(
-        elevation: 80,
         backgroundColor: importantConstants.bgGradBegin,
         foregroundColor: Colors.white,
         autofocus: true,
