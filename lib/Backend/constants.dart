@@ -37,11 +37,11 @@ class ImportantConstants {
       );
 
   Plasma withBackgroundPlasma({Widget child}) => Plasma(
-        particles: 18,
+        particles: 20,
         foregroundColor: importantConstants.bgGradBegin,
         backgroundColor: importantConstants.bgGradMid,
-        size: 0.6,
-        speed: 4.76,
+        size: 0.5,
+        speed: 3.76,
         offset: 0.00,
         blendMode: BlendMode.color,
         child: child,

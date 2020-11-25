@@ -235,9 +235,11 @@ class EmployeeAdd extends StatelessWidget {
         ),
       ),
       body: importantConstants.withBackgroundPlasma(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: EmployeeForm(employee: employee),
+        child: Center(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: EmployeeForm(employee: employee),
+          ),
         ),
       ),
     );
