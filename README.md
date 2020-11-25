@@ -1,12 +1,14 @@
 # SafeSyncIoT Dashboard
 
-This repository holds the code for thl Server, Database and UI components for the IoT project SafeSync IoT, for a safer, post-covid workspace.
+This repository holds the code for the Server, Database and UI components for the IoT project SafeSync IoT, for a safer, post-covid workspace.
 
 SafeSync-IoT is a full-fledged *Employee Management* and IoT driven *Contact-Tracing* based *Workspace Safety solution*, with a **Cross-Platform Dashboard** in Flutter, **Client-Server IoT communication**, and a self-sufficient, local, **SQL-based Database**.
 
-  a. Utilizes [Moor](https://pub.dev/packages/moor) + [SQL](https://pub.dev/packages/sqflite) for a database that works across platforms
-  
-  b. Utilizes [bloc](https://pub.dev/packages/bloc) + [Provider](https://pub.dev/packages/provider) based State Management Architecture.
+1. Utilizes [Moor](https://pub.dev/packages/moor) + [SQL](https://pub.dev/packages/sqflite) for a database that works across platforms
+
+2. Utilizes [bloc](https://pub.dev/packages/bloc) + [Provider](https://pub.dev/packages/provider) based State Management Architecture.
+
+3. Utilizes both [Material Design](https://material.io/develop/flutter) and [Cupertino](https://flutter.dev/docs/development/ui/widgets/cupertino) elements for UI building, as well as various other Open Source Packages as [listed below](#dependencies-used).
 
 ## Features
 
