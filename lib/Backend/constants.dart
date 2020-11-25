@@ -73,7 +73,9 @@ class ImportantConstants {
   /// Where are files being written to?
   Future<String> fileSavePath() async {
     Directory directory;
-    if (Platform.isAndroid || Platform.isIOS)
+    if (Platform.isAndroid)
+      directory = await getExternalStorageDirectory();
+    else if (Platform.isIOS)
       directory = await getApplicationDocumentsDirectory();
     else if (Platform.isLinux || Platform.isWindows || Platform.isMacOS)
       directory = await getDownloadsDirectory();
