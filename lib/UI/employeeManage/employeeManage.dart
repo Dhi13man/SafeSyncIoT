@@ -46,7 +46,11 @@ class EmployeeList extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     "No Registered Employees",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 );
               else
@@ -106,7 +110,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
 
   Container putBackgroundOnAppBarButton(Widget foregroundWidget) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: EdgeInsets.only(left: 1, right: 2, top: 10, bottom: 10),
       decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
       child: foregroundWidget,
     );
@@ -116,10 +120,7 @@ class _EmployeeManagementState extends State<EmployeeManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Manage your Employees',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: importantConstants.appBarText('Manage your Employees'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         leading: IconButton(

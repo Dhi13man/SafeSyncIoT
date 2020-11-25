@@ -33,7 +33,8 @@ class _SpecificDetailsState extends State<SpecificDetails> {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 8),
                   color: Colors.grey[100],
                   child: DropdownButton<String>(
                     items: _employees
@@ -59,7 +60,12 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                     ),
                     elevation: 15,
                     dropdownColor: Colors.grey[100],
-                    hint: Text('Select Employee by Name here'),
+                    hint: Text(
+                      'Select Employee by Name here',
+                      style: TextStyle(
+                        fontSize: importantConstants.onMobileScreen ? 8 : 14,
+                      ),
+                    ),
                     disabledHint: Text('Add Employees to begin'),
                     value: _employeeDeviceID,
                   ),
@@ -92,6 +98,7 @@ class _SpecificDetailsState extends State<SpecificDetails> {
               'Check events encountered by Employee: ',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: importantConstants.onMobileScreen ? 9 : 14,
               ),
             ),
             dropdownEmployeeList(_bloc),
@@ -117,7 +124,7 @@ class _SpecificDetailsState extends State<SpecificDetails> {
                 child: Text(
                   'See Events encountered',
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: importantConstants.onMobileScreen ? 9 : 15,
                       color: importantConstants.textLightestColor,
                       fontWeight: FontWeight.bold),
                 ),

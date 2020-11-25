@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_sync/Backend/constants.dart';
 
 export 'package:provider/provider.dart';
 
@@ -36,14 +37,17 @@ class FilterButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.bottomRight,
         height: 20,
-        margin: EdgeInsets.symmetric(horizontal: 7),
+        margin: EdgeInsets.symmetric(horizontal: 3),
         child: CupertinoButton(
           padding: EdgeInsets.symmetric(horizontal: 10),
           color: (isActive) ? Colors.blue[900] : Colors.black26,
           onPressed: () => watcher.toggleType(filterTypeText.toLowerCase()),
           child: Text(
             filterTypeText,
-            style: TextStyle(color: Colors.white, fontSize: 10),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: importantConstants.onMobileScreen ? 8 : 10,
+            ),
           ),
         ),
       ),
@@ -65,7 +69,10 @@ class FilterBar extends StatelessWidget {
           children: [
             Text(
               'Displaying Events: ',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: importantConstants.onMobileScreen ? 9 : 14,
+              ),
             ),
             FilterButton('Attendance'),
             FilterButton('Contact'),

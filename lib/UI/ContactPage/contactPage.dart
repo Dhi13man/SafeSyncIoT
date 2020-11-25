@@ -9,10 +9,7 @@ class ContactPage extends StatelessWidget {
     Size _dimensions = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Contact the Creators!',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
+        title: importantConstants.appBarText('Contact the Creators!'),
         elevation: 1,
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,

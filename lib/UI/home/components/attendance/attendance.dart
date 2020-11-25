@@ -15,7 +15,7 @@ class InfoText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(3.0),
       margin: const EdgeInsets.only(top: 10.0),
       child: Text(
         this._text,

@@ -44,7 +44,10 @@ class ContactCard extends StatelessWidget {
                           : null,
                     ),
                   ),
-                  importantConstants.cardText(githubURL),
+                  importantConstants.cardText(
+                    githubURL,
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
             ],

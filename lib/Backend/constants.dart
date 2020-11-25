@@ -15,6 +15,8 @@ class ImportantConstants {
   Color get bgGradEnd => Colors.purple[800];
   Color get textLighterColor => Color(0xFFACACAC);
   Color get textLightestColor => Colors.white;
+  EdgeInsetsGeometry get defaultPadding =>
+      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
 
   /// Whether on small screen
   bool get onMobileScreen => Platform.isIOS || Platform.isAndroid;
@@ -40,8 +42,14 @@ class ImportantConstants {
         child: child,
       );
 
-  EdgeInsetsGeometry get defaultPadding =>
-      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
+  Text appBarText(String text) => Text(
+        text,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontSize: onMobileScreen ? 13 : 14,
+        ),
+      );
 
   /// Launch URL from anywhere in the app
   void launchURL(BuildContext context, String url) async {
@@ -71,8 +79,12 @@ class ImportantConstants {
 
   /// Main scrollable text of Cards used all over the app
   Widget cardText(String _text, {TextStyle style}) {
-    style =
-        (style) ?? TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
+    style = (style) ??
+        TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+          fontSize: onMobileScreen ? 8 : 14,
+        );
     return Expanded(
       flex: 5,
       child: SingleChildScrollView(

@@ -189,10 +189,7 @@ class ContactEventSummary extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // Changes based on whether Adding new or editing.
-        title: Text(
-          'Summary of Contacts',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: importantConstants.appBarText('Summary of Contacts'),
         centerTitle: true,
         backgroundColor: importantConstants.bgGradBegin,
         elevation: 1,

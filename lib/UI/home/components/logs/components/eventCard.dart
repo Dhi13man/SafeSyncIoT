@@ -97,7 +97,10 @@ class EventCard extends StatelessWidget {
               ? 'Click to open $_nameA.'
               : 'Click to open $_nameA, Double Click to open $_nameB.',
           child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+            margin: EdgeInsets.symmetric(
+              horizontal: importantConstants.onMobileScreen ? 10 : 20,
+              vertical: 3,
+            ),
             shadowColor: _getIcon().color,
             elevation: 3,
             shape: RoundedRectangleBorder(
@@ -105,24 +108,26 @@ class EventCard extends StatelessWidget {
             ),
             borderOnForeground: false,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30),
+              padding: EdgeInsets.symmetric(
+                horizontal: importantConstants.onMobileScreen ? 10 : 30,
+                vertical: 10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(flex: 1, child: _getIcon()),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: _getIcon(),
+                  ),
                   _infoString(context, _nameA, _nameB),
-                  Flexible(
-                    flex: 2,
-                    child: Container(
-                      child: Text(
-                        '${_dateTime.substring(0, _dateTime.length - 4)}',
-                        style: TextStyle(
-                            fontSize:
-                                (importantConstants.onMobileScreen) ? 5.5 : 9,
-                            fontWeight: FontWeight.w600,
-                            color: importantConstants.textLighterColor),
-                      ),
+                  Container(
+                    child: Text(
+                      '${_dateTime.substring(0, _dateTime.length - 4)}',
+                      style: TextStyle(
+                          fontSize:
+                              (importantConstants.onMobileScreen) ? 5.5 : 9,
+                          fontWeight: FontWeight.w600,
+                          color: importantConstants.textLighterColor),
                     ),
                   ),
                 ],

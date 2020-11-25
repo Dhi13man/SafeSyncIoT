@@ -43,7 +43,10 @@ class AttendanceCard extends StatelessWidget {
     return Card(
       shadowColor: _getIcon().color,
       elevation: 4,
-      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 4),
+      margin: EdgeInsets.symmetric(
+        horizontal: importantConstants.onMobileScreen ? 5 : 25,
+        vertical: 4,
+      ),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: _getIcon().color),
         borderRadius: BorderRadius.circular(10),
@@ -54,38 +57,39 @@ class AttendanceCard extends StatelessWidget {
         onPressed: () => Navigator.pushNamed(context, '/employeeManage/add',
             arguments: employee),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 30),
+          padding: EdgeInsets.symmetric(
+            vertical: 7.0,
+            horizontal: (importantConstants.onMobileScreen) ? 5 : 30,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Flexible(flex: 1, child: _getIcon()),
               Container(
-                child: importantConstants.cardText(
-                  '${employee.name}',
-                ),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 3.0, horizontal: 7),
+                child: _getIcon(),
               ),
-              Flexible(
-                flex: 2,
-                child: Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: importantConstants.cardSubText(
-                          'ID: ${employee.employeeID}',
-                        ),
-                      ),
-                      importantConstants.cardSubText(
-                        '${attendance.attendanceCount} Sanitizations',
-                        style: TextStyle(
-                            fontSize:
-                                (importantConstants.onMobileScreen) ? 7 : 10,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.blue[900]),
-                      ),
-                      importantConstants.cardSubText('Last: $_lastAttendance'),
-                    ],
-                  ),
+              importantConstants.cardText(
+                '${employee.name}',
+              ),
+              Container(
+                margin: const EdgeInsets.all(3.0),
+                width: 50,
+                child: Column(
+                  children: [
+                    importantConstants.cardSubText(
+                      'ID: ${employee.employeeID}',
+                    ),
+                    importantConstants.cardSubText(
+                      '${attendance.attendanceCount} Sanitizations',
+                      style: TextStyle(
+                          fontSize:
+                              (importantConstants.onMobileScreen) ? 7 : 10,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.blue[900]),
+                    ),
+                    importantConstants.cardSubText('Last: $_lastAttendance'),
+                  ],
                 ),
               ),
             ],
