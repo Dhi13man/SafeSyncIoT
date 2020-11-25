@@ -70,10 +70,10 @@ class ResetEventsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
+      margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       height: 50,
-      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       child: CupertinoButton(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 55),
+        padding: importantConstants.buttonPadding(vertical: 15, horizontal: 55),
         color: importantConstants.bgGradBegin,
         child: Row(
           children: [
@@ -88,7 +88,7 @@ class ResetEventsButton extends StatelessWidget {
               'Reset Events',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: (importantConstants.onMobileScreen) ? 10 : 15,
               ),
             ),
           ],
@@ -106,40 +106,36 @@ class SummarizeContactsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-          height: 50,
-          child: CupertinoButton(
-            color: importantConstants.bgGradBegin,
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 35),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(
-                    Icons.book_sharp,
-                    size: 20,
-                  ),
-                ),
-                Text(
-                  'Summarize Contacts',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      height: 50,
+      child: CupertinoButton(
+        color: importantConstants.bgGradBegin,
+        padding: importantConstants.buttonPadding(vertical: 15, horizontal: 35),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(
+                Icons.book_sharp,
+                size: 20,
+              ),
             ),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              '/contactEventSummary',
+            Text(
+              'Summarize Contacts',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: (importantConstants.onMobileScreen) ? 10 : 15,
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+        onPressed: () => Navigator.pushNamed(
+          context,
+          '/contactEventSummary',
+        ),
+      ),
     );
   }
 }
@@ -184,7 +180,7 @@ class RealTimeLogs extends StatelessWidget {
                 FilterBar(),
                 EventList(events: _events, bloc: _bloc),
                 SingleChildScrollView(
-                  clipBehavior: Clip.hardEdge,
+                  clipBehavior: Clip.antiAlias,
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

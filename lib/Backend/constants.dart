@@ -17,6 +17,11 @@ class ImportantConstants {
   Color get textLightestColor => Colors.white;
   EdgeInsetsGeometry get defaultPadding =>
       EdgeInsets.symmetric(vertical: 20, horizontal: 20);
+  EdgeInsetsGeometry buttonPadding({double vertical, double horizontal}) =>
+      EdgeInsets.symmetric(
+        vertical: vertical,
+        horizontal: onMobileScreen ? horizontal - 30 : horizontal,
+      );
 
   /// Whether on small screen
   bool get onMobileScreen => Platform.isIOS || Platform.isAndroid;

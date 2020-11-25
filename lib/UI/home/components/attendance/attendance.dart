@@ -34,13 +34,15 @@ class ResetAttendancesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
+      margin: EdgeInsets.symmetric(
+          horizontal: (importantConstants.onMobileScreen) ? 25 : 0),
       height: 50,
       child: CupertinoButton(
         color: importantConstants.bgGradBegin,
         child: Text(
           'Reset Attendances',
           style: TextStyle(
-            fontSize: 15,
+            fontSize: (importantConstants.onMobileScreen) ? 10 : 15,
             color: importantConstants.textLightestColor,
             fontWeight: FontWeight.bold,
           ),
@@ -54,26 +56,22 @@ class ResetAttendancesButton extends StatelessWidget {
 class AttendanceTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        margin: EdgeInsets.only(
-          top: 20,
-          bottom: 13,
-          left: 20,
-          right: 20,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            InfoText('Present: '),
-            AttendanceList('present'),
-            InfoText('Absent: '),
-            AttendanceList('absent'),
-            ResetAttendancesButton(),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.only(
+        top: 20,
+        bottom: 13,
+        left: 20,
+        right: 20,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          InfoText('Present: '),
+          AttendanceList('present'),
+          InfoText('Absent: '),
+          AttendanceList('absent'),
+          ResetAttendancesButton(),
+        ],
       ),
     );
   }

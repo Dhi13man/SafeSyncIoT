@@ -18,20 +18,17 @@ class CustomTitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 10,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: RawMaterialButton(
-          focusColor: Colors.transparent,
-          onPressed: () => Navigator.pushNamed(context, '/contact'),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: (importantConstants.onMobileScreen) ? 12 : 22,
-              color: Colors.white,
-            ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: RawMaterialButton(
+        focusColor: Colors.transparent,
+        onPressed: () => Navigator.pushNamed(context, '/contact'),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: (importantConstants.onMobileScreen) ? 13 : 22,
+            color: Colors.white,
           ),
         ),
       ),
@@ -57,7 +54,8 @@ class DatabaseExtractButton extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+        alignment: Alignment.center,
+        margin: EdgeInsets.all(5),
         child: Column(
           children: [
             IconButton(
@@ -84,15 +82,12 @@ class DatabaseExtractButton extends StatelessWidget {
                 );
               },
             ),
-            Container(
-              padding: EdgeInsets.only(left: 11),
-              child: Text(
-                type,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
-                ),
+            Text(
+              type,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: (importantConstants.onMobileScreen) ? 8 : 9,
               ),
             ),
           ],
@@ -130,6 +125,7 @@ class SafeSyncHomePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 alignment: Alignment.center,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     CustomTitleBar(title: title),
                     DatabaseExtractButton(type: 'Employees'),
