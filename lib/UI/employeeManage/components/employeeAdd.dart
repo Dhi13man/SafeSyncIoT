@@ -89,6 +89,12 @@ class _EmployeeFormState extends State<EmployeeForm> {
   }
 
   @override
+  void dispose() {
+    _controlMap.forEach((key, value) => value.dispose());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<bool> verifyFormData = [
       _editmode, // ID is not editable once set
