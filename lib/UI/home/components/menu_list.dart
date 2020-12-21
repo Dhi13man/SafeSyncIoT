@@ -28,7 +28,7 @@ class MenuList extends StatelessWidget {
         ),
         Flexible(
           child: ListItem(
-            itemText: 'Attendance',
+            itemText: 'Attendances',
             tab: 1,
             tabColor: _giveColor(1, homeTabState.homeTabID),
             key: ValueKey(1),

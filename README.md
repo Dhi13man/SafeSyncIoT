@@ -10,11 +10,26 @@ SafeSync-IoT is a full-fledged *Employee Management* and IoT driven *Contact-Tra
 
 3. Utilizes both [Material Design](https://material.io/develop/flutter) and [Cupertino](https://flutter.dev/docs/development/ui/widgets/cupertino) elements for UI building, as well as various other Open Source Packages as [listed below](#dependencies-used).
 
+## Installation and Set up
+
+1. Run and Extract SafeSync.rar into a writable folder of your choice.
+2. Run `safe_sync.exe` to begin using the software, while connected to the Workspace network that the Hardware devices are configured to connect to.
+
+## Usage
+
+1. Once the device is successfully connected to the proper network and `safe_sync.exe` is executed, the server automatically begins in the background.
+2. The `Real Time Logs` Tab shows Employee Registration, Attendance, Short Contacts and Dangerous Contacts in Real Time through the data being sent over by the hardware devices.
+3. The `Attendances` Tab shows the number of times the Employees gave attendance (sanitized) throughout the day, using the IoT Sanitization device. The defaulters list is also easily accessible.
+4. The `Statistics` Tab shows Filtered events encountered by particular employees, as well as important tidbits of information like 'Percentage of Dangerous Contacts', 'Last Sanitization', 'Most Sanitized Employee', 'Least Sanitized Employee' etc.
+5. There are also buttons for resetting data, saving current Data in CSV form for easy exporting and sharing, as well as Summarizing Data in relevant windows.
+6. The Floating Action Button in Home Screen of the app also opens the Sidebar that provides easy access to `Employee Management Screen` using which **new employees may be added** to keep track of, and other frequently used Features.
+7. Any of the cards in any of the windows may be hovered over and clicked for intuitive editing and viewing of relevant Employee information.
+
 ## Features
 
-1. Employee Management.
-2. Attendance Tracking.
-3. Real time (IoT utilized) Logs.
+1. Internal SQL-based Employee Management Database.
+2. Real-Time Attendance Tracking.
+3. Real-Time (IoT utilized) Logs.
 4. Detailed statistics about Employees and their work ethic.
 
 ## Screenshots

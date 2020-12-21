@@ -28,10 +28,10 @@ class EmployeeStatistics extends StatelessWidget {
           Container(
             margin: _margins,
             child: StatisticsInformationCard(
-              cardName: 'Dangerous Contact Percentage: ',
+              cardName: 'Percentage of Dangerous Contacts: ',
               type: 'negative',
               informationStream: _bloc.getDangerousContactsPercentage(),
-              key: ValueKey('Dangerous Contact Percentage: '),
+              key: ValueKey('Percentage of Dangerous Contacts: '),
             ),
           ),
           Container(
