@@ -80,3 +80,5 @@ Full Fledged Employee Management System:|
 13. [build_runner](https://pub.dev/packages/build_runner) developer dependency for building Moor database tables
 
 14. [build_web_compilers](https://pub.dev/packages/build_web_compilers) used as a development dependency for users of `package:build` who want to run code in a browser (Flutter Web)
+
+15. [http](https://pub.dev/packages/http) package for mock request testing.

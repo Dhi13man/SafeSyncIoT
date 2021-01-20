@@ -52,10 +52,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # For Moor
   moor_generator: ^3.4.0
   build_runner: ^1.10.4
   build_web_compilers: ^2.13.0
   sqflite_common_ffi: ^1.1.1
+
+  # For testing
+  http:
   integration_test: 
 
 # For information on the generic Dart part of this file, see the
