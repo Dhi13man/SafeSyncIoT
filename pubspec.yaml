@@ -47,7 +47,7 @@ dependencies:
   # State Management
   bloc:
   flutter_bloc:
-  provider: ^4.3.2+2
+  provider:
 
 dev_dependencies:
   flutter_test:

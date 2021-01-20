@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 class SafeSyncServer {
-  HttpServer server;
-  final Function(Map) sendParsedRequest;
+  HttpServer _server;
+  final void Function(Map<String, dynamic>) _sendParsedRequest;
 
-  SafeSyncServer(this.sendParsedRequest) {
+  SafeSyncServer(this._sendParsedRequest) {
     initServer();
   }
 
   void initServer() async {
-    server = await HttpServer.bind(
+    _server = await HttpServer.bind(
       InternetAddress.anyIPv6,
       8989,
     );
 
-    await for (var request in server) {
+    await for (HttpRequest request in _server) {
       try {
         if (request.method == 'POST') {
           _handleDataPosted(request);
@@ -34,9 +34,9 @@ class SafeSyncServer {
     if (contentType?.mimeType == 'application/json') {
       try {
         String content = await utf8.decoder.bind(request).join();
-        Map data = jsonDecode(content) as Map;
+        Map<String, dynamic> data = jsonDecode(content) as Map<String, dynamic>;
 
-        sendParsedRequest(data);
+        _sendParsedRequest(data);
 
         request.response
           ..statusCode = HttpStatus.ok

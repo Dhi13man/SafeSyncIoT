@@ -19,7 +19,7 @@ class DataBloc extends Cubit<ChangeStack> {
   }
 
   //------------------- SERVER DATA HANDLING -------------------//
-  void _handleParsedClientRequest(Map parsedRequest) {
+  void _handleParsedClientRequest(Map<String, dynamic> parsedRequest) {
     // As IoT device waits 15 seconds before making request, we make it up.
     DateTime _current = DateTime.now();
     _current.subtract(Duration(seconds: 10));
@@ -29,17 +29,19 @@ class DataBloc extends Cubit<ChangeStack> {
     if (parsedRequest['selfID'] == 'safesync-iot-sanitize') {
       giveAttendance(parsedRequest['contactDeviceID']);
       createEvent(Event(
-          key: _current.toString() + parsedRequest['contactDeviceID'],
-          deviceIDA: parsedRequest['contactDeviceID'],
-          eventType: 'attendance',
-          eventTime: _current));
+        key: _current.toString() + parsedRequest['contactDeviceID'],
+        deviceIDA: parsedRequest['contactDeviceID'],
+        eventType: 'attendance',
+        eventTime: _current,
+      ));
     } else {
       createEvent(Event(
-          key: _current.toString() + parsedRequest['selfID'],
-          deviceIDA: parsedRequest['selfID'],
-          deviceIDB: parsedRequest['contactDeviceID'],
-          eventType: parsedRequest['type'],
-          eventTime: _current));
+        key: _current.toString() + parsedRequest['selfID'],
+        deviceIDA: parsedRequest['selfID'],
+        deviceIDB: parsedRequest['contactDeviceID'],
+        eventType: parsedRequest['type'],
+        eventTime: _current,
+      ));
     }
   }
 

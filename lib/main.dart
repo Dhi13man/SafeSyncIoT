@@ -31,7 +31,6 @@ void main() {
   runApp(SafeSyncApp());
 }
 
-// flutter packages pub run build_runner watch
 // flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8989
 
 class SafeSyncApp extends StatelessWidget {
@@ -103,9 +102,7 @@ class SafeSyncApp extends StatelessWidget {
                 return null;
             }
           },
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: ThemeData(primarySwatch: Colors.blue),
         ),
       ),
     );

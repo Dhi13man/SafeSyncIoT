@@ -53,8 +53,9 @@ class SafeSyncAlerts {
                       child: Text(
                         snapshot.data,
                         style: TextStyle(
-                            color: importantConstants.textLighterColor,
-                            fontSize: 12),
+                          color: importantConstants.textLighterColor,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -63,10 +64,8 @@ class SafeSyncAlerts {
           ),
           actions: <Widget>[
             FlatButton(
-              child: new Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              child: const Text("OK"),
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
         );
@@ -102,17 +101,17 @@ class SafeSyncAlerts {
           title: Text(
             'Confirm $resetTableName Reset',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Text(
             'Are you sure about Resetting ${resetTableName}s?',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: importantConstants.textLighterColor, fontSize: 20),
+              color: importantConstants.textLighterColor,
+              fontSize: 20,
+            ),
           ),
-          actionsPadding: EdgeInsets.all(10),
+          actionsPadding: const EdgeInsets.all(10),
           actions: <Widget>[
             Container(
               alignment: Alignment.bottomCenter,

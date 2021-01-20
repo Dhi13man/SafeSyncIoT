@@ -9,14 +9,14 @@ import 'package:safe_sync/UI/safesyncAlerts.dart';
 
 class ImportantConstants {
   Color get textColor => Colors.black;
-  Color get textLightColor => Color(0xFF535353);
+  Color get textLightColor => const Color(0xFF535353);
   Color get bgGradBegin => Colors.purple[900];
   Color get bgGradMid => Colors.blue[900];
   Color get bgGradEnd => Colors.purple[800];
-  Color get textLighterColor => Color(0xFFACACAC);
+  Color get textLighterColor => const Color(0xFFACACAC);
   Color get textLightestColor => Colors.white;
   EdgeInsetsGeometry get defaultPadding =>
-      EdgeInsets.symmetric(vertical: 20, horizontal: 20);
+      const EdgeInsets.symmetric(vertical: 20, horizontal: 20);
   EdgeInsetsGeometry buttonPadding({double vertical, double horizontal}) =>
       EdgeInsets.symmetric(
         vertical: vertical,
@@ -108,8 +108,9 @@ class ImportantConstants {
   Widget cardSubText(String _text, {TextStyle style}) {
     style = (style) ??
         TextStyle(
-            fontSize: (onMobileScreen) ? 6 : 9,
-            color: importantConstants.textLighterColor);
+          fontSize: (onMobileScreen) ? 6 : 9,
+          color: importantConstants.textLighterColor,
+        );
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
