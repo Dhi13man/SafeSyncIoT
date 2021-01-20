@@ -24,19 +24,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Dart
-  moor: ^3.4.0
-  moor2csv: ^1.0.2  # My own package ;)
-  url_launcher: ^5.7.8
-
   # UI
   cupertino_icons: ^1.0.0
   page_transition:
   simple_animations:
 
   # DATABASE
-  sqlite3_flutter_libs: ^0.2.0
-  sqflite: ^1.3.2+1
+  moor: ^3.4.0 # Core
+  sqlite3_flutter_libs: ^0.2.0 # For Compatibility
+  sqflite: ^1.3.2+1  # For Compatibility
+  moor2csv: ^1.0.2  # My own package for easy Database Exporting ;)
 
   # Mobile and Path finding
   permission_handler: ^5.0.1+1
@@ -49,11 +46,12 @@ dependencies:
   flutter_bloc:
   provider:
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  # Miscellaneous
+  url_launcher: ^5.7.8
 
-  # For Moor
+
+dev_dependencies:
+  # Moor Database Generation and Handling
   moor_generator: ^3.4.0
   build_runner: ^1.10.4
   build_web_compilers: ^2.13.0
@@ -61,6 +59,8 @@ dev_dependencies:
 
   # For testing
   http:
+  flutter_test:
+    sdk: flutter
   integration_test: 
 
 # For information on the generic Dart part of this file, see the
