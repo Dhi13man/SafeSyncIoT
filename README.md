@@ -38,16 +38,15 @@ Real Time Logs: | Employee Safety Statistics:
 ----------------|----------------------------
 [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png" alt="Real Time Logs">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/logs.png) | [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png" alt="Statistics">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/stats.png)
 
-
 Dynamic Employee information Storage: | Supporting Utilities:
 --------------------------------------|----------------------
 [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png" alt="Employee View">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_view.png) | [<img height="450" width="350" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/sidebarSanitizeScreen.png" alt="Employee View">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/sidebarSanitizeScreen.png)
 
-Full Fledged Employee Management System:|
-----------------------------------------
+Full Fledged Employee Management System: |
+---------------------------------------|
 [<img height="500" width="720" src="https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png" alt="Employee Management">](https://raw.githubusercontent.com/Dhi13man/SafeSyncIoT/main/Screenshots/employee_management.png) |
 
-### Dependencies Used
+## Dependencies Used
 
 1. [material](https://material.io/develop/flutter) for UI
 
