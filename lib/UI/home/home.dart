@@ -18,18 +18,45 @@ class CustomTitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DataBloc bloc = context.watch<DataBloc>();
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: RawMaterialButton(
         focusColor: Colors.transparent,
         onPressed: () => Navigator.pushNamed(context, '/contact'),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: (importantConstants.onMobileScreen) ? 13 : 22,
-            color: Colors.white,
-          ),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: (importantConstants.onMobileScreen) ? 13 : 22,
+                color: Colors.white,
+              ),
+            ),
+            StreamBuilder<String>(
+              stream: bloc.server.serverIPTracker.stream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData)
+                  return Text(
+                    'Server Listening on ...',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: (importantConstants.onMobileScreen) ? 7 : 9,
+                      color: Colors.white,
+                    ),
+                  );
+                return Text(
+                  'Server Listening on ${snapshot.data}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: (importantConstants.onMobileScreen) ? 7 : 9,
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -119,7 +146,8 @@ class SafeSyncHomePage extends StatelessWidget {
               flex: 1,
               child: Container(
                 margin: EdgeInsets.only(
-                    top: (importantConstants.onMobileScreen) ? 20 : 15),
+                  top: (importantConstants.onMobileScreen) ? 20 : 15,
+                ),
                 height: _dimensions.height,
                 width: _dimensions.width,
                 padding: EdgeInsets.symmetric(horizontal: 20),

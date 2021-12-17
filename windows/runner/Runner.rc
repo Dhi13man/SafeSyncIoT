@@ -90,13 +90,13 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.dhi13man" "\0"
-            VALUE "FileDescription", "SafeSync IoT Dashboard Application" "\0"
-            VALUE "FileVersion", 1.0 "\0"
+            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "safe_sync" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2020 com.dhi13man. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2021 com.dhi13man. All rights reserved." "\0"
             VALUE "OriginalFilename", "safe_sync.exe" "\0"
             VALUE "ProductName", "safe_sync" "\0"
-            VALUE "ProductVersion", 1.0 "\0"
+            VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
     BLOCK "VarFileInfo"

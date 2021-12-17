@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
 class SafeSyncServer {
   HttpServer _server;
@@ -7,9 +10,13 @@ class SafeSyncServer {
 
   SafeSyncServer(this._sendParsedRequest) {
     initServer();
+    serverIPTracker = StreamController<String>();
+    serverIPTracker.add('...');
   }
 
-  void initServer() async {
+  StreamController<String> serverIPTracker;
+
+  Future<void> initServer() async {
     _server = await HttpServer.bind(
       InternetAddress.anyIPv6,
       8989,
@@ -18,7 +25,7 @@ class SafeSyncServer {
     await for (HttpRequest request in _server) {
       try {
         if (request.method == 'POST') {
-          _handleDataPosted(request);
+          await _handleDataPosted(request);
         } else if (request.method == 'GET') {
           print('GET REQUEST RECIEVED. NOT IMPLEMENTED');
         }
@@ -26,9 +33,11 @@ class SafeSyncServer {
         print('Exception in handleRequest: $e');
       }
     }
+
+    WifiInfo().getWifiIP().then((ip) => serverIPTracker.add(ip));
   }
 
-  void _handleDataPosted(HttpRequest request) async {
+  Future<void> _handleDataPosted(HttpRequest request) async {
     ContentType contentType = request.headers.contentType;
     HttpResponse response = request.response;
     if (contentType?.mimeType == 'application/json') {
