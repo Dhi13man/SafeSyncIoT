@@ -50,6 +50,9 @@ dependencies:
   url_launcher: ^6.0.4
   wifi_info_flutter: ^2.0.0
 
+dependency_overrides:
+  archive: 3.3.8
+
 dev_dependencies:
   # Moor Database Generation and Handling
   moor_generator: ^4.3.0
